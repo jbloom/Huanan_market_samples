@@ -84,7 +84,7 @@ metadata = (
                 axis=1,
             )
         ),
-        fastqs=lambda x: x["download_urls"].map(lambda fs: [os.path.join("results/fastqs", os.path.basename(f)) for f in fs]),
+        fastqs=lambda x: x["download_urls"].map(lambda fs: [os.path.basename(f) for f in fs]),
     )
     .drop(columns=[col for col in metadata.columns if col.startswith("DownLoad")])
     .drop(columns=[col for col in metadata.columns if col.startswith("MD5")])
@@ -111,6 +111,6 @@ fastqs_to_get = (
     [["fastqs", "download_urls", "md5_checksums"]]
     .explode(column=["fastqs", "download_urls", "md5_checksums"])
 )
-
+assert fastqs_to_get["fastqs"].nunique() == len(fastqs_to_get)
 print(f"Writing FASTQs to get to {snakemake.output.fastqs}")
 fastqs_to_get.to_csv(snakemake.output.fastqs, index=False)
