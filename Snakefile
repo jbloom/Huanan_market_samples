@@ -44,13 +44,28 @@ rule get_fastq:
         csv=rules.process_metadata.output.fastqs,
     output:
         fastq=protected("results/fastqs/{fastq}"),
+    conda:
+        "environment.yml"
     script:
         "scripts/get_fastq.py"
+
+
+rule fastq_md5:
+    """Get MD5 checksum for FASTQ file."""
+    input:
+        fastq=rules.get_fastq.output.fastq
+    output:
+        md5="results/fastqs_md5/{fastq}.md5",
+    conda:
+        "environment.yml"
+    shell:
+        "md5sum {input.fastq} > {output.md5}"
 
 
 rule agg_fastqs:
     input:
         lambda wc: [f"results/fastqs/{fastq}" for (fastq, _, _) in fastq_info(wc)],
+        lambda wc: [f"results/fastqs_md5/{fastq}.md5" for (fastq, _, _) in fastq_info(wc)],
     output:
         "_temp"
     shell:

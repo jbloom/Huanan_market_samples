@@ -4,4 +4,6 @@
 *.out
 _*
 
+slurm_logs
+
 results

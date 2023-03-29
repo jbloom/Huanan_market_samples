@@ -15,6 +15,7 @@ snakemake \
     --use-conda \
     --latency-wait 60 \
     --keep-going \
+    --retries 3 \
     --scheduler greedy \
     --rerun-incomplete
 printf "Run of snakemake complete.\n"
