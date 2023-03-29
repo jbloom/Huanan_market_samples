@@ -1,0 +1,19 @@
+name: Huanan_market_samples
+channels:
+  - conda-forge
+  - defaults
+  - bioconda
+
+dependencies:
+  - entrez-direct
+  - git-lfs
+  - jupyterlab
+  - mamba
+  - minimap2=2.24
+  - openpyxl
+  - pandas=1.5
+  - pip
+  - python=3.11
+  - snakemake=7.25
+  - pip:
+    - altair==5.0.0rc1   
