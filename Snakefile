@@ -40,16 +40,12 @@ def fastq_info(wildcards):
 
 rule get_fastq:
     """Download a FASTQ file."""
+    input:
+        csv=rules.process_metadata.output.fastqs,
     output:
-        fastq="results/fastqs/{fastq}",
-    params:
-        # note we have to fix the URL specified in the metadata by substituting
-        # "/gsa2/" for "/gsa/" as the medata page gives wrong URL
-        url=lambda wc: {
-            fastq: url.replace("/gsa/", "/gsa2/") for (fastq, url, _) in fastq_info(wc)
-        }[wc.fastq],
-    shell:
-        "curl -s {params.url} -o {output.fastq}"
+        fastq=protected("results/fastqs/{fastq}"),
+    script:
+        "scripts/get_fastq.py"
 
 
 rule agg_fastqs:
