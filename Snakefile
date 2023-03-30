@@ -19,6 +19,7 @@ rule all:
         "results/crits_christoph_data/check_sha512_vs_crits_christoph.csv",
         "results/mitochondrial_genomes/all.fasta",
         "results/mitochondrial_genomes/all.csv",
+        "_temp2",
 #        "_temp",
 
 
@@ -38,7 +39,7 @@ checkpoint process_metadata:
         "scripts/process_metadata.py"
 
 
-def fastqs(wildcards):
+def fastqs(_):
     """Return list of FASTQs."""
     fname = checkpoints.process_metadata.get().output.fastqs
     fastqs = pd.read_csv(fname)["fastqs"].tolist()
@@ -46,7 +47,7 @@ def fastqs(wildcards):
     return fastqs
 
 
-def accessions(wildcards):
+def accessions(_):
     """Return list of run accessions."""
     fname = checkpoints.process_metadata.get().output.metadata
     accs = pd.read_csv(fname)["Run accession"].tolist()
@@ -210,16 +211,39 @@ rule get_mitochondrial_genomes:
         "curl -s {params.url} | gzip -cd > {output.fasta}"
 
 
-checkpoint mitochondrial_genome_info:
-    """Extract information for mitochondrial genomes into CSV."""
+checkpoint process_mitochondrial_genomes:
+    """Extract info for mitochondrial genomes to CSV and write a per-genome FASTA."""
     input:
         fasta=rules.get_mitochondrial_genomes.output.fasta,
     output:
         csv="results/mitochondrial_genomes/all.csv",
+        per_genome_fastas=directory("results/mitochondrial_genomes/per_genome_fastas"),
+        per_genome_fasta_list="results/mitochondrial_genomes/per_genome_fasta_list.csv",
     conda:
         "environment.yml"
     script:
-        "scripts/mitochondrial_genome_info.py"
+        "scripts/process_mitochondrial_genomes.py"
+
+
+def mitochondrial_genome_ids(_):
+    """Get list of all mitochondrial genome IDs."""
+    fname = checkpoints.process_mitochondrial_genomes.get().output.csv
+    return pd.read_csv(fname)["id"].tolist()
+
+
+rule agg_mitochondrial_genomes:
+    """Split each mitochondrial genome into its own file."""
+    input:
+        lambda wc: [
+            f"results/mitochondrial_genomes/per_genome_fastas/{mito_id}.fa"
+            for mito_id in mitochondrial_genome_ids(wc)
+        ],
+    output:
+        "_temp2",
+    conda:
+        "environment.yml"
+    script:
+        "scripts/split_mitochondrial_genomes.py"
 
 
 rule align_fastq:
