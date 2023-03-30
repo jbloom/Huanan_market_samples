@@ -123,7 +123,7 @@ rule check_sha512_vs_crits_christoph:
         cc_checksums=rules.crits_christoph_sha512_checksums.output.checksums,
         metadata=rules.process_metadata.output.metadata,
     output:
-        "results/crits_christoph_data/check_sha512_vs_crits_christoph.csv",
+        csv="results/crits_christoph_data/check_sha512_vs_crits_christoph.csv",
     log:
         notebook="results/crits_christoph_data/check_sha512_vs_crits_christoph.ipynb",
     conda:
