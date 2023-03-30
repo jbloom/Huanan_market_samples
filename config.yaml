@@ -1,3 +1,8 @@
 # Configuration file for analysis
 
-metadata_sheet: 
+# Data from Crits-Christoph et al report: https://zenodo.org/record/7754299#.ZCTNLezMKX0
+crits_christoph_data:
+  file_info: https://raw.githubusercontent.com/sars-cov-2-origins/huanan-environmental/bd2afdb19392a0efb872c09eb94045de9d265a6e/tables/TableS1_FileInformation.csv
+  sample_names: https://raw.githubusercontent.com/sars-cov-2-origins/huanan-environmental/bd2afdb19392a0efb872c09eb94045de9d265a6e/tables/TableS2_SampleNames.csv
+  read_counts: https://raw.githubusercontent.com/sars-cov-2-origins/huanan-environmental/bd2afdb19392a0efb872c09eb94045de9d265a6e/tables/TableS3_MappedReadCounts.csv
+

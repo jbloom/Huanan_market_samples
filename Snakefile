@@ -13,7 +13,8 @@ configfile: "config.yaml"
 
 rule all:
     input:
-        "_temp"
+        "results/fastqs_md5/check_vs_metadata.csv",
+#        "_temp",
 
 
 checkpoint process_metadata:
@@ -50,23 +51,41 @@ rule get_fastq:
         "scripts/get_fastq.py"
 
 
-rule fastq_md5:
-    """Get MD5 checksum for FASTQ file."""
+rule fastq_checksum:
+    """Get checksum for FASTQ file."""
     input:
         fastq=rules.get_fastq.output.fastq
     output:
-        md5="results/fastqs_md5/{fastq}.md5",
+        checksum="results/fastqs_{checksumtype}/{fastq}.{checksumtype}",
     conda:
         "environment.yml"
     shell:
-        "md5sum {input.fastq} > {output.md5}"
+        "{wildcards.checksumtype}sum {input.fastq} > {output.checksum}"
 
 
-rule agg_fastqs:
+rule check_fastq_md5s:
+    """Check MD5s for all downloaded FASTQs versus metadata, raise error if mismatch."""
     input:
-        lambda wc: [f"results/fastqs/{fastq}" for (fastq, _, _) in fastq_info(wc)],
-        lambda wc: [f"results/fastqs_md5/{fastq}.md5" for (fastq, _, _) in fastq_info(wc)],
+        checksums=lambda wc: [
+            f"results/fastqs_md5/{fastq}.md5" for (fastq, _, _) in fastq_info(wc)
+        ],
+        fastq_metadata=rules.process_metadata.output.fastqs,
     output:
-        "_temp"
+        csv="results/fastqs_md5/check_vs_metadata.csv",
+    conda:
+        "environment.yml"
+    script:
+        "scripts/check_fastq_md5s.py"
+
+
+rule agg_fastq_sha512:
+    input:
+        checksums=lambda wc: [
+            f"results/fastqs_sha512/{fastq}.sha512" for (fastq, _, _) in fastq_info(wc)
+        ],
+    output:
+        "_temp",
+    conda:
+        "environment.yml"
     shell:
         "echo not_implemented"
