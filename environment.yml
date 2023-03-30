@@ -5,11 +5,13 @@ channels:
   - bioconda
 
 dependencies:
+  - biopython=1.81
   - entrez-direct
   - fastp=0.23.2
   - git-lfs
   - jupyterlab
   - mamba
+  - mash=2.3
   - minimap2=2.24
   - openpyxl
   - pandas=1.5

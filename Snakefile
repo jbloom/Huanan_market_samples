@@ -17,7 +17,9 @@ rule all:
     input:
         "results/fastqs_md5/check_vs_metadata.csv",
         "results/crits_christoph_data/check_sha512_vs_crits_christoph.csv",
-        "_temp",
+        "results/mitochondrial_genomes/all.fasta",
+        "results/mitochondrial_genomes/all.csv",
+#        "_temp",
 
 
 checkpoint process_metadata:
@@ -194,6 +196,30 @@ rule preprocess_paired_fastq:
             --json {output.json} \
             --html {output.html}
         """
+
+
+rule get_mitochondrial_genomes:
+    """Get the mitochondrial genomes."""
+    params:
+        url=config["mitochondrial_genomes"],
+    output:
+        fasta="results/mitochondrial_genomes/all.fasta",
+    conda:
+        "environment.yml"
+    shell:
+        "curl -s {params.url} | gzip -cd > {output.fasta}"
+
+
+checkpoint mitochondrial_genome_info:
+    """Extract information for mitochondrial genomes into CSV."""
+    input:
+        fasta=rules.get_mitochondrial_genomes.output.fasta,
+    output:
+        csv="results/mitochondrial_genomes/all.csv",
+    conda:
+        "environment.yml"
+    script:
+        "scripts/mitochondrial_genome_info.py"
 
 
 rule align_fastq:
