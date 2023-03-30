@@ -17,5 +17,6 @@ snakemake \
     --keep-going \
     --retries 3 \
     --scheduler greedy \
-    --rerun-incomplete
+    --rerun-incomplete \
+    --rerun-triggers mtime input params code
 printf "Run of snakemake complete.\n"

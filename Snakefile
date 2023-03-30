@@ -5,6 +5,8 @@ Written by Jesse Bloom.
 """
 
 
+import ast
+
 import pandas as pd
 
 
@@ -15,6 +17,7 @@ rule all:
     input:
         "results/fastqs_md5/check_vs_metadata.csv",
         "results/crits_christoph_data/check_sha512_vs_crits_christoph.csv",
+        "_temp",
 
 
 checkpoint process_metadata:
@@ -33,10 +36,36 @@ checkpoint process_metadata:
         "scripts/process_metadata.py"
 
 
-def fastq_info(wildcards):
-    """Return list of tuples of FASTQs, their URLs, and MD5 checksums."""
+def fastqs(wildcards):
+    """Return list of FASTQs."""
     fname = checkpoints.process_metadata.get().output.fastqs
-    return list(pd.read_csv(fname).itertuples(index=False))
+    fastqs = pd.read_csv(fname)["fastqs"].tolist()
+    assert len(fastqs) == len(set(fastqs))
+    return fastqs
+
+
+def accessions(wildcards):
+    """Return list of run accessions."""
+    fname = checkpoints.process_metadata.get().output.metadata
+    accs = pd.read_csv(fname)["Run accession"].tolist()
+    assert len(accs) == len(set(accs))
+    return accs
+
+
+def accession_fastqs(wildcards):
+    """Given {accession} returns FASTQs as dict keyed by "r1" and (optionally) "r2"."""
+    fname = checkpoints.process_metadata.get().output.metadata
+    acc_fastqs = (
+        pd.read_csv(fname, converters={"fastqs": ast.literal_eval})
+        .set_index("Run accession")
+        ["fastqs"]
+        .to_dict()
+        [wildcards.accession]
+    )
+    if 1 <= len(acc_fastqs) <= 2:
+        return dict(zip(["r1", "r2"], [f"results/fastqs/{f}" for f in acc_fastqs]))
+    else:
+        raise ValueError(f"Not 1 or 2 FASTQs\n{acc_fastqs=}\n{wildcards.accession=}")
 
 
 rule get_fastq:
@@ -73,9 +102,7 @@ rule fastq_checksum:
 rule check_fastq_md5s:
     """Check MD5s for all downloaded FASTQs versus metadata, raise error if mismatch."""
     input:
-        checksums=lambda wc: [
-            f"results/fastqs_md5/{fastq}.md5" for (fastq, _, _) in fastq_info(wc)
-        ],
+        checksums=lambda wc: [f"results/fastqs_md5/{fastq}.md5" for fastq in fastqs(wc)],
         fastq_metadata=rules.process_metadata.output.fastqs,
     output:
         csv="results/fastqs_md5/check_vs_metadata.csv",
@@ -114,11 +141,10 @@ rule check_sha512_vs_crits_christoph:
     """Check the SHA-512 checksums of downloaded FASTQs vs those from Crits-Christoph."""
     input:
         checksums=lambda wc: [
-            f"results/fastqs_sha512/{fastq}.sha512" for (fastq, _, _) in fastq_info(wc)
+            f"results/fastqs_sha512/{fastq}.sha512" for fastq in fastqs(wc)
         ],
         checksums_nogz=lambda wc: [
-            f"results/fastqs_sha512/{fastq}_unzipped.sha512"
-            for (fastq, _, _) in fastq_info(wc)
+            f"results/fastqs_sha512/{fastq}_unzipped.sha512" for fastq in fastqs(wc)
         ],
         cc_checksums=rules.crits_christoph_sha512_checksums.output.checksums,
         metadata=rules.process_metadata.output.metadata,
@@ -130,3 +156,73 @@ rule check_sha512_vs_crits_christoph:
         "environment.yml"
     notebook:
         "notebooks/check_sha512_vs_crits_christoph.py.ipynb"
+
+
+rule preprocess_single_fastq:
+    """Pre-process the FASTQ files."""
+    input:
+        unpack(lambda wc: accession_fastqs(wc)),
+    output:
+        fastq="results/fastqs_preprocessed/{accession}.fq.gz",
+    threads: 2
+    conda:
+        "environment.yml"
+    shell:
+        "fastp -i {input.r1} -o {output.fastq} -w {threads}"
+
+
+rule preprocess_paired_fastq:
+    """Pre-process the FASTQ files."""
+    input:
+        unpack(lambda wc: accession_fastqs(wc)),
+    output:
+        r1="results/fastqs_preprocessed/{accession}_R1.fq.gz",
+        r2="results/fastqs_preprocessed/{accession}_R2.fq.gz",
+        json="results/fastqs_preprocessed/{accession}.json",
+        html="results/fastqs_preprocessed/{accession}.html",
+    threads: 2
+    conda:
+        "environment.yml"
+    shell:
+        """
+        fastp \
+            -i {input.r1} \
+            -I {input.r2} \
+            -o {output.r1} \
+            -O {output.r2} \
+            -w {threads} \
+            --json {output.json} \
+            --html {output.html}
+        """
+
+
+rule align_fastq:
+    """Align FASTQs for an accession, aligning single or paired end as depending on data."""
+    input:
+        unpack(
+            lambda wc: (
+                {"r1": f"results/fastqs_preprocessed/{wc.accession}.fq.gz"}
+                if len(accession_fastqs(wc)) == 1
+                else {
+                    "r1": f"results/fastqs_preprocessed/{wc.accession}_R1.fq.gz",
+                    "r2": f"results/fastqs_preprocessed/{wc.accession}_R2.fq.gz",
+                }
+            )
+        ),
+    output:
+        "results/alignment/{accession}",
+    conda:
+        "environment.yml"
+    shell:
+        "echo not_implemented"
+
+
+rule agg_alignments:
+    input:
+        lambda wc: [f"results/alignment/{accession}" for accession in accessions(wc)],
+    output:
+        "_temp"
+    conda:
+        "environment.yml"
+    shell:
+        "echo not_implemented"

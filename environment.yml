@@ -6,6 +6,7 @@ channels:
 
 dependencies:
   - entrez-direct
+  - fastp=0.23.2
   - git-lfs
   - jupyterlab
   - mamba
