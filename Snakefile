@@ -231,19 +231,32 @@ def mitochondrial_genome_ids(_):
     return pd.read_csv(fname)["id"].tolist()
 
 
+rule mash_dist_mitochondrial_genome:
+    """Compute Mash distance of one mitochondrial genome to all others."""
+    input:
+        genome_list=rules.process_mitochondrial_genomes.output.per_genome_fasta_list,
+        genome="results/mitochondrial_genomes/per_genome_fastas/{mito_id}.fa",
+    output:
+        tsv="results/mitochondrial_genomes/per_genome_mash/{mito_id}.tsv",
+    conda:
+        "environment.yml"
+    shell:
+        "mash dist {input.genome} {input.genome_list} -l -t > {output.tsv} -s 5000"
+
+
 rule agg_mitochondrial_genomes:
     """Split each mitochondrial genome into its own file."""
     input:
         lambda wc: [
-            f"results/mitochondrial_genomes/per_genome_fastas/{mito_id}.fa"
+            f"results/mitochondrial_genomes/per_genome_mash/{mito_id}.tsv"
             for mito_id in mitochondrial_genome_ids(wc)
         ],
     output:
         "_temp2",
     conda:
         "environment.yml"
-    script:
-        "scripts/split_mitochondrial_genomes.py"
+    shell:
+        "echo not_implemented"
 
 
 rule align_fastq:
