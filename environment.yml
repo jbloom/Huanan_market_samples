@@ -16,7 +16,9 @@ dependencies:
   - openpyxl
   - pandas=1.5
   - pip
+  - pysam=0.20.0
   - python=3.11
+  - samtools=1.16.1
   - snakemake=7.25
   - pip:
     - altair==5.0.0rc1   

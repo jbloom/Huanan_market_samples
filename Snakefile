@@ -19,8 +19,7 @@ rule all:
         "results/fastqs_md5/check_vs_metadata.csv",
         "results/crits_christoph_data/check_sha512_vs_crits_christoph.csv",
         "results/mitochondrial_genomes/retained.csv",
-        "results/minimap2_ref/ref.mmi",
-#        "_temp",
+        "_temp",
 
 
 checkpoint process_metadata:
@@ -292,34 +291,48 @@ rule minimap2_ref:
     shell:
         """
         cat {input} > {output.fasta}
-        minimap2 -d {output.mmi} {output.fasta}
+        minimap2 -x sr -d {output.mmi} {output.fasta}
         """
 
 
-rule align_fastq:
-    """Align FASTQs for an accession, aligning single or paired end as depending on data."""
+rule minimap2_alignments:
+    """Align FASTQs for accession, aligning single or paired end as depending on data."""
     input:
-        unpack(
-            lambda wc: (
-                {"r1": f"results/fastqs_preprocessed/{wc.accession}.fq.gz"}
-                if len(accession_fastqs(wc)) == 1
-                else {
-                    "r1": f"results/fastqs_preprocessed/{wc.accession}_R1.fq.gz",
-                    "r2": f"results/fastqs_preprocessed/{wc.accession}_R2.fq.gz",
-                }
-            )
+        fastqs=lambda wc: (
+            [f"results/fastqs_preprocessed/{wc.accession}.fq.gz"]
+            if len(accession_fastqs(wc)) == 1
+            else [
+                f"results/fastqs_preprocessed/{wc.accession}_R1.fq.gz",
+                f"results/fastqs_preprocessed/{wc.accession}_R2.fq.gz",
+            ]
         ),
+        ref=rules.minimap2_ref.output.mmi
     output:
-        "results/alignment/{accession}",
+        sam=temp("results/minimap2_alignments/{accession}.sam"),
+        unsorted_bam=temp("results/minimap2_alignments/{accession}.bam"),
+        bam=protected("results/minimap2_alignments/{accession}_sorted.bam"),
+    threads: 2
+    params:
+        extra_threads=lambda _, threads: threads - 1
     conda:
         "environment.yml"
     shell:
-        "echo not_implemented"
+        """
+        minimap2 \
+            -t {threads} \
+            -x sr \
+            --secondary=yes \
+            -a {input.ref} \
+            {input.fastqs} \
+            > {output.sam}
+        samtools view -@ {params.extra_threads} -b -o {output.unsorted_bam} {output.sam}
+        samtools sort -@ {params.extra_threads} -o {output.bam} {output.unsorted_bam}
+        """
 
 
 rule agg_alignments:
     input:
-        lambda wc: [f"results/alignment/{accession}" for accession in accessions(wc)],
+        lambda wc: [f"results/minimap2_alignments/{accession}_sorted.bam" for accession in accessions(wc)],
     output:
         "_temp"
     conda:
