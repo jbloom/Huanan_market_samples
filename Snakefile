@@ -17,9 +17,8 @@ rule all:
     input:
         "results/fastqs_md5/check_vs_metadata.csv",
         "results/crits_christoph_data/check_sha512_vs_crits_christoph.csv",
-        "results/mitochondrial_genomes/all.fasta",
-        "results/mitochondrial_genomes/all.csv",
-        "_temp2",
+        "results/mitochondrial_genomes/retained.fasta",
+        "results/mitochondrial_genomes/retained.csv",
 #        "_temp",
 
 
@@ -244,19 +243,27 @@ rule mash_dist_mitochondrial_genome:
         "mash dist {input.genome} {input.genome_list} -l -t > {output.tsv} -s 5000"
 
 
-rule agg_mitochondrial_genomes:
-    """Split each mitochondrial genome into its own file."""
+rule mitochondrial_genomes_to_retain:
+    """Retain sufficiently unique mitochondrial genomes."""
     input:
-        lambda wc: [
+        mashes=lambda wc: [
             f"results/mitochondrial_genomes/per_genome_mash/{mito_id}.tsv"
             for mito_id in mitochondrial_genome_ids(wc)
         ],
+        fasta=rules.get_mitochondrial_genomes.output.fasta,
+        info_csv=rules.process_mitochondrial_genomes.output.csv,
     output:
-        "_temp2",
+        csv="results/mitochondrial_genomes/retained.csv",
+        fasta="results/mitochondrial_genomes/retained.fasta",
+    params:
+        min_mash_dist=config["mitochondrial_genome_min_mash_dist"],
+        to_keep=config["mitochondrial_genomes_to_keep"],
+    log:
+        notebook="results/mitochondrial_genomes/mitochondrial_genomes_to_retain.ipynb",
     conda:
         "environment.yml"
-    shell:
-        "echo not_implemented"
+    notebook:
+        "notebooks/mitochondrial_genomes_to_retain.py.ipynb"
 
 
 rule align_fastq:

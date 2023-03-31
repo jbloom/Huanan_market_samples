@@ -8,3 +8,33 @@ crits_christoph_data:
 
 # get mitochondrial genome sets from here;
 mitochondrial_genomes: https://ftp.ncbi.nlm.nih.gov/refseq/release/mitochondrion/mitochondrion.1.1.genomic.fna.gz
+
+# always keep these mitochondrial genomes when do clustering to remove overly similar ones,
+# and define common names (synonyms) for them
+mitochondrial_genomes_to_keep:
+  # Crits-Christop Figure 1, https://zenodo.org/record/7754299#.ZCTNLezMKX0
+  raccoon dog: Nyctereutes procyonoides
+  hedgehog: Erinaceus europaeus
+  Malayan porcupine: Hystrix brachyura
+  hoary bamboo rat: Rhizomys pruinosus
+  Himalayan marmot: Marmota himalayana
+  masked palm civet: Paguma larvata
+  Siberian weasel: Mustela sibirica
+  hog badger: Arctonyx collaris
+  human: Homo sapiens
+  cow: Bos taurus
+  sheep: Ovis orientalis
+  brown rat: Rattus norvegicus strain Wistar
+  pig: Sus scrofa domesticus
+  dog: Canis lupus familiaris
+  # some additional animals of interest
+  cat: Felis catus
+  chicken: Gallus gallus isolate bGalGal1
+  duck: Anas poecilorhyncha
+
+# we only keep mitochondrial genomes that are either in the list to keep above,
+# or have a mash distances >= this from all other retained ones.
+mitochondrial_genome_min_mash_dist: 0.1
+
+# SARS-CoV-2 reference genome
+sars2_ref: http://hgdownload.soe.ucsc.edu/goldenPath/wuhCor1/bigZips/wuhCor1.fa.gz
