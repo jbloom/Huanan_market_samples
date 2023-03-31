@@ -15,10 +15,11 @@ configfile: "config.yaml"
 
 rule all:
     input:
+        "results/metadata/merged_metadata.csv",
         "results/fastqs_md5/check_vs_metadata.csv",
         "results/crits_christoph_data/check_sha512_vs_crits_christoph.csv",
-        "results/mitochondrial_genomes/retained.fasta",
         "results/mitochondrial_genomes/retained.csv",
+        "results/minimap2_ref/ref.mmi",
 #        "_temp",
 
 
@@ -264,6 +265,35 @@ rule mitochondrial_genomes_to_retain:
         "environment.yml"
     notebook:
         "notebooks/mitochondrial_genomes_to_retain.py.ipynb"
+
+
+rule get_sars2_ref:
+    """Get SARS-CoV-2 reference genome."""
+    params:
+        url=config["sars2_ref"],
+    output:
+        fasta="results/sars2_ref/ref.fa",
+    conda:
+        "environment.yml"
+    shell:
+        "curl -s {params.url} | gzip -cd > {output.fasta}"
+
+
+rule minimap2_ref:
+    """Build ``minimap2`` reference genome."""
+    input:
+        rules.get_sars2_ref.output.fasta,
+        rules.mitochondrial_genomes_to_retain.output.fasta,
+    output:
+        fasta="results/minimap2_ref/ref.fa",
+        mmi="results/minimap2_ref/ref.mmi",
+    conda:
+        "environment.yml",
+    shell:
+        """
+        cat {input} > {output.fasta}
+        minimap2 -d {output.mmi} {output.fasta}
+        """
 
 
 rule align_fastq:
