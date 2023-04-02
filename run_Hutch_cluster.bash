@@ -15,8 +15,8 @@ snakemake \
     --use-conda \
     --latency-wait 60 \
     --keep-going \
-    --retries 1 \
+    --retries 2 \
     --scheduler greedy \
     --rerun-incomplete \
-    --rerun-triggers mtime input params
+    --rerun-triggers mtime
 printf "Run of snakemake complete.\n"

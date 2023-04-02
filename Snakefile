@@ -165,12 +165,21 @@ rule preprocess_single_fastq:
     input:
         unpack(lambda wc: accession_fastqs(wc)),
     output:
-        fastq="results/fastqs_preprocessed/{accession}.fq.gz",
-    threads: 2
+        fastq=protected("results/fastqs_preprocessed/{accession}.fq.gz"),
+        json="results/fastqs_preprocessed/{accession}.json",
+        html="results/fastqs_preprocessed/{accession}.html",
+    threads: 3
     conda:
         "environment.yml"
     shell:
-        "fastp -i {input.r1} -o {output.fastq} -w {threads}"
+        """
+        fastp \
+            -i {input.r1} \
+            -o {output.fastq} \
+            -w {threads} \
+            --json {output.json} \
+            --html {output.html}
+        """
 
 
 rule preprocess_paired_fastq:
@@ -178,11 +187,11 @@ rule preprocess_paired_fastq:
     input:
         unpack(lambda wc: accession_fastqs(wc)),
     output:
-        r1="results/fastqs_preprocessed/{accession}_R1.fq.gz",
-        r2="results/fastqs_preprocessed/{accession}_R2.fq.gz",
+        r1=protected("results/fastqs_preprocessed/{accession}_R1.fq.gz"),
+        r2=protected("results/fastqs_preprocessed/{accession}_R2.fq.gz"),
         json="results/fastqs_preprocessed/{accession}.json",
         html="results/fastqs_preprocessed/{accession}.html",
-    threads: 2
+    threads: 3
     conda:
         "environment.yml"
     shell:
@@ -311,7 +320,7 @@ rule minimap2_alignments:
         sam=temp("results/minimap2_alignments/{accession}.sam"),
         unsorted_bam=temp("results/minimap2_alignments/{accession}.bam"),
         bam=protected("results/minimap2_alignments/{accession}_sorted.bam"),
-    threads: 2
+    threads: 3
     params:
         extra_threads=lambda _, threads: threads - 1
     conda:
@@ -330,9 +339,40 @@ rule minimap2_alignments:
         """
 
 
-rule agg_alignments:
+rule read_and_alignment_counts:
+    """Count total, pre-processed, and aligned reads (primary alignments only)."""
     input:
-        lambda wc: [f"results/minimap2_alignments/{accession}_sorted.bam" for accession in accessions(wc)],
+        fastqs=lambda wc: accession_fastqs(wc).values(),
+        preprocessed_fastqs=lambda wc: (
+            [f"results/fastqs_preprocessed/{wc.accession}.fq.gz"]
+            if len(accession_fastqs(wc)) == 1
+            else [
+                f"results/fastqs_preprocessed/{wc.accession}_R1.fq.gz",
+                f"results/fastqs_preprocessed/{wc.accession}_R2.fq.gz",
+            ]
+        ),
+        bam=rules.minimap2_alignments.output.bam,
+    output:
+        counts="results/read_and_alignment_counts/{accession}.txt",
+    conda:
+        "environment.yml"
+    shell:
+        # count only primary alignments: https://www.biostars.org/p/138116/#138118
+        """
+        echo "{wildcards.accession}" > {output.counts}
+        zcat {input.fastqs} | echo $((`wc -l`/4)) >> {output.counts}
+        if [ -s {input.preprocessed_fastqs[0]} ]; then
+            zcat {input.preprocessed_fastqs} | echo $((`wc -l`/4)) >> {output.counts}
+        else
+            echo 0 >> {output.counts}
+        fi
+        samtools view -F 0x904 -c {input.bam} >> {output.counts}
+        """
+
+
+rule agg_read_and_alignment_counts:
+    input:
+        lambda wc: [f"results/read_and_alignment_counts/{accession}.txt" for accession in accessions(wc)],
     output:
         "_temp"
     conda:
