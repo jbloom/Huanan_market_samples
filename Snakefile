@@ -19,7 +19,7 @@ rule all:
         "results/fastqs_md5/check_vs_metadata.csv",
         "results/crits_christoph_data/check_sha512_vs_crits_christoph.csv",
         "results/mitochondrial_genomes/retained.csv",
-        "_temp",
+        "results/read_and_alignment_counts/aggregated_counts.csv",
 
 
 checkpoint process_metadata:
@@ -371,11 +371,15 @@ rule read_and_alignment_counts:
 
 
 rule agg_read_and_alignment_counts:
+    """Aggregate total, pre-processed, and aligned reads (primary alignments only)."""    
     input:
-        lambda wc: [f"results/read_and_alignment_counts/{accession}.txt" for accession in accessions(wc)],
+        lambda wc: [
+            f"results/read_and_alignment_counts/{accession}.txt"
+            for accession in accessions(wc)
+        ],
     output:
-        "_temp"
+        csv="results/read_and_alignment_counts/aggregated_counts.csv",
     conda:
         "environment.yml"
-    shell:
-        "echo not_implemented"
+    script:
+        "scripts/agg_read_and_alignment_counts.py"
