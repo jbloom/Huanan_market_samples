@@ -20,6 +20,7 @@ rule all:
         "results/crits_christoph_data/check_sha512_vs_crits_christoph.csv",
         "results/mitochondrial_genomes/retained.csv",
         "results/read_and_alignment_counts/aggregated_counts.csv",
+        "results/tallied_alignment_counts/aggregated_counts.csv",
 
 
 checkpoint process_metadata:
@@ -331,6 +332,7 @@ rule minimap2_alignments:
             -t {threads} \
             -x sr \
             --secondary=yes \
+            --sam-hit-only \
             -a {input.ref} \
             {input.fastqs} \
             > {output.sam}
@@ -383,3 +385,30 @@ rule agg_read_and_alignment_counts:
         "environment.yml"
     script:
         "scripts/agg_read_and_alignment_counts.py"
+
+
+rule tally_alignment_counts:
+    """Tally alignment counts to each reference."""
+    input:
+        bamfile=rules.minimap2_alignments.output.bam,
+    output:
+        csv="results/tallied_alignment_counts/{accession}.csv",
+    conda:
+        "environment.yml"
+    script:
+        "scripts/tally_alignment_counts.py"
+
+
+rule agg_tallied_alignment_counts:
+    """Aggregate tallied alignment counts."""
+    input:
+        lambda wc: [
+            f"results/tallied_alignment_counts/{accession}.csv"
+            for accession in accessions(wc)
+        ],
+    output:
+        csv="results/tallied_alignment_counts/aggregated_counts.csv",
+    conda:
+        "environment.yml"
+    shell:
+        "echo not_implemented"
