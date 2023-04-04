@@ -19,8 +19,8 @@ rule all:
         "results/fastqs_md5/check_vs_metadata.csv",
         "results/crits_christoph_data/check_sha512_vs_crits_christoph.csv",
         "results/mitochondrial_genomes/retained.csv",
-        "results/read_and_alignment_counts/aggregated_counts.csv",
-        "results/tallied_alignment_counts/aggregated_counts.csv",
+        "results/read_counts/aggregated_counts.csv",
+        "results/aggregated_counts/aggregated_counts.csv",
 
 
 checkpoint process_metadata:
@@ -341,8 +341,8 @@ rule minimap2_alignments:
         """
 
 
-rule read_and_alignment_counts:
-    """Count total, pre-processed, and aligned reads (primary alignments only)."""
+rule read_counts:
+    """Count total and pre-processed reads."""
     input:
         fastqs=lambda wc: accession_fastqs(wc).values(),
         preprocessed_fastqs=lambda wc: (
@@ -353,13 +353,11 @@ rule read_and_alignment_counts:
                 f"results/fastqs_preprocessed/{wc.accession}_R2.fq.gz",
             ]
         ),
-        bam=rules.minimap2_alignments.output.bam,
     output:
-        counts="results/read_and_alignment_counts/{accession}.txt",
+        counts="results/read_counts/{accession}.txt",
     conda:
         "environment.yml"
     shell:
-        # count only primary alignments: https://www.biostars.org/p/138116/#138118
         """
         echo "{wildcards.accession}" > {output.counts}
         zcat {input.fastqs} | echo $((`wc -l`/4)) >> {output.counts}
@@ -368,23 +366,22 @@ rule read_and_alignment_counts:
         else
             echo 0 >> {output.counts}
         fi
-        samtools view -F 0x904 -c {input.bam} >> {output.counts}
         """
 
 
-rule agg_read_and_alignment_counts:
-    """Aggregate total, pre-processed, and aligned reads (primary alignments only)."""    
+rule agg_read_counts:
+    """Aggregate total and pre-processed reads."""    
     input:
         lambda wc: [
-            f"results/read_and_alignment_counts/{accession}.txt"
+            f"results/read_counts/{accession}.txt"
             for accession in accessions(wc)
         ],
     output:
-        csv="results/read_and_alignment_counts/aggregated_counts.csv",
+        csv="results/read_counts/aggregated_counts.csv",
     conda:
         "environment.yml"
     script:
-        "scripts/agg_read_and_alignment_counts.py"
+        "scripts/agg_read_counts.py"
 
 
 rule tally_alignment_counts:
@@ -399,16 +396,24 @@ rule tally_alignment_counts:
         "scripts/tally_alignment_counts.py"
 
 
-rule agg_tallied_alignment_counts:
-    """Aggregate tallied alignment counts."""
+rule aggregate_all_counts:
+    """Aggregate all counts."""
     input:
-        lambda wc: [
+        tallied_counts=lambda wc: [
             f"results/tallied_alignment_counts/{accession}.csv"
             for accession in accessions(wc)
         ],
+        mito_ref_info=rules.mitochondrial_genomes_to_retain.output.csv,
+        metadata=rules.process_metadata.output.metadata,
+        read_counts=rules.agg_read_counts.output.csv,
     output:
-        csv="results/tallied_alignment_counts/aggregated_counts.csv",
+        csv="results/aggregated_counts/aggregated_counts.csv",
+    params:
+        sars2_ref_id=config["sars2_ref_id"],
+        mito_genomes_to_keep=config["mitochondrial_genomes_to_keep"],
+    log:
+        notebook="results/aggregated_counts/aggregate_all_counts.ipynb",
     conda:
         "environment.yml"
-    shell:
-        "echo not_implemented"
+    notebook:
+        "notebooks/aggregate_all_counts.py.ipynb"

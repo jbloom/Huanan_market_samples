@@ -38,3 +38,4 @@ mitochondrial_genome_min_mash_dist: 0.1
 
 # SARS-CoV-2 reference genome
 sars2_ref: http://hgdownload.soe.ucsc.edu/goldenPath/wuhCor1/bigZips/wuhCor1.fa.gz
+sars2_ref_id: NC_045512v2  # id of reference genome
