@@ -13,14 +13,19 @@ import pandas as pd
 configfile: "config.yaml"
 
 
+# output files with aggregated counts
+aggregated_counts_csvs = [
+    "results/aggregated_counts/sars2_mito_aligned_by_run.csv",
+    "results/aggregated_counts/sars2_mito_aligned_by_sample.csv",
+]
+
 rule all:
     input:
         "results/metadata/merged_metadata.csv",
         "results/fastqs_md5/check_vs_metadata.csv",
         "results/crits_christoph_data/check_sha512_vs_crits_christoph.csv",
         "results/mitochondrial_genomes/retained.csv",
-        "results/read_counts/aggregated_counts.csv",
-        "results/aggregated_counts/aggregated_counts.csv",
+        aggregated_counts_csvs,
 
 
 checkpoint process_metadata:
@@ -407,7 +412,7 @@ rule aggregate_all_counts:
         metadata=rules.process_metadata.output.metadata,
         read_counts=rules.agg_read_counts.output.csv,
     output:
-        csv="results/aggregated_counts/aggregated_counts.csv",
+        **{os.path.splitext(os.path.basename(f))[0]: f for f in aggregated_counts_csvs}
     params:
         sars2_ref_id=config["sars2_ref_id"],
         mito_genomes_to_keep=config["mitochondrial_genomes_to_keep"],
