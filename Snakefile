@@ -218,20 +218,21 @@ rule get_mitochondrial_genomes:
     params:
         url=config["mitochondrial_genomes"],
     output:
-        fasta="results/mitochondrial_genomes/all.fasta",
+        gb="results/mitochondrial_genomes/all.gb",
     conda:
         "environment.yml"
     shell:
-        "curl -s {params.url} | gzip -cd > {output.fasta}"
+        "curl -s {params.url} | gzip -cd > {output.gb}"
 
 
 checkpoint process_mitochondrial_genomes:
     """Extract info for mitochondrial genomes to CSV and write a per-genome FASTA."""
     input:
-        fasta=rules.get_mitochondrial_genomes.output.fasta,
+        gb=rules.get_mitochondrial_genomes.output.gb,
     output:
         csv="results/mitochondrial_genomes/all.csv",
-        per_genome_fastas=directory("results/mitochondrial_genomes/per_genome_fastas"),
+        fasta="results/mitochondrial_genomes/all.fa",
+        per_genome_seqs=directory("results/mitochondrial_genomes/per_genome_seqs"),
         per_genome_fasta_list="results/mitochondrial_genomes/per_genome_fasta_list.csv",
     conda:
         "environment.yml"
@@ -245,11 +246,23 @@ def mitochondrial_genome_ids(_):
     return pd.read_csv(fname)["id"].tolist()
 
 
+rule mitochondrial_genome_taxa:
+    """Get the taxa (phylum and subphylum) for a mitochondrial genome."""
+    input:
+        gb="results/mitochondrial_genomes/per_genome_seqs/{mito_id}.gb",
+    output:
+        csv="results/mitochondrial_genomes/taxa/{mito_id}.csv",
+    conda:
+        "environment.yml"
+    script:
+        "scripts/mitochondrial_genome_taxa.py"
+
+
 rule mash_dist_mitochondrial_genome:
     """Compute Mash distance of one mitochondrial genome to all others."""
     input:
         genome_list=rules.process_mitochondrial_genomes.output.per_genome_fasta_list,
-        genome="results/mitochondrial_genomes/per_genome_fastas/{mito_id}.fa",
+        genome="results/mitochondrial_genomes/per_genome_seqs/{mito_id}.fa",
     output:
         tsv="results/mitochondrial_genomes/per_genome_mash/{mito_id}.tsv",
     conda:
@@ -265,20 +278,27 @@ rule mitochondrial_genomes_to_retain:
             f"results/mitochondrial_genomes/per_genome_mash/{mito_id}.tsv"
             for mito_id in mitochondrial_genome_ids(wc)
         ],
-        fasta=rules.get_mitochondrial_genomes.output.fasta,
+        taxa=lambda wc: [
+            f"results/mitochondrial_genomes/taxa/{mito_id}.csv"
+            for mito_id in mitochondrial_genome_ids(wc)
+        ],
+        fasta=rules.process_mitochondrial_genomes.output.fasta,
         info_csv=rules.process_mitochondrial_genomes.output.csv,
     output:
         csv="results/mitochondrial_genomes/retained.csv",
         fasta="results/mitochondrial_genomes/retained.fasta",
     params:
+        taxa_to_keep=config["mitochondrial_taxa_to_keep"],
         min_mash_dist=config["mitochondrial_genome_min_mash_dist"],
         to_keep=config["mitochondrial_genomes_to_keep"],
     log:
         notebook="results/mitochondrial_genomes/mitochondrial_genomes_to_retain.ipynb",
     conda:
         "environment.yml"
-    notebook:
-        "notebooks/mitochondrial_genomes_to_retain.py.ipynb"
+    shell:
+        "echo not_implemented"
+    #notebook:
+    #    "notebooks/mitochondrial_genomes_to_retain.py.ipynb"
 
 
 rule get_sars2_ref:

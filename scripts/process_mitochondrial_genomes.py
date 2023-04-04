@@ -10,27 +10,35 @@ import pandas as pd
 
 
 regex = re.compile(
-    "(?P<id>[^\s]+) (?P<species>.+) "
+    "(?P<species>.+) "
     + "(?:mitochondrion|mitochondria|mitochondrial|chloroplast|kinetoplast|genome assembly).+"
 )
 
 
-os.makedirs(snakemake.output.per_genome_fastas, exist_ok=True)
+os.makedirs(snakemake.output.per_genome_seqs, exist_ok=True)
 
 records = []
 outfiles = []
-for seq in Bio.SeqIO.parse(snakemake.input.fasta, "fasta"):
+seqs = []
+for seq in Bio.SeqIO.parse(snakemake.input.gb, "genbank"):
     desc = seq.description
     m = regex.fullmatch(desc)
     if m:
-        records.append((m.group("id"), m.group("species")))
-    elif desc == "NC_036144.1 Trichoderma hamatum, complete genome":
-        records.append(desc.split(",")[0].split(maxsplit=1))
+        species = m.group("species")
+    elif desc == "Trichoderma hamatum, complete genome":
+        species = desc.split(",")[0]
     else:
-        raise ValueError(f"Cannot recognize {desc}")
-    outfile = os.path.join(snakemake.output.per_genome_fastas, f"{seq.id}.fa")
-    outfiles.append(outfile)
-    Bio.SeqIO.write([seq], outfile, "fasta")
+        raise ValueError(f"Cannot recognize\n{desc}\nfor {seq}")
+    try:
+        outfasta = os.path.join(snakemake.output.per_genome_seqs, f"{seq.id}.fa")
+        Bio.SeqIO.write([seq], outfasta, "fasta")
+        outgb = os.path.join(snakemake.output.per_genome_seqs, f"{seq.id}.gb")
+        Bio.SeqIO.write([seq], outgb, "genbank")
+        records.append((seq.id, species))
+        outfiles.append(outfasta)
+        seqs.append(seq)
+    except Bio.Seq.UndefinedSequenceError:
+        print(f"No sequence for {seq.id} {desc}")
 
 pd.DataFrame(records, columns=["id", "species"]).to_csv(
     snakemake.output.csv, index=False,
@@ -38,3 +46,5 @@ pd.DataFrame(records, columns=["id", "species"]).to_csv(
 
 with open(snakemake.output.per_genome_fasta_list, "w") as f:
     f.write("\n".join(outfiles))
+
+Bio.SeqIO.write(seqs, snakemake.output.fasta, "fasta")

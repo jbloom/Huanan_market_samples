@@ -7,7 +7,12 @@ crits_christoph_data:
   read_counts: https://raw.githubusercontent.com/sars-cov-2-origins/huanan-environmental/bd2afdb19392a0efb872c09eb94045de9d265a6e/tables/TableS3_MappedReadCounts.csv
 
 # get mitochondrial genome sets from here;
-mitochondrial_genomes: https://ftp.ncbi.nlm.nih.gov/refseq/release/mitochondrion/mitochondrion.1.1.genomic.fna.gz
+mitochondrial_genomes: https://ftp.ncbi.nlm.nih.gov/refseq/release/mitochondrion/mitochondrion.1.genomic.gbff.gz
+
+# only keep mitochondrial genomes from listed phyla and subphyla
+mitochondrial_taxa_to_keep:
+  phylum: [Chordata]
+  subphylum: []
 
 # always keep these mitochondrial genomes when do clustering to remove overly similar ones,
 # and define common names (synonyms) for them
