@@ -39,3 +39,12 @@ mitochondrial_genome_min_mash_dist: 0.1
 # SARS-CoV-2 reference genome
 sars2_ref: http://hgdownload.soe.ucsc.edu/goldenPath/wuhCor1/bigZips/wuhCor1.fa.gz
 sars2_ref_id: NC_045512v2  # id of reference genome
+
+# When calculating mitochondrial genome composition, apply the following filters:
+mito_composition_filters:
+  # only keep runs with  >= this many primary alignments across all mitochondrial genomes
+  min_alignments_run_filter: 5000
+  # only keep mitochondrial genomes that have >= this percentage of all primary
+  # aligned reads for at least one run
+  min_percent_aligned_genome_filter: 0.1
+

@@ -402,7 +402,7 @@ rule tally_alignment_counts:
 
 
 rule aggregate_all_counts:
-    """Aggregate all counts."""
+    """Aggregate all counts and compute composition of reads."""
     input:
         tallied_counts=lambda wc: [
             f"results/tallied_alignment_counts/{accession}.csv"
@@ -416,6 +416,7 @@ rule aggregate_all_counts:
     params:
         sars2_ref_id=config["sars2_ref_id"],
         mito_genomes_to_keep=config["mitochondrial_genomes_to_keep"],
+        mito_composition_filters=config["mito_composition_filters"],
     log:
         notebook="results/aggregated_counts/aggregate_all_counts.ipynb",
     conda:
