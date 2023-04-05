@@ -72,7 +72,7 @@ metagenomic_descriptions:
 mito_composition_filters:
   # only keep runs with  >= this many primary alignments across all mitochondrial genomes
   min_alignments_run_filter: 2000
-  # only keep mitochondrial genomes that have >= this percentage of all unique best primary
+  # only keep mitochondrial genomes that have >= this percentage of all primary
   # aligned reads for at least one run
   min_percent_aligned_genome_filter: 1
 

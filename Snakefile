@@ -17,6 +17,8 @@ configfile: "config.yaml"
 aggregated_counts_csvs = [
     "results/aggregated_counts/sars2_mito_aligned_by_run.csv",
     "results/aggregated_counts/sars2_mito_aligned_by_metagenomic_sample.csv",
+    "results/aggregated_counts/mito_composition_by_metagenomic_run.csv",
+    "results/aggregated_counts/mito_composition_by_metagenomic_sample.csv",
 ]
 
 rule all:
