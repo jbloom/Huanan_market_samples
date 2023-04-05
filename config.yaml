@@ -45,6 +45,11 @@ mitochondrial_genome_min_mash_dist: 0.1
 sars2_ref: http://hgdownload.soe.ucsc.edu/goldenPath/wuhCor1/bigZips/wuhCor1.fa.gz
 sars2_ref_id: NC_045512v2  # id of reference genome
 
+# When aggregating counts, consider only these descriptions as representing
+# metagenomic samples:
+metagenomic_descriptions:
+  - RNA sequencing of total nucleic acids from environmental swabs for metagenomics
+
 # When calculating mitochondrial genome composition, apply the following filters:
 mito_composition_filters:
   # only keep runs with  >= this many primary alignments across all mitochondrial genomes

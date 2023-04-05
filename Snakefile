@@ -16,7 +16,7 @@ configfile: "config.yaml"
 # output files with aggregated counts
 aggregated_counts_csvs = [
     "results/aggregated_counts/sars2_mito_aligned_by_run.csv",
-    "results/aggregated_counts/sars2_mito_aligned_by_sample.csv",
+    "results/aggregated_counts/sars2_mito_aligned_by_metagenomic_sample.csv",
 ]
 
 rule all:
@@ -435,6 +435,7 @@ rule aggregate_all_counts:
         sars2_ref_id=config["sars2_ref_id"],
         mito_genomes_to_keep=config["mitochondrial_genomes_to_keep"],
         mito_composition_filters=config["mito_composition_filters"],
+        metagenomic_descriptions=config["metagenomic_descriptions"],
     log:
         notebook="results/aggregated_counts/aggregate_all_counts.ipynb",
     conda:
