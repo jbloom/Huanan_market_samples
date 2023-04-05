@@ -295,10 +295,8 @@ rule mitochondrial_genomes_to_retain:
         notebook="results/mitochondrial_genomes/mitochondrial_genomes_to_retain.ipynb",
     conda:
         "environment.yml"
-    shell:
-        "echo not_implemented"
-    #notebook:
-    #    "notebooks/mitochondrial_genomes_to_retain.py.ipynb"
+    notebook:
+        "notebooks/mitochondrial_genomes_to_retain.py.ipynb"
 
 
 rule get_sars2_ref:

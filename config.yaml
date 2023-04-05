@@ -34,7 +34,7 @@ mitochondrial_genomes_to_keep:
   dog: Canis lupus familiaris
   # some additional animals of interest
   cat: Felis catus
-  chicken: Gallus gallus isolate bGalGal1
+  chicken: Gallus gallus spadiceus isolate YP19903 breed Red jungle fowl
   duck: Anas poecilorhyncha
 
 # we only keep mitochondrial genomes that are either in the list to keep above,
