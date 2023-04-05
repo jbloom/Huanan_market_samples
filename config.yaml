@@ -14,8 +14,10 @@ mitochondrial_taxa_to_keep:
   phylum: [Chordata]
   subphylum: []
 
-# always keep these mitochondrial genomes when do clustering to remove overly similar ones,
-# and define common names (synonyms) for them
+# Always keep these mitochondrial genomes when do clustering to remove overly similar ones,
+# and define common names (synonyms) for them. The list basically includes the ones in
+# the Crits-Christoph et al (https://zenodo.org/record/7754299#.ZCTNLezMKX0) Table S3
+# plus some other common ones in paper.
 mitochondrial_genomes_to_keep:
   # all species listed in Table S3 of Crits Christoph et al
   # Crits-Christop Figure 1, https://zenodo.org/record/7754299#.ZCTNLezMKX0
@@ -55,6 +57,12 @@ mitochondrial_genomes_to_keep:
   collared dove: Streptopelia decaocto
   golden pheasant: Chrysolophus pictus
 
+# Genomes used in Crits-Christoph et al Table S3 **not** included here, because they
+# don't seem to be present in current NCBI RefSeq set of full mitochondrial genomes
+# despite being listed as obtained from there in Crits-Christoph et al.
+mitochondrial_genomes_crits_christoph_missing:
+  - Amur hedgehog: Erinaceus amurensis
+
 # we only keep mitochondrial genomes that are either in the list to keep above,
 # or have a mash distances >= this from all other retained ones.
 mitochondrial_genome_min_mash_dist: 0.1
@@ -74,5 +82,5 @@ mito_composition_filters:
   min_alignments_run_filter: 2000
   # only keep mitochondrial genomes that have >= this percentage of all primary
   # aligned reads for at least one run
-  min_percent_aligned_genome_filter: 1
+  min_percent_aligned_genome_filter: 10
 

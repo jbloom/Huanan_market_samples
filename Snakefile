@@ -28,6 +28,7 @@ rule all:
         "results/crits_christoph_data/check_sha512_vs_crits_christoph.csv",
         "results/mitochondrial_genomes/retained.csv",
         aggregated_counts_csvs,
+        "results/plots",
 
 
 checkpoint process_metadata:
@@ -444,3 +445,23 @@ rule aggregate_all_counts:
         "environment.yml"
     notebook:
         "notebooks/aggregate_all_counts.py.ipynb"
+
+
+rule make_plots:
+    """Make final plots."""
+    input:
+        **{os.path.splitext(os.path.basename(f))[0]: f for f in aggregated_counts_csvs},
+        crits_christoph_read_counts="results/crits_christoph_data/read_counts.csv",
+        ngdc_to_crits_christoph=rules.check_sha512_vs_crits_christoph.output.csv,
+    output:
+        plotsdir=directory("results/plots"),
+    params:
+        mitochondrial_genomes_crits_christoph_missing=config[
+            "mitochondrial_genomes_crits_christoph_missing"
+        ],
+    log:
+        notebook="results/plots/make_plots.ipynb",
+    conda:
+        "environment.yml"
+    notebook:
+        "notebooks/make_plots.py.ipynb"
