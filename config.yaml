@@ -17,25 +17,43 @@ mitochondrial_taxa_to_keep:
 # always keep these mitochondrial genomes when do clustering to remove overly similar ones,
 # and define common names (synonyms) for them
 mitochondrial_genomes_to_keep:
+  # all species listed in Table S3 of Crits Christoph et al
   # Crits-Christop Figure 1, https://zenodo.org/record/7754299#.ZCTNLezMKX0
+  # Amur hedgehog: Erinaceus amurensis  # cannot find in RefSeq mitochondrial genomes
+  pig: Sus scrofa domesticus
+  brown rat: Rattus norvegicus strain Wistar
+  rabbit: Oryctolagus cuniculus
+  dog: Canis lupus familiaris
+  European hedgehog: Erinaceus europaeus
+  long-eared hedgehog: Hemiechinus auritus
+  cow: Bos taurus
+  human: Homo sapiens
   raccoon dog: Nyctereutes procyonoides
-  hedgehog: Erinaceus europaeus
-  Malayan porcupine: Hystrix brachyura
-  hoary bamboo rat: Rhizomys pruinosus
   Himalayan marmot: Marmota himalayana
-  masked palm civet: Paguma larvata
   Siberian weasel: Mustela sibirica
   hog badger: Arctonyx collaris
-  human: Homo sapiens
-  cow: Bos taurus
+  hoary bamboo rat: Rhizomys pruinosus
+  fennec fox: Vulpes zerda
   sheep: Ovis orientalis
-  brown rat: Rattus norvegicus strain Wistar
-  pig: Sus scrofa domesticus
-  dog: Canis lupus familiaris
+  gray fox: Urocyon cinereoargenteus
+  goat: Capra aegagrus
+  sand cat: Felis margarita
+  masked palm civet: Paguma larvata
+  Mayalan field rat: Rattus tiomanicus
+  bat-eared fox: Otocyon megalotis
+  leaf deer: Muntiacus putaoensis
+  Malayan porcupine: Hystrix brachyura
   # some additional animals of interest
   cat: Felis catus
-  chicken: Gallus gallus spadiceus isolate YP19903 breed Red jungle fowl
+  chicken: Gallus gallus spadiceus
   duck: Anas poecilorhyncha
+  crocodile: Osteolaemus tetraspis
+  Japanese salamander: Andrias japonicus
+  rat snake: Elaphe dione
+  snakehead fish: Channa maculata
+  brown bush hen: Amaurornis akool
+  collared dove: Streptopelia decaocto
+  golden pheasant: Chrysolophus pictus
 
 # we only keep mitochondrial genomes that are either in the list to keep above,
 # or have a mash distances >= this from all other retained ones.
@@ -53,8 +71,8 @@ metagenomic_descriptions:
 # When calculating mitochondrial genome composition, apply the following filters:
 mito_composition_filters:
   # only keep runs with  >= this many primary alignments across all mitochondrial genomes
-  min_alignments_run_filter: 5000
-  # only keep mitochondrial genomes that have >= this percentage of all primary
+  min_alignments_run_filter: 2000
+  # only keep mitochondrial genomes that have >= this percentage of all unique best primary
   # aligned reads for at least one run
-  min_percent_aligned_genome_filter: 0.1
+  min_percent_aligned_genome_filter: 1
 
