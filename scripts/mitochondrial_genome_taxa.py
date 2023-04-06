@@ -20,6 +20,7 @@ taxon_qualifier = [
 assert len(taxon_qualifier) == 1
 taxon_key, taxonid = taxon_qualifier[0].split(":")
 assert taxon_key == "taxon", source_feature.qualifiers
+print(f"Getting taxa for {taxonid=}")
 tax_xml = Bio.Entrez.efetch(db="taxonomy", id=taxonid, retmode="xml").read().decode("utf-8")
 
 taxa_groups = ["phylum", "subphylum"]
@@ -33,7 +34,7 @@ for taxa_group in taxa_groups:
     )
     if not m:
         taxa.append("")
-        assert all(s not in tax_xml.lower() for s in ["phyla", "phylum"])
+        assert taxa_group not in tax_xml.lower(), f"{taxa_group=}\n{tax_xml}"
     else:
         taxa.append(m.group("taxa"))
 
