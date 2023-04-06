@@ -237,6 +237,8 @@ checkpoint process_mitochondrial_genomes:
         fasta="results/mitochondrial_genomes/all.fa",
         per_genome_seqs=directory("results/mitochondrial_genomes/per_genome_seqs"),
         per_genome_fasta_list="results/mitochondrial_genomes/per_genome_fasta_list.csv",
+    params:
+        extra_genomes=config["extra_mitochondrial_genomes"],
     conda:
         "environment.yml"
     script:
@@ -455,10 +457,6 @@ rule make_plots:
         ngdc_to_crits_christoph=rules.check_sha512_vs_crits_christoph.output.csv,
     output:
         plotsdir=directory("results/plots"),
-    params:
-        mitochondrial_genomes_crits_christoph_missing=config[
-            "mitochondrial_genomes_crits_christoph_missing"
-        ],
     log:
         notebook="results/plots/make_plots.ipynb",
     conda:

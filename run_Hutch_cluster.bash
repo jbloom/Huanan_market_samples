@@ -15,7 +15,7 @@ snakemake \
     --use-conda \
     --latency-wait 60 \
     --keep-going \
-    --retries 2 \
+    --retries 1 \
     --scheduler greedy \
     --rerun-incomplete \
     --rerun-triggers mtime

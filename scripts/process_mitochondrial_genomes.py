@@ -4,6 +4,7 @@
 import os
 import re
 
+import Bio.Entrez
 import Bio.SeqIO
 
 import pandas as pd
@@ -17,10 +18,15 @@ regex = re.compile(
 
 os.makedirs(snakemake.output.per_genome_seqs, exist_ok=True)
 
+extra_seqs = [
+    Bio.SeqIO.read(Bio.Entrez.efetch(db="nuccore", id=acc, rettype="gb"), "genbank")
+    for acc in snakemake.params.extra_genomes
+]
+
 records = []
 outfiles = []
 seqs = []
-for seq in Bio.SeqIO.parse(snakemake.input.gb, "genbank"):
+for seq in list(Bio.SeqIO.parse(snakemake.input.gb, "genbank")) + extra_seqs:
     desc = seq.description
     m = regex.fullmatch(desc)
     if m:

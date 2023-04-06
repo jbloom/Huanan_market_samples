@@ -8,6 +8,8 @@ crits_christoph_data:
 
 # get mitochondrial genome sets from here;
 mitochondrial_genomes: https://ftp.ncbi.nlm.nih.gov/refseq/release/mitochondrion/mitochondrion.1.genomic.gbff.gz
+extra_mitochondrial_genomes:  # extra genomes used by Crits-Christoph but not in RefSeq set
+  - KX964606.1  # Erinaceus amurensis (Amur hedgehog)
 
 # only keep mitochondrial genomes from listed phyla and subphyla
 mitochondrial_taxa_to_keep:
@@ -21,7 +23,7 @@ mitochondrial_taxa_to_keep:
 mitochondrial_genomes_to_keep:
   # all species listed in Table S3 of Crits Christoph et al
   # Crits-Christop Figure 1, https://zenodo.org/record/7754299#.ZCTNLezMKX0
-  # Amur hedgehog: Erinaceus amurensis  # cannot find in RefSeq mitochondrial genomes
+  Amur hedgehog: Erinaceus amurensis
   pig: Sus scrofa domesticus
   brown rat: Rattus norvegicus strain Wistar
   rabbit: Oryctolagus cuniculus
@@ -57,15 +59,10 @@ mitochondrial_genomes_to_keep:
   collared dove: Streptopelia decaocto
   golden pheasant: Chrysolophus pictus
 
-# Genomes used in Crits-Christoph et al Table S3 **not** included here, because they
-# don't seem to be present in current NCBI RefSeq set of full mitochondrial genomes
-# despite being listed as obtained from there in Crits-Christoph et al.
-mitochondrial_genomes_crits_christoph_missing:
-  - Amur hedgehog: Erinaceus amurensis
-
 # we only keep mitochondrial genomes that are either in the list to keep above,
 # or have a mash distances >= this from all other retained ones.
-mitochondrial_genome_min_mash_dist: 0.1
+# This identity of 0.93 (distance of 0.07) is same used by Crits-Christoph et al.
+mitochondrial_genome_min_mash_dist: 0.07
 
 # SARS-CoV-2 reference genome
 sars2_ref: http://hgdownload.soe.ucsc.edu/goldenPath/wuhCor1/bigZips/wuhCor1.fa.gz
