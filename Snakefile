@@ -186,6 +186,8 @@ rule preprocess_single_fastq:
             -i {input.r1} \
             -o {output.fastq} \
             -w {threads} \
+            --trim_poly_g \
+            --trim_poly_x \
             --json {output.json} \
             --html {output.html}
         """
@@ -309,17 +311,30 @@ rule get_sars2_ref:
     params:
         url=config["sars2_ref"],
     output:
-        fasta="results/sars2_ref/ref.fa",
+        fasta="results/sars2_ref/untrimmed_ref.fa",
     conda:
         "environment.yml"
     shell:
         "curl -s {params.url} | gzip -cd > {output.fasta}"
 
 
+rule trim_sars2_ref:
+    input:
+        fasta=rules.get_sars2_ref.output.fasta,
+    output:
+        fasta="results/sars2_ref/trimmed_ref.fa",
+    params:
+        trim_3_polyA=config["sars2_ref_trim_3_polyA"],
+    conda:
+        "environment.yml"
+    script:
+        "scripts/trim_sars2_ref.py"
+
+
 rule minimap2_ref:
     """Build ``minimap2`` reference genome."""
     input:
-        rules.get_sars2_ref.output.fasta,
+        rules.trim_sars2_ref.output.fasta,
         rules.mitochondrial_genomes_to_retain.output.fasta,
     output:
         fasta="results/minimap2_ref/ref.fa",
