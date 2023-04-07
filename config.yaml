@@ -47,17 +47,27 @@ mitochondrial_genomes_to_keep:
   bat-eared fox: Otocyon megalotis
   leaf deer: Muntiacus putaoensis
   Malayan porcupine: Hystrix brachyura
-  # some additional animals of interest
-  cat: Felis catus
+  # some additional animals of interest that have hits in actual data
+  dwarf crocodile: Osteolaemus tetraspis
   chicken: Gallus gallus spadiceus
-  duck: Anas poecilorhyncha
-  crocodile: Osteolaemus tetraspis
-  Japanese salamander: Andrias japonicus
-  rat snake: Elaphe dione
-  snakehead fish: Channa maculata
-  brown bush hen: Amaurornis akool
+  Oriental rat snake: Ptyas mucosa
+  Dybowski frog: Rana dybowski
+  carp: Ctenopharyngodon idella
+  Siamese crocodile: Crocodylus siamensis
   collared dove: Streptopelia decaocto
+  snakehead fish: Channa maculata
+  spot-billed duck: Anas poecilorhyncha
+  otter: Aonyx cinerea isolate 16
+  curlew (bird): Numenius tenuirostris
+  catfish: Ictalurus punctatus
+  box turtle: Terrapene carolina
+  frog: Sooglossus thomasseti
+  ground frog: Platymantis vitianus
+  Chinese salamander: Andrias davidianus
+  cat: Felis catus
+  brown bush hen: Amaurornis akool
   golden pheasant: Chrysolophus pictus
+  rat snake: Elaphe dione
 
 # we only keep mitochondrial genomes that are either in the list to keep above,
 # or have a mash distances >= this from all other retained ones.
@@ -77,8 +87,8 @@ metagenomic_descriptions:
 # When calculating mitochondrial genome composition, apply the following filters:
 mito_composition_filters:
   # only keep runs with  >= this many primary alignments across all mitochondrial genomes
-  min_alignments_run_filter: 2000
+  min_alignments_run_filter: 1000
   # only keep mitochondrial genomes that have >= this percentage of all primary
   # aligned reads for at least one run
-  min_percent_aligned_genome_filter: 10
+  min_percent_aligned_genome_filter: 25
 
