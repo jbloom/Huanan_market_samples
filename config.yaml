@@ -75,7 +75,7 @@ sars2_ref_id: NC_045512v2  # id of reference genome
 sars2_ref_trim_3_polyA: true  # trim 3' polyA tail before using
 
 # filter alignments to only retain reads with at least this mapping quality
-min_mapq: 5
+min_mapq: 4
 
 # flags passed to `coverm` when computing read counts and coverage. Reads
 # are only counted if they meet these flags.
