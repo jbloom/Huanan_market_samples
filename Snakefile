@@ -445,23 +445,33 @@ rule agg_read_counts:
         "scripts/agg_read_counts.py"
 
 
-rule tally_alignment_counts:
-    """Tally alignment counts to each reference."""
+rule alignmend_counts_and_coverage:
+    """Get alignment counts to each reference."""
     input:
-        bamfile=rules.mapq_filter_bam.output.bam,
+        bam=rules.mapq_filter_bam.output.bam,
     output:
-        csv="results/tallied_alignment_counts/{accession}.csv",
+        tsv="results/alignment_counts_and_coverage/{accession}.tsv",
+    params:
+        **config["coverm_flags"],
     conda:
         "environment.yml"
-    script:
-        "scripts/tally_alignment_counts.py"
+    shell:
+        """
+        coverm contig \
+            -b {input.bam} \
+            -m count covered_bases \
+            --min-read-aligned-length {params.min_read_aligned_length} \
+            --contig-end-exclusion {params.contig_end_exclusion} \
+            --min-read-percent-identity {params.min_read_percent_identity} \
+            > {output.tsv}
+        """
 
 
 rule aggregate_all_counts:
     """Aggregate all counts and compute composition of reads."""
     input:
-        tallied_counts=lambda wc: [
-            f"results/tallied_alignment_counts/{accession}.csv"
+        counts_and_coverage=lambda wc: [
+            f"results/alignment_counts_and_coverage/{accession}.tsv"
             for accession in accessions(wc)
         ],
         mito_ref_info=rules.mitochondrial_genomes_to_retain.output.csv,

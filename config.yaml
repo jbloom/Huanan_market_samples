@@ -79,9 +79,15 @@ sars2_ref: http://hgdownload.soe.ucsc.edu/goldenPath/wuhCor1/bigZips/wuhCor1.fa.
 sars2_ref_id: NC_045512v2  # id of reference genome
 sars2_ref_trim_3_polyA: true  # trim 3' polyA tail before using
 
-# filter alignments to only retain reads with at least this
-# mapping quality
+# filter alignments to only retain reads with at least this mapping quality
 min_mapq: 10
+
+# flags passed to `coverm` when computing read counts and coverage. Reads
+# are only counted if they meet these flags.
+coverm_flags:
+  min_read_aligned_length: 40
+  contig_end_exclusion: 100
+  min_read_percent_identity: 0.95
 
 # When aggregating counts, consider only these descriptions as representing
 # metagenomic samples:
@@ -91,7 +97,9 @@ metagenomic_descriptions:
 # When calculating mitochondrial genome composition, apply the following filters:
 mito_composition_filters:
   # only keep runs with  >= this many primary alignments across all mitochondrial genomes
-  min_alignments_run_filter: 1000
+  min_alignments_run_filter: 500
   # only keep mitochondrial genomes that have >= this percentage of all primary
   # aligned reads for at least one run
   min_percent_aligned_genome_filter: 25
+  # only keep mitochondrial genomes that have >= this many covered bases for at least one one run
+  min_coverage_aligned_genome_filter: 400

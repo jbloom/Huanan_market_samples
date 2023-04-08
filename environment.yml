@@ -6,6 +6,7 @@ channels:
 
 dependencies:
   - biopython=1.81
+  - coverm=0.6.1
   - fastp=0.23.2
   - git-lfs
   - jupyterlab
@@ -15,7 +16,6 @@ dependencies:
   - openpyxl
   - pandas=1.5
   - pip
-  - pysam=0.20
   - python=3.10
   - samtools=1.16
   - snakemake=7.25
