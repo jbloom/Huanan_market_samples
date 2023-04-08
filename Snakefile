@@ -361,12 +361,12 @@ rule minimap2_alignments:
         ),
         ref=rules.minimap2_ref.output.mmi
     output:
-        sam=temp("results/minimap2_alignments/{accession}.sam"),
-        unsorted_bam=temp("results/minimap2_alignments/{accession}.bam"),
-        bam=protected("results/minimap2_alignments/{accession}_sorted.bam"),
+        sam=temp("results/minimap2_alignments/not_mapq_filtered/{accession}.sam"),
+        unsorted_bam=temp("results/minimap2_alignments/not_mapq_filtered/{accession}.bam"),
+        bam=protected("results/minimap2_alignments/not_mapq_filtered/{accession}_sorted.bam"),
     threads: 3
     params:
-        extra_threads=lambda _, threads: threads - 1
+        extra_threads=lambda _, threads: threads - 1,
     conda:
         "environment.yml"
     shell:
@@ -379,9 +379,27 @@ rule minimap2_alignments:
             -a {input.ref} \
             {input.fastqs} \
             > {output.sam}
-        samtools view -@ {params.extra_threads} -b -o {output.unsorted_bam} {output.sam}
+        samtools view \
+            -@ {params.extra_threads} \
+            -b \
+            -o {output.unsorted_bam} \
+            {output.sam}
         samtools sort -@ {params.extra_threads} -o {output.bam} {output.unsorted_bam}
         """
+
+
+rule mapq_filter_bam:
+    """Filter BAM for only reads above a certain mapping quality."""
+    input:
+        bam=rules.minimap2_alignments.output.bam,
+    output:
+        bam="results/minimap2_alignments/mapq_filtered/{accession}_sorted.bam",
+    params:
+        min_mapq=config["min_mapq"],
+    conda:
+        "environment.yml"
+    shell:
+        "samtools view -q {params.min_mapq} -b -o {output.bam} {input.bam}"
 
 
 rule read_counts:
@@ -430,7 +448,7 @@ rule agg_read_counts:
 rule tally_alignment_counts:
     """Tally alignment counts to each reference."""
     input:
-        bamfile=rules.minimap2_alignments.output.bam,
+        bamfile=rules.mapq_filter_bam.output.bam,
     output:
         csv="results/tallied_alignment_counts/{accession}.csv",
     conda:

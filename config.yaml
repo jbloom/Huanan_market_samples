@@ -79,6 +79,10 @@ sars2_ref: http://hgdownload.soe.ucsc.edu/goldenPath/wuhCor1/bigZips/wuhCor1.fa.
 sars2_ref_id: NC_045512v2  # id of reference genome
 sars2_ref_trim_3_polyA: true  # trim 3' polyA tail before using
 
+# filter alignments to only retain reads with at least this
+# mapping quality
+min_mapq: 10
+
 # When aggregating counts, consider only these descriptions as representing
 # metagenomic samples:
 metagenomic_descriptions:
@@ -91,4 +95,3 @@ mito_composition_filters:
   # only keep mitochondrial genomes that have >= this percentage of all primary
   # aligned reads for at least one run
   min_percent_aligned_genome_filter: 25
-
