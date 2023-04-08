@@ -445,7 +445,7 @@ rule agg_read_counts:
         "scripts/agg_read_counts.py"
 
 
-rule alignmend_counts_and_coverage:
+rule alignment_counts_and_coverage:
     """Get alignment counts to each reference."""
     input:
         bam=rules.mapq_filter_bam.output.bam,

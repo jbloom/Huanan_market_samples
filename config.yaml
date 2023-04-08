@@ -48,26 +48,21 @@ mitochondrial_genomes_to_keep:
   leaf deer: Muntiacus putaoensis
   Malayan porcupine: Hystrix brachyura
   # some additional animals of interest that have hits in actual data
-  dwarf crocodile: Osteolaemus tetraspis
+  quail: Coturnix japonica
+  yellow croaker (fish): Larimichthys crocea
+  spotted dove: Streptopelia chinensis
+  swamp eel: Monopterus albus
   chicken: Gallus gallus spadiceus
   Oriental rat snake: Ptyas mucosa
-  Dybowski frog: Rana dybowski
   carp: Ctenopharyngodon idella
-  Siamese crocodile: Crocodylus siamensis
-  collared dove: Streptopelia decaocto
   snakehead fish: Channa maculata
   spot-billed duck: Anas poecilorhyncha
-  otter: Aonyx cinerea isolate 16
-  curlew (bird): Numenius tenuirostris
   catfish: Ictalurus punctatus
-  box turtle: Terrapene carolina
-  frog: Sooglossus thomasseti
-  ground frog: Platymantis vitianus
   Chinese salamander: Andrias davidianus
-  cat: Felis catus
   brown bush hen: Amaurornis akool
-  golden pheasant: Chrysolophus pictus
-  rat snake: Elaphe dione
+  Chinese cobra: Naja atra
+  Largemouth bass: Micropterus salmoides salmoides
+  pigeon: Columba rupestris
 
 # we only keep mitochondrial genomes that are either in the list to keep above,
 # or have a mash distances >= this from all other retained ones.
@@ -80,7 +75,7 @@ sars2_ref_id: NC_045512v2  # id of reference genome
 sars2_ref_trim_3_polyA: true  # trim 3' polyA tail before using
 
 # filter alignments to only retain reads with at least this mapping quality
-min_mapq: 10
+min_mapq: 5
 
 # flags passed to `coverm` when computing read counts and coverage. Reads
 # are only counted if they meet these flags.
@@ -100,6 +95,6 @@ mito_composition_filters:
   min_alignments_run_filter: 500
   # only keep mitochondrial genomes that have >= this percentage of all primary
   # aligned reads for at least one run
-  min_percent_aligned_genome_filter: 25
+  min_percent_aligned_genome_filter: 20
   # only keep mitochondrial genomes that have >= this many covered bases for at least one one run
-  min_coverage_aligned_genome_filter: 400
+  min_coverage_aligned_genome_filter: 4000
