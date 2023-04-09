@@ -14,12 +14,28 @@ configfile: "config.yaml"
 
 
 # output files with aggregated counts
-aggregated_counts_csvs = [
-    "results/aggregated_counts/sars2_aligned_by_run.csv",
-    "results/aggregated_counts/sars2_aligned_by_sample.csv",
-    "results/aggregated_counts/mito_composition_by_run.csv",
-    "results/aggregated_counts/mito_composition_by_sample.csv",
-]
+aggregated_counts_csvs = {
+    name: f"results/aggregated_counts/{name}.csv"
+    for name in [
+        "sars2_aligned_by_run",
+        "sars2_aligned_by_sample",
+        "mito_composition_by_run",
+        "mito_composition_by_sample",
+    ]
+}
+
+# plot files
+plot_htmls = {
+    name: f"results/plots/{name}.html"
+    for name in [
+        "crits_christoph_vs_current_run_corr",
+        "mito_composition",
+        "sars2_aligned",
+        "per_species_corr_faceted",
+        "per_species_corr_single",
+        "overall_corr",
+    ]
+}
 
 rule all:
     input:
@@ -27,8 +43,8 @@ rule all:
         "results/fastqs_md5/check_vs_metadata.csv",
         "results/crits_christoph_data/check_sha512_vs_crits_christoph.csv",
         "results/mitochondrial_genomes/retained.csv",
-        aggregated_counts_csvs,
-        "results/plots",
+        aggregated_counts_csvs.values(),
+        plot_htmls.values(),
 
 
 checkpoint process_metadata:
@@ -478,7 +494,7 @@ rule aggregate_all_counts:
         metadata=rules.process_metadata.output.metadata,
         read_counts=rules.agg_read_counts.output.csv,
     output:
-        **{os.path.splitext(os.path.basename(f))[0]: f for f in aggregated_counts_csvs}
+        **aggregated_counts_csvs,
     params:
         sars2_ref_id=config["sars2_ref_id"],
         mito_genomes_to_keep=config["mitochondrial_genomes_to_keep"],
@@ -495,13 +511,13 @@ rule aggregate_all_counts:
 rule make_plots:
     """Make final plots."""
     input:
-        **{os.path.splitext(os.path.basename(f))[0]: f for f in aggregated_counts_csvs},
+        **aggregated_counts_csvs,
         crits_christoph_read_counts="results/crits_christoph_data/read_counts.csv",
         ngdc_to_crits_christoph=rules.check_sha512_vs_crits_christoph.output.csv,
     params:
         metagenomic_descriptions=config["metagenomic_descriptions"],
     output:
-        plotsdir=directory("results/plots"),
+        **plot_htmls,
     log:
         notebook="results/plots/make_plots.ipynb",
     conda:

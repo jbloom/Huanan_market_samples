@@ -18,6 +18,7 @@ dependencies:
   - pip
   - python=3.10
   - samtools=1.16
+  - scipy
   - snakemake=7.25
   - pip:
     - altair==5.0.0rc1   
