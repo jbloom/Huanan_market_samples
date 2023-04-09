@@ -6,4 +6,20 @@ _*
 
 slurm_logs
 
-results
+results/*
+
+!results/metadata
+results/metadata/*
+!results/metadata/merged_metadata.csv
+
+!results/crits_christoph_data
+results/crits_christoph_data/*
+!results/crits_christoph_data/check_sha512_vs_crits_christoph.csv
+
+!results/mitochondrial_genomes
+results/mitochondrial_genomes/*
+!results/mitochondrial_genomes/retained.csv
+
+!results/aggregated_counts
+results/aggregated_counts/*
+!results/aggregated_counts/*.csv
