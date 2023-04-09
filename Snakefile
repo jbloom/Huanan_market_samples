@@ -16,9 +16,9 @@ configfile: "config.yaml"
 # output files with aggregated counts
 aggregated_counts_csvs = [
     "results/aggregated_counts/sars2_aligned_by_run.csv",
-    "results/aggregated_counts/sars2_aligned_by_metagenomic_sample.csv",
-    "results/aggregated_counts/mito_composition_by_metagenomic_run.csv",
-    "results/aggregated_counts/mito_composition_by_metagenomic_sample.csv",
+    "results/aggregated_counts/sars2_aligned_by_sample.csv",
+    "results/aggregated_counts/mito_composition_by_run.csv",
+    "results/aggregated_counts/mito_composition_by_sample.csv",
 ]
 
 rule all:
@@ -498,6 +498,8 @@ rule make_plots:
         **{os.path.splitext(os.path.basename(f))[0]: f for f in aggregated_counts_csvs},
         crits_christoph_read_counts="results/crits_christoph_data/read_counts.csv",
         ngdc_to_crits_christoph=rules.check_sha512_vs_crits_christoph.output.csv,
+    params:
+        metagenomic_descriptions=config["metagenomic_descriptions"],
     output:
         plotsdir=directory("results/plots"),
     log:

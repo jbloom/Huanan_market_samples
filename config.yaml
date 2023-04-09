@@ -84,8 +84,7 @@ coverm_flags:
   contig_end_exclusion: 100
   min_read_percent_identity: 0.95
 
-# When aggregating counts, consider only these descriptions as representing
-# metagenomic samples:
+# Consider only these descriptions as representing metagenomic samples:
 metagenomic_descriptions:
   - RNA sequencing of total nucleic acids from environmental swabs for metagenomics
 
