@@ -11,6 +11,7 @@ dependencies:
   - git-lfs
   - jupyterlab
   - mamba
+  - markdown
   - mash=2.3
   - minimap2=2.24
   - openpyxl

@@ -97,3 +97,6 @@ mito_composition_filters:
   min_percent_aligned_genome_filter: 20
   # only keep mitochondrial genomes that have >= this many covered bases for at least one one run
   min_coverage_aligned_genome_filter: 4000
+
+# annotations for plots in GitHub pages docs
+docs_plot_annotations: data/docs_plot_annotations.yaml

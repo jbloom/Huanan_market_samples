@@ -1,0 +1,119 @@
+# Annotations for the plots shown via GitHub pages
+
+# suffix added to all legends
+legend_suffix: |
+  See [https://github.com/jbloom/Huanan_market_samples](https://github.com/jbloom/Huanan_market_samples)
+  for results files and a fully reproducible computational pipeline.
+
+  See [https://jbloom.github.io/Huanan_market_samples](https://jbloom.github.io/Huanan_market_samples)
+  for links to all interactive plots.
+
+# some information for the index page
+index_title: Association between SARS-CoV-2 and metagenomic content of environmental samples from the Huanan Seafood Market
+index_abstract: |
+  Analysis by Jesse Bloom of the SARS-CoV-2 and mitochondrial DNA content of metagenomic samples collected in early 2020
+  from the Huanan Seafood Market by [Liu et al (2023)](https://www.nature.com/articles/s41586-023-06043-2),
+  with the data taken from [NGDC project CRA010170](https://ngdc.cncb.ac.cn/gsa/browse/CRA010170).
+
+  The metagenomic content of some samples was also analyzed by
+  [Crits-Christoph et al (2023)](https://zenodo.org/record/7754299#.ZDNVv-zMLX0).
+
+  This page links to interactive plots of key results:
+
+# List of plots along with a `title` and markdown `legend`.
+# The keys should be the base name of the plot.
+plots:
+  
+  crits_christoph_vs_current_run_corr:
+    title: Correlation of read counts aligned to mitochondria of different species in current study vs Crits-Christoph et al
+    legend: |
+      For each sequencing run analyzed by [Crits-Christoph et al (2023)](https://zenodo.org/record/7754299#.ZDNVv-zMLX0),
+      this plot shows the Pearson correlation in the counts of aligned mitochondrial reads in the current study
+      versus Table S3 of Crits-Christoph et al across all species in that table.
+
+      You can mouseover the points for details, and use the sliders at the bottom of the plot to
+      adjust how many total aligned mitochondrial reads in each study are required for a run
+      in order for it to be shown in this plot.
+
+  mito_composition:
+    title: Composition of mitochondrial DNA in each sample for all chordates and just the mammals analyzed in Crits-Christoph et al
+    legend: |
+      For individual samples (which can be selected using the dropdown box below the pie charts), this
+      plot shows the percentage of aligned mitochondrial reads that map to each species. Pie charts
+      are shown just for the species (mammals) analyzed in
+      [Crits-Christoph et al (2023)](https://zenodo.org/record/7754299#.ZDNVv-zMLX0) and for all
+      chordates as analyzed in the current study. Note that the read counts are all as determined
+      in the current study, and "Chrits-Christoph et al" refers to their set of species,
+      not their read counts. 
+      
+      You can use the dropdown below the plot to also show just one of these species sets.
+      to also show just one of these species sets.
+
+      Mouseover the pie slices for more details about counts for individual species.
+  
+  sars2_aligned:
+    title: Percent of high-quality reads aligning to SARS-CoV-2 in each metagenomic sample
+    legend: |
+      For each metagenomic sample, this plot shows the percent of all high-quality reads (reads
+      that passed `fastp` pre-processing) that align with sufficiently high mapping quality
+      to SARS-CoV-2. Points are colored according to the date that sample was collected.
+
+      Click on points in the *Collection date* legend to subset only to samples
+      collected on specific dates, and use the dropdown to select samples isolated from
+      particular sources. Mouseover points on the plot for details about individual samples.
+
+      Note that the y-axis uses a symlog scale.
+  
+  per_species_corr_faceted:
+    title: Correlation of mitochondrial composition with SARS-CoV-2 reads for all species
+    legend: |
+      Each panel shows the correlation between the percent of all high-quality (preprocessed) reads
+      that align to SARS-CoV-2 and the percent of all aligned mitochondrial reads that are from
+      that species across all samples. The orange numbers give the squared Pearson correlation coefficient.
+
+      The options at the bottom allow you to select samples only from specific collection dates
+      (click on the circles for those dates), only samples isolated from particular sources, or only
+      samples with a sufficient number of total aligned mitochondrial reads.
+
+      The axis scale selection enables switching between the percentages or the log percentages
+      computed after adding a pseudocount of 0.5.
+
+      Mouseover points for details on particular samples.
+    
+  per_species_corr_single:
+    title: Correlation of mitochondrial composition with SARS-CoV-2 reads for individual species
+    legend: |
+      The correlation between the percent of all high-quality (preprocessed) reads
+      that align to SARS-CoV-2 and the percent of all aligned mitochondrial reads that are from
+      that species across all samples. The orange numbers give the squared Pearson correlation coefficient.
+
+      The options at the bottom allow you to select which species to show,
+      select samples only from specific collection dates
+      (click on the circles for those dates), only samples isolated from particular sources, or only
+      samples with a sufficient number of total aligned mitochondrial reads.
+
+      The axis scale selection enables switching between the percentages or the log percentages
+      computed after adding a pseudocount of 0.5.
+
+      Mouseover points for details on particular samples.
+
+  overall_corr:
+    title: Overall correlation of mitochondrial DNA and SARS-CoV-2 across all species
+    legend: |
+      Each point shows the correlation between the percent of all high-quality reads that align
+      to SARS-CoV-2 and the percent of aligned mitochondrial reads for a specific species taken
+      across all samples. The axes show the Pearson and Spearman correlations.
+
+      The options at bottom allows you to show correlations computed only over samples
+      collected on specific dates or isolated from particular sources.
+      
+      The axis scale selection enables switching between correlations computed using
+      the percentages or the log percentages
+      computed after adding a pseudocount of 0.5.
+
+      The *species to highlight* boxes allow you to click on a specific species to
+      highlight in a red box on the plot.
+
+      This plot is modeled on that shown in Figure 4A of the original
+      [Liu et al (2022) Research Square](https://assets.researchsquare.com/files/rs-1370392/v1_covered.pdf)
+      pre-print.

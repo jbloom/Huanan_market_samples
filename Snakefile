@@ -9,9 +9,13 @@ import ast
 
 import pandas as pd
 
+import yaml
+
 
 configfile: "config.yaml"
 
+with open(config["docs_plot_annotations"]) as f:
+    docs_plot_annotations = yaml.safe_load(f)
 
 # output files with aggregated counts
 aggregated_counts_csvs = {
@@ -45,6 +49,8 @@ rule all:
         "results/mitochondrial_genomes/retained.csv",
         aggregated_counts_csvs.values(),
         plot_htmls.values(),
+        expand("docs/{plot}.html", plot=plot_htmls),
+        "docs/index.html",
 
 
 checkpoint process_metadata:
@@ -524,3 +530,44 @@ rule make_plots:
         "environment.yml"
     notebook:
         "notebooks/make_plots.py.ipynb"
+
+
+rule format_plot_for_docs:
+    """Format a specific plot for the GitHub pages docs."""
+    input:
+        plot=lambda wc: plot_htmls[wc.plot],
+        script="scripts/format_altair_html.py",
+    output:
+        plot="docs/{plot}.html",
+        markdown=temp("docs/{plot}.md"),
+    params:
+        annotations=lambda wc: docs_plot_annotations["plots"][wc.plot],
+        url="https://jbloom.github.io/Huanan_market_samples",
+        legend_suffix=docs_plot_annotations["legend_suffix"]
+    conda:
+        "environment.yml"
+    shell:
+        """
+        echo "## {params.annotations[title]}\n" > {output.markdown}
+        echo "{params.annotations[legend]}\n\n" >> {output.markdown}
+        echo "{params.legend_suffix}" >> {output.markdown}
+        python {input.script} \
+            --chart {input.plot} \
+            --markdown {output.markdown} \
+            --site {params.url} \
+            --title "{params.annotations[title]}" \
+            --description "{params.annotations[title]}" \
+            --output {output.plot}
+        """
+
+
+rule docs_index:
+    """Write index for GitHub pages docs."""
+    output:
+        html="docs/index.html",
+    params:
+        plot_annotations=docs_plot_annotations,
+    conda:
+        "environment.yml"
+    script:
+        "scripts/docs_index.py"
