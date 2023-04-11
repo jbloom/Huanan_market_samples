@@ -42,12 +42,11 @@ plots:
       plot shows the percentage of aligned mitochondrial reads that map to each species. Pie charts
       are shown just for the species (mammals) analyzed in
       [Crits-Christoph et al (2023)](https://zenodo.org/record/7754299#.ZDNVv-zMLX0) and for all
-      chordates as analyzed in the current study. Note that the read counts are all as determined
+      chordates as analyzed in the current study. Note the read counts values are the ones determined
       in the current study, and "Chrits-Christoph et al" refers to their set of species,
       not their read counts. 
       
-      You can use the dropdown below the plot to also show just one of these species sets.
-      to also show just one of these species sets.
+      Use the dropdown below the plot to show just one of these species sets.
 
       Mouseover the pie slices for more details about counts for individual species.
   
@@ -67,35 +66,50 @@ plots:
   per_species_corr_faceted:
     title: Correlation of mitochondrial composition with SARS-CoV-2 reads for all species
     legend: |
-      Each panel shows the correlation between the percent of all high-quality (preprocessed) reads
-      that align to SARS-CoV-2 and the percent of all aligned mitochondrial reads that are from
-      that species across all samples. The orange numbers give the squared Pearson correlation coefficient.
+      Each panel shows the correlation across all samples
+      between the percent of all high-quality (preprocessed) reads
+      that align to SARS-CoV-2 versus the percent that align to the mitochondrial genomes for
+      the indicated species.
+      The orange numbers give the Pearson correlation coefficient.
 
-      The options at the bottom allow you to select samples only from specific collection dates
-      (click on the circles for those dates), only samples isolated from particular sources, or only
-      samples with a sufficient number of total aligned mitochondrial reads.
-
-      The axis scale selection enables switching between the percentages or the log percentages
-      computed after adding a pseudocount of 0.5.
+      The options at the bottom enable:
+      
+        - selection of samples only from specific collection dates (click on circles next to select)
+        - only samples collected from particular sources
+        - whether the percent mitochondrial reads is computed as the percent of all high-quality (preprocessed) reads or as the percent of reads that align to mitochondrial genomes from any species
+        - whether the axis scales show the raw percentages of the log10 of the percentages; when using a log scale percentages of zero are set to half the lowest observed percentage across all samples and species
+        - selection of samples only with a sufficient number of total aligned mitochondrial reads
 
       Mouseover points for details on particular samples.
+
+      The correlation coefficients will change accordingly if you select different options for
+      how the percent mitochondrial reads is computed or whether we analyze the direct or log10
+      percents.
     
   per_species_corr_single:
     title: Correlation of mitochondrial composition with SARS-CoV-2 reads for individual species
     legend: |
-      The correlation between the percent of all high-quality (preprocessed) reads
-      that align to SARS-CoV-2 and the percent of all aligned mitochondrial reads that are from
-      that species across all samples. The orange numbers give the squared Pearson correlation coefficient.
+      Each panel shows the correlation across all samples
+      between the percent of all high-quality (preprocessed) reads
+      that align to SARS-CoV-2 versus the percent that align to the mitochondrial genomes for
+      the indicated species.
+      The orange numbers give the Pearson correlation coefficient.
 
-      The options at the bottom allow you to select which species to show,
-      select samples only from specific collection dates
-      (click on the circles for those dates), only samples isolated from particular sources, or only
-      samples with a sufficient number of total aligned mitochondrial reads.
+      You can select which species to show using the dropdown at the bottom of the plot.
 
-      The axis scale selection enables switching between the percentages or the log percentages
-      computed after adding a pseudocount of 0.5.
+      Other options at the bottom enable:
+      
+        - selection of samples only from specific collection dates (click on circles next to select)
+        - only samples collected from particular sources
+        - whether the percent mitochondrial reads is computed as the percent of all high-quality (preprocessed) reads or as the percent of reads that align to mitochondrial genomes from any species
+        - whether the axis scales show the raw percentages of the log10 of the percentages; when using a log scale percentages of zero are set to half the lowest observed percentage across all samples and species
+        - selection of samples only with a sufficient number of total aligned mitochondrial reads
 
       Mouseover points for details on particular samples.
+
+      The correlation coefficients will change accordingly if you select different options for
+      how the percent mitochondrial reads is computed or whether we analyze the direct or log10
+      percents.
 
   overall_corr:
     title: Overall correlation of mitochondrial DNA and SARS-CoV-2 across all species
@@ -108,8 +122,9 @@ plots:
       collected on specific dates or isolated from particular sources.
       
       The axis scale selection enables switching between correlations computed using
-      the percentages or the log percentages
-      computed after adding a pseudocount of 0.5.
+      the percentages or the log10 percentages.
+
+      You can also select whether the percent mitochondrial reads is computed as the percent of all high-quality (preprocessed) reads or as the percent of reads that align to mitochondrial genomes from any species
 
       The *species to highlight* boxes allow you to click on a specific species to
       highlight in a red box on the plot.
