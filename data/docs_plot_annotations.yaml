@@ -62,6 +62,19 @@ plots:
       particular sources. Mouseover points on the plot for details about individual samples.
 
       Note that the y-axis uses a symlog scale.
+
+  sars2_aligned_vertical:
+    title: Percent of high-quality reads aligning to SARS-CoV-2 in each metagenomic sample (vertically oriented plot)
+    legend: |
+      For each metagenomic sample, this plot shows the percent of all high-quality reads (reads
+      that passed `fastp` pre-processing) that align with sufficiently high mapping quality
+      to SARS-CoV-2. Points are colored according to the date that sample was collected.
+
+      Click on points in the *Collection date* legend to subset only to samples
+      collected on specific dates, and use the dropdown to select samples isolated from
+      particular sources. Mouseover points on the plot for details about individual samples.
+
+      Note that the y-axis uses a symlog scale.
   
   per_species_corr_faceted:
     title: Correlation of mitochondrial composition with SARS-CoV-2 reads for all species

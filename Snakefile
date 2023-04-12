@@ -35,6 +35,7 @@ plot_htmls = {
         "crits_christoph_vs_current_run_corr",
         "mito_composition",
         "sars2_aligned",
+        "sars2_aligned_vertical",
         "per_species_corr_faceted",
         "per_species_corr_single",
         "overall_corr",
