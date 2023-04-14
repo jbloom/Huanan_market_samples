@@ -52,13 +52,10 @@ rule all:
         "results/crits_christoph_data/check_sha512_vs_crits_christoph.csv",
         "results/mitochondrial_genomes/retained.csv",
         aggregated_counts_csvs.values(),
+        "results/contigs/counts_and_coverage/processed_counts.csv",
         plot_htmls.values(),
         expand("docs/{plot}.html", plot=plot_htmls),
         "docs/index.html",
-        expand(
-            "results/contigs/alignments/{accession}_sorted.bam",
-            accession=config["metagenomic_contigs"],
-        ),
 
 
 checkpoint process_metadata:
@@ -625,6 +622,59 @@ rule align_contigs:
             {output.sam}
         samtools sort -@ {params.extra_threads} -o {output.bam} {output.unsorted_bam}
         """
+
+
+rule mapq_filter_contigs_bam:
+    """Filter aligned contig BAM for only reads above a certain mapping quality."""
+    input:
+        bam=rules.align_contigs.output.bam,
+    output:
+        bam="results/contigs/alignments/{accession}_mapq_filtered_sorted.bam",
+    params:
+        min_mapq=config["metagenomic_contigs_min_mapq"],
+    conda:
+        "environment.yml"
+    shell:
+        "samtools view -q {params.min_mapq} -b -o {output.bam} {input.bam}"
+
+
+rule contig_counts_and_coverage:
+    """Get contig alignment counts to each reference."""
+    input:
+        bam=rules.mapq_filter_contigs_bam.output.bam,
+    output:
+        tsv="results/contigs/counts_and_coverage/{accession}.tsv",
+    params:
+        **config["metagenomic_contigs_coverm_flags"],
+    conda:
+        "environment.yml"
+    shell:
+        """
+        coverm contig \
+            -b {input.bam} \
+            -m count covered_bases \
+            --min-read-aligned-length {params.min_read_aligned_length} \
+            --contig-end-exclusion {params.contig_end_exclusion} \
+            --min-read-percent-identity {params.min_read_percent_identity} \
+            > {output.tsv}
+        """
+
+
+rule process_contig_counts_and_coverage:
+    """Process contig counts and coverage at species level."""
+    input:
+        tsvs=expand(
+            rules.contig_counts_and_coverage.output.tsv,
+            accession=config["metagenomic_contigs"],
+        ),
+    output:
+        csv="results/contigs/counts_and_coverage/processed_counts.csv",
+    params:
+        d=lambda wc: config["metagenomic_contigs"],
+    conda:
+        "environment.yml"
+    script:
+        "scripts/process_contig_counts_and_coverage.py"
 
 
 rule make_plots:

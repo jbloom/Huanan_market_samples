@@ -23,3 +23,9 @@ results/mitochondrial_genomes/*
 !results/aggregated_counts
 results/aggregated_counts/*
 !results/aggregated_counts/*.csv
+
+!results/contigs
+results/contigs/*
+!results/contigs/counts_and_coverage
+results/contigs/counts_and_coverage/*
+!results/contigs/counts_and_coverage/processed_counts.csv

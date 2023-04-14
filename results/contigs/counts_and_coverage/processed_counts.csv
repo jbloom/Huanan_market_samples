@@ -1,0 +1,5 @@
+species,aligned_contigs,covered_bases,accession,sample
+chicken,3,1358,CRR710762,Q61
+dog,24,12295,CRR710762,Q61
+duck,123,97810,CRR710762,Q61
+raccoon_dog,3663,2683886,CRR710762,Q61

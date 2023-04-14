@@ -108,5 +108,14 @@ metagenomic_contigs:
       raccoon_dog: https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/905/146/905/GCA_905146905.1_NYPRO_anot_genome/GCA_905146905.1_NYPRO_anot_genome_genomic.fna.gz
       duck: https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/015/476/345/GCF_015476345.1_ZJU1.0/GCF_015476345.1_ZJU1.0_genomic.fna.gz
 
+# require metagenomic contigs to have at least this mapping quality to count
+metagenomic_contigs_min_mapq: 10
+
+# flags for `coverm` when computing contig read counts and coverage
+metagenomic_contigs_coverm_flags:
+  min_read_aligned_length: 300
+  contig_end_exclusion: 100
+  min_read_percent_identity: 0.98
+
 # annotations for plots in GitHub pages docs
 docs_plot_annotations: data/docs_plot_annotations.yaml
