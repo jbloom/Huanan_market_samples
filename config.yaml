@@ -98,5 +98,15 @@ mito_composition_filters:
   # only keep mitochondrial genomes that have >= this many covered bases for at least one one run
   min_coverage_aligned_genome_filter: 4000
 
+# build contigs for following accessions and align against indicated species' genomes
+metagenomic_contigs:
+  CRR710762:
+    sample: Q61
+    species:
+      chicken: https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/016/699/485/GCF_016699485.2_bGalGal1.mat.broiler.GRCg7b/GCF_016699485.2_bGalGal1.mat.broiler.GRCg7b_genomic.fna.gz
+      dog: https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/000/002/285/GCF_000002285.5_Dog10K_Boxer_Tasha/GCF_000002285.5_Dog10K_Boxer_Tasha_genomic.fna.gz
+      raccoon_dog: https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/905/146/905/GCA_905146905.1_NYPRO_anot_genome/GCA_905146905.1_NYPRO_anot_genome_genomic.fna.gz
+      duck: https://ftp.ncbi.nlm.nih.gov/genomes/all/GCF/015/476/345/GCF_015476345.1_ZJU1.0/GCF_015476345.1_ZJU1.0_genomic.fna.gz
+
 # annotations for plots in GitHub pages docs
 docs_plot_annotations: data/docs_plot_annotations.yaml

@@ -12,6 +12,9 @@ import pandas as pd
 import yaml
 
 
+wildcard_constraints:
+    accession="CRR\d+",
+
 configfile: "config.yaml"
 
 with open(config["docs_plot_annotations"]) as f:
@@ -52,6 +55,10 @@ rule all:
         plot_htmls.values(),
         expand("docs/{plot}.html", plot=plot_htmls),
         "docs/index.html",
+        expand(
+            "results/contigs/alignments/{accession}_sorted.bam",
+            accession=config["metagenomic_contigs"],
+        ),
 
 
 checkpoint process_metadata:
@@ -513,6 +520,111 @@ rule aggregate_all_counts:
         "environment.yml"
     notebook:
         "notebooks/aggregate_all_counts.py.ipynb"
+
+
+rule build_contigs:
+    """Build contigs using ``Trinity``."""
+    input:
+        fastqs=lambda wc: (
+            [f"results/fastqs_preprocessed/{wc.accession}.fq.gz"]
+            if len(accession_fastqs(wc)) == 1
+            else [
+                f"results/fastqs_preprocessed/{wc.accession}_R1.fq.gz",
+                f"results/fastqs_preprocessed/{wc.accession}_R2.fq.gz",
+            ]
+        ),
+    output:
+        outdir=directory("results/contigs/trinity_{accession}"),
+        contigs=protected("results/contigs/trinity_{accession}/Trinity.fasta"),
+    params: 
+        readin=lambda wc, input: (
+            f"--single {input.fastqs}"
+            if len(input) == 1
+            else f"--left {input.fastqs[0]} --right {input.fastq[1]}"
+        ),
+    threads: 12
+    envmodules:
+        "Trinity/2.12.0-foss-2020b"
+    shell:
+        """
+        Trinity \
+            --CPU {threads} \
+            --seqType fq \
+            {params.readin} \
+            --output {output.outdir} \
+            --max_memory 50G
+        """
+
+
+rule get_contig_species_ref:
+    """Get reference for a particular species for contig alignment, update header."""
+    output:
+        fasta="results/contigs/refs/{accession}_{species}.fa",
+    params:
+        url=lambda wc: config["metagenomic_contigs"][wc.accession]["species"][wc.species],
+    conda:
+        "environment.yml",
+    shell:
+        # since we will make concatenated genome, add species to beginning of chromosome name
+        """
+        curl -s {params.url} \
+        | gzip -cd \
+        | sed -E 's/>/>{wildcards.species}-/g' \
+        > {output.fasta}
+        """
+
+
+rule build_contig_ref:
+    """Build reference genome for each contig alignment."""
+    input:
+        fastas=lambda wc: [
+            f"results/contigs/refs/{{accession}}_{species}.fa"
+            for species in config["metagenomic_contigs"][wc.accession]["species"]
+        ],
+    output:
+        fasta="results/contigs/refs/{accession}.fa",
+        mmi="results/contigs/refs/{accession}.mmi",
+    conda:
+        "environment.yml",
+    shell:
+        """
+        cat {input.fastas} > {output.fasta}
+        minimap2 -I 40G -x splice -d {output.mmi} {output.fasta}
+        """
+
+
+rule align_contigs:
+    """Align contigs to specified reference genomes."""
+    input:
+        contigs=rules.build_contigs.output.contigs,
+        ref=rules.build_contig_ref.output.mmi,
+    output:
+        sam=temp("results/contigs/alignments/{accession}.sam"),
+        unsorted_bam=temp("results/contigs/alignments/{accession}.bam"),
+        bam=protected("results/contigs/alignments/{accession}_sorted.bam"),
+    threads: 4
+    params:
+        extra_threads=lambda _, threads: threads - 1,
+    conda:
+        "environment.yml",
+    shell:
+        """
+        minimap2 \
+            -I 40G \
+            -t {threads} \
+            -x splice \
+            --secondary=no \
+            --sam-hit-only \
+            -a {input.ref} \
+            {input.contigs} \
+            > {output.sam}
+        samtools view \
+            -@ {params.extra_threads} \
+            -b \
+            -o {output.unsorted_bam} \
+            {output.sam}
+        samtools sort -@ {params.extra_threads} -o {output.bam} {output.unsorted_bam}
+        """
 
 
 rule make_plots:
