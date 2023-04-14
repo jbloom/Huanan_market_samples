@@ -49,6 +49,14 @@ plots:
       Use the dropdown below the plot to show just one of these species sets.
 
       Mouseover the pie slices for more details about counts for individual species.
+
+  genomic_contig_composition:
+    title: Composition of genomic contigs in each sample
+    legend: |
+      This plot shows the composition of contigs that align to the genome (or transcriptome
+      as alignments allow splicing) for each sample. Currently only calculated for sample Q61.
+
+      Mouseover the pie slices for more details about the counts for individual species.
   
   sars2_aligned:
     title: Percent of high-quality reads aligning to SARS-CoV-2 in each metagenomic sample

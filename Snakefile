@@ -37,6 +37,7 @@ plot_htmls = {
     for name in [
         "crits_christoph_vs_current_run_corr",
         "mito_composition",
+        "genomic_contig_composition",
         "sars2_aligned",
         "sars2_aligned_vertical",
         "per_species_corr_faceted",
@@ -683,6 +684,7 @@ rule make_plots:
         **aggregated_counts_csvs,
         crits_christoph_read_counts="results/crits_christoph_data/read_counts.csv",
         ngdc_to_crits_christoph=rules.check_sha512_vs_crits_christoph.output.csv,
+        contig_counts=rules.process_contig_counts_and_coverage.output.csv,
     params:
         metagenomic_descriptions=config["metagenomic_descriptions"],
     output:

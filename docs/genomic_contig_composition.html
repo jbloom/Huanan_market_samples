@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <style>
+   .error {
+        color: red;
+    }
+   #vis {margin-left: 2.5%; margin-left: 2.5%; width: 95vw; overflow-x: auto;}
+   #markdown {margin-left: 2.5%; margin-right: 2.5%; margin-top: 10px; }
+   #vis input, #vis label, #vis span {font-size: 14px; margin: 0px 3px 1px 0px;}
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/vega@5" type="text/javascript">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@5.6.1" type="text/javascript">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6" type="text/javascript">
+  </script>
+  <meta content="summary" name="twitter:card"/>
+  <meta content="https://jbloom.github.io/Huanan_market_samples" name="twitter:site"/>
+  <meta content="Composition of genomic contigs in each sample" name="twitter:title"/>
+  <meta content="Composition of genomic contigs in each sample" name="twitter:description"/>
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet"/>
+ </head>
+ <body>
+  <div id="vis">
+  </div>
+  <script>
+   (function(vegaEmbed) {
+      var spec = {"config": {"view": {"continuousWidth": 300, "continuousHeight": 300}}, "data": {"name": "data-80aab11a5021fdc2b5765fc3cc4dab65"}, "mark": {"type": "arc"}, "encoding": {"color": {"field": "species", "legend": {"columns": 1, "labelLimit": 0, "orient": "right", "symbolSize": 125, "symbolType": "square"}, "scale": {"domain": ["chicken", "dog", "raccoon dog", "duck"], "range": ["#5778a4", "#e49444", "#85b6b2", "#6a9f58"]}, "title": "species", "type": "nominal"}, "theta": {"field": "aligned_contigs", "type": "quantitative"}, "tooltip": [{"field": "species", "type": "nominal"}, {"field": "aligned_contigs", "type": "quantitative"}, {"field": "covered_bases", "type": "quantitative"}, {"field": "accession", "type": "nominal"}, {"field": "sample", "type": "nominal"}]}, "height": 175, "params": [{"name": "param_5", "select": {"type": "point", "fields": ["sample"]}, "bind": {"input": "select", "options": ["Q61"], "name": "sample"}, "value": "Q61"}], "transform": [{"filter": {"param": "param_5"}}], "width": 175, "$schema": "https://vega.github.io/schema/vega-lite/v5.6.1.json", "datasets": {"data-80aab11a5021fdc2b5765fc3cc4dab65": [{"species": "chicken", "aligned_contigs": 3, "covered_bases": 1358, "accession": "CRR710762", "sample": "Q61"}, {"species": "dog", "aligned_contigs": 24, "covered_bases": 12295, "accession": "CRR710762", "sample": "Q61"}, {"species": "duck", "aligned_contigs": 123, "covered_bases": 97810, "accession": "CRR710762", "sample": "Q61"}, {"species": "raccoon dog", "aligned_contigs": 3663, "covered_bases": 2683886, "accession": "CRR710762", "sample": "Q61"}]}};
+      var embedOpt = {"mode": "vega-lite"};
+
+      function showError(el, error){
+          el.innerHTML = ('<div class="error" style="color:red;">'
+                          + '<p>JavaScript Error: ' + error.message + '</p>'
+                          + "<p>This usually means there's a typo in your chart specification. "
+                          + "See the javascript console for the full traceback.</p>"
+                          + '</div>');
+          throw error;
+      }
+      const el = document.getElementById('vis');
+      vegaEmbed("#vis", spec, embedOpt)
+        .catch(error => showError(el, error));
+    })(vegaEmbed);
+  </script>
+  <div id="markdown">
+   <hr/>
+   <h2>
+    Composition of genomic contigs in each sample
+   </h2>
+   <p>
+    This plot shows the composition of contigs that align to the genome (or transcriptome
+as alignments allow splicing) for each sample. Currently only calculated for sample Q61.
+   </p>
+   <p>
+    Mouseover the pie slices for more details about the counts for individual species.
+   </p>
+   <p>
+    See
+    <a href="https://github.com/jbloom/Huanan_market_samples">
+     https://github.com/jbloom/Huanan_market_samples
+    </a>
+    for results files and a fully reproducible computational pipeline.
+   </p>
+   <p>
+    See
+    <a href="https://jbloom.github.io/Huanan_market_samples">
+     https://jbloom.github.io/Huanan_market_samples
+    </a>
+    for links to all interactive plots.
+   </p>
+  </div>
+ </body>
+</html>
