@@ -69,6 +69,23 @@ mitochondrial_genomes_to_keep:
 # This identity of 0.93 (distance of 0.07) is same used by Crits-Christoph et al.
 mitochondrial_genome_min_mash_dist: 0.07
 
+# Species plotted in Figure 1 of Crits-Christoph et al
+crits_christoph_plotted_species:
+  - raccoon dog
+  - hoary bamboo rat
+  - Siberian weasel
+  - Amur hedgehog
+  - Himalayan marmot
+  - hog badger
+  - Malayan porcupine
+  - masked palm civet
+  - human
+  - sheep
+  - pig
+  - cow
+  - brown rat
+  - dog
+
 # SARS-CoV-2 reference genome
 sars2_ref: http://hgdownload.soe.ucsc.edu/goldenPath/wuhCor1/bigZips/wuhCor1.fa.gz
 sars2_ref_id: NC_045512v2  # id of reference genome

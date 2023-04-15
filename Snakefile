@@ -687,6 +687,7 @@ rule make_plots:
         contig_counts=rules.process_contig_counts_and_coverage.output.csv,
     params:
         metagenomic_descriptions=config["metagenomic_descriptions"],
+        crits_christoph_plotted_species=config["crits_christoph_plotted_species"],
     output:
         **plot_htmls,
     log:
