@@ -39,13 +39,15 @@ plots:
     title: Composition of mitochondrial DNA in each sample for all chordates and just mammals
     legend: |
       For individual samples (which can be selected using the dropdown box below the pie charts), this
-      plot shows the percentage of aligned mitochondrial reads that map to each species. Pie charts
-      are shown for all chordates and just mammals.
+      plot shows the percentage of aligned mitochondrial reads that map to each species as determined
+      in the current study. Pie charts are shown for all chordates and just mammals.
+
       For the samples also analyzed in 
-      [Crits-Christoph et al (2023)](https://zenodo.org/record/7754299#.ZDNVv-zMLX0), there are alos
-      pie charts showing the mitochondrial DNA composition for all species in Table S3 of
+      [Crits-Christoph et al (2023)](https://zenodo.org/record/7754299#.ZDNVv-zMLX0), there are also
+      pie charts showing the mitochondrial DNA composition determined in that study
+      for all species in Table S3 of
       Crits-Christoph et al, and for all species plotted in Figure 1 of Crits-Christoph
-      et al (note Table S3 of their paper just reports counts for mammals, and Figure 1 of
+      et al (note Table S3 of their paper reports counts only for mammals, and Figure 1 of
       their paper only plots counts for a subset of these mammals).
       
       Use the clickable legend below the plot to show some of these species sets.
@@ -68,7 +70,7 @@ plots:
     title: Percent of high-quality reads aligning to SARS-CoV-2 in each metagenomic sample
     legend: |
       For each metagenomic sample, this plot shows the percent of all high-quality reads (reads
-      that passed `fastp` pre-processing) that align with sufficiently high mapping quality
+      that passed `fastp` pre-processing) that align with high mapping quality
       to SARS-CoV-2. Points are colored according to the date that sample was collected.
 
       Click on points in the *Collection date* legend to subset only to samples
@@ -81,7 +83,7 @@ plots:
     title: Percent of high-quality reads aligning to SARS-CoV-2 in each metagenomic sample (vertically oriented plot)
     legend: |
       For each metagenomic sample, this plot shows the percent of all high-quality reads (reads
-      that passed `fastp` pre-processing) that align with sufficiently high mapping quality
+      that passed `fastp` pre-processing) that align with high mapping quality
       to SARS-CoV-2. Points are colored according to the date that sample was collected.
 
       Click on points in the *Collection date* legend to subset only to samples
@@ -93,19 +95,24 @@ plots:
   per_species_corr_faceted:
     title: Correlation of mitochondrial composition with SARS-CoV-2 reads for all species
     legend: |
-      Each panel shows the correlation across all samples
+      Correlation across all samples
       between the percent of all high-quality (preprocessed) reads
       that align to SARS-CoV-2 versus the percent that align to the mitochondrial genomes for
       the indicated species.
       The orange numbers give the Pearson correlation coefficient.
 
-      The options at the bottom enable:
+      A critical aspect of this plot is the choice of what scale is used to plot the numbers
+      and calculate the correlations. The choices, which are adjustable using the options below
+      the plot, are:
+
+        - Quantify the mitochondrial reads is as the percent of all high-quality (preprocessed) reads that map to the mitochondrial genome of that species, or as the percent of reads that align to any chordate mitochondrial genome that align to that species.
+        - Whether the axis scales show the raw percentages or the log10 of the percentages. When using a log scale, percentages of zero are set to half the lowest observed percentage across all samples and species.
+
+      Other at the bottom of the plot enable:
       
-        - selection of samples only from specific collection dates (click on circles next to select)
-        - only samples collected from particular sources
-        - whether the percent mitochondrial reads is computed as the percent of all high-quality (preprocessed) reads or as the percent of reads that align to mitochondrial genomes from any species
-        - whether the axis scales show the raw percentages of the log10 of the percentages; when using a log scale percentages of zero are set to half the lowest observed percentage across all samples and species
-        - selection of samples only with a sufficient number of total aligned mitochondrial reads
+        - Selection of samples only from specific collection dates (click on circles next to select).
+        - Selection of only samples collected from particular sources.
+        - Selection of samples only with a sufficient number of total aligned mitochondrial reads.
 
       Mouseover points for details on particular samples.
 
@@ -116,28 +123,32 @@ plots:
   per_species_corr_single:
     title: Correlation of mitochondrial composition with SARS-CoV-2 reads for individual species
     legend: |
-      Each panel shows the correlation across all samples
+      Correlation across all samples
       between the percent of all high-quality (preprocessed) reads
       that align to SARS-CoV-2 versus the percent that align to the mitochondrial genomes for
       the indicated species.
       The orange numbers give the Pearson correlation coefficient.
 
-      You can select which species to show using the dropdown at the bottom of the plot.
+      A critical aspect of this plot is the choice of what scale is used to plot the numbers
+      and calculate the correlations. The choices, which are adjustable using the options below
+      the plot, are:
 
-      Other options at the bottom enable:
+        - Quantify the mitochondrial reads is as the percent of all high-quality (preprocessed) reads that map to the mitochondrial genome of that species, or as the percent of reads that align to any chordate mitochondrial genome that align to that species.
+        - Whether the axis scales show the raw percentages or the log10 of the percentages. When using a log scale, percentages of zero are set to half the lowest observed percentage across all samples and species.
+
+      Other at the bottom of the plot enable:
       
-        - selection of samples only from specific collection dates (click on circles next to select)
-        - only samples collected from particular sources
-        - whether the percent mitochondrial reads is computed as the percent of all high-quality (preprocessed) reads or as the percent of reads that align to mitochondrial genomes from any species
-        - whether the axis scales show the raw percentages of the log10 of the percentages; when using a log scale percentages of zero are set to half the lowest observed percentage across all samples and species
-        - selection of samples only with a sufficient number of total aligned mitochondrial reads
+        - Selection of samples only from specific collection dates (click on circles next to select).
+        - Selection of only samples collected from particular sources.
+        - Selection of samples only with a sufficient number of total aligned mitochondrial reads.
+        - Which species to show.
 
       Mouseover points for details on particular samples.
 
       The correlation coefficients will change accordingly if you select different options for
       how the percent mitochondrial reads is computed or whether we analyze the direct or log10
       percents.
-
+    
   overall_corr:
     title: Overall correlation of mitochondrial DNA and SARS-CoV-2 across all species
     legend: |
@@ -145,14 +156,16 @@ plots:
       to SARS-CoV-2 and the percent of aligned mitochondrial reads for a specific species taken
       across all samples. The axes show the Pearson and Spearman correlations.
 
+      A critical aspect of this plot is the choice of what scale is used to
+      calculate the correlations. The choices, which are adjustable using the options below
+      the plot, are:
+
+        - Quantify the mitochondrial reads is as the percent of all high-quality (preprocessed) reads that map to the mitochondrial genome of that species, or as the percent of reads that align to any chordate mitochondrial genome that align to that species.
+        - Whether the axis scales show the raw percentages or the log10 of the percentages. When using a log scale, percentages of zero are set to half the lowest observed percentage across all samples and species.
+
       The options at bottom allows you to show correlations computed only over samples
       collected on specific dates or isolated from particular sources.
       
-      The axis scale selection enables switching between correlations computed using
-      the percentages or the log10 percentages.
-
-      You can also select whether the percent mitochondrial reads is computed as the percent of all high-quality (preprocessed) reads or as the percent of reads that align to mitochondrial genomes from any species
-
       The *species to highlight* boxes allow you to click on a specific species to
       highlight in a red box on the plot.
 

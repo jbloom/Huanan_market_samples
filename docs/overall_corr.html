@@ -53,15 +53,21 @@ to SARS-CoV-2 and the percent of aligned mitochondrial reads for a specific spec
 across all samples. The axes show the Pearson and Spearman correlations.
    </p>
    <p>
+    A critical aspect of this plot is the choice of what scale is used to
+calculate the correlations. The choices, which are adjustable using the options below
+the plot, are:
+   </p>
+   <ul>
+    <li>
+     Quantify the mitochondrial reads is as the percent of all high-quality (preprocessed) reads that map to the mitochondrial genome of that species, or as the percent of reads that align to any chordate mitochondrial genome that align to that species.
+    </li>
+    <li>
+     Whether the axis scales show the raw percentages or the log10 of the percentages. When using a log scale, percentages of zero are set to half the lowest observed percentage across all samples and species.
+    </li>
+   </ul>
+   <p>
     The options at bottom allows you to show correlations computed only over samples
 collected on specific dates or isolated from particular sources.
-   </p>
-   <p>
-    The axis scale selection enables switching between correlations computed using
-the percentages or the log10 percentages.
-   </p>
-   <p>
-    You can also select whether the percent mitochondrial reads is computed as the percent of all high-quality (preprocessed) reads or as the percent of reads that align to mitochondrial genomes from any species
    </p>
    <p>
     The
