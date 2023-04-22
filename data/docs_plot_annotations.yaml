@@ -113,6 +113,7 @@ plots:
         - Selection of samples only from specific collection dates (click on circles next to select).
         - Selection of only samples collected from particular sources.
         - Selection of samples only with a sufficient number of total aligned mitochondrial reads.
+        - Selection of only samples containing at least one SARS-CoV-2 read.
 
       Mouseover points for details on particular samples.
 
@@ -142,6 +143,7 @@ plots:
         - Selection of only samples collected from particular sources.
         - Selection of samples only with a sufficient number of total aligned mitochondrial reads.
         - Which species to show.
+        - Selection of only samples containing at least one SARS-CoV-2 read.
 
       Mouseover points for details on particular samples.
 
@@ -164,7 +166,8 @@ plots:
         - Whether the axis scales show the raw percentages or the log10 of the percentages. When using a log scale, percentages of zero are set to half the lowest observed percentage across all samples and species.
 
       The options at bottom allows you to show correlations computed only over samples
-      collected on specific dates or isolated from particular sources.
+      collected on specific dates, isolated from particular sources, or that contain at least one
+      SARS-CoV-2 read.
       
       The *species to highlight* boxes allow you to click on a specific species to
       highlight in a red box on the plot.
