@@ -115,6 +115,19 @@ mito_composition_filters:
   # only keep mitochondrial genomes that have >= this many covered bases for at least one one run
   min_coverage_aligned_genome_filter: 4000
 
+# when writing table of SARS-CoV-2 content for susceptible figures, apply these filters
+susceptible_table:
+  species:
+    - raccoon dog
+    - hoary bamboo rat
+    - Amur hedgehog
+    - Malayan porcupine
+    - Himalayan marmot
+    - masked palm civet
+    - Siberian weasel
+    - hog badger
+  min_percent: 20
+
 # build contigs for following accessions and align against indicated species' genomes
 metagenomic_contigs:
   CRR710762:

@@ -29,3 +29,8 @@ results/contigs/*
 !results/contigs/counts_and_coverage
 results/contigs/counts_and_coverage/*
 !results/contigs/counts_and_coverage/processed_counts.csv
+
+!results/plots
+results/plots/*
+!results/plots/susceptible_table.csv
+!results/plots/susceptible_table.tex

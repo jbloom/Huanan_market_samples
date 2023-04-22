@@ -55,6 +55,8 @@ rule all:
         aggregated_counts_csvs.values(),
         "results/contigs/counts_and_coverage/processed_counts.csv",
         plot_htmls.values(),
+        "results/plots/susceptible_table.csv",
+        "results/plots/susceptible_table.tex",
         expand("docs/{plot}.html", plot=plot_htmls),
         "docs/index.html",
 
@@ -688,8 +690,11 @@ rule make_plots:
     params:
         metagenomic_descriptions=config["metagenomic_descriptions"],
         crits_christoph_plotted_species=config["crits_christoph_plotted_species"],
+        susceptible_table=config["susceptible_table"],
     output:
         **plot_htmls,
+        susceptible_csv="results/plots/susceptible_table.csv",
+        susceptible_tex="results/plots/susceptible_table.tex",
     log:
         notebook="results/plots/make_plots.ipynb",
     conda:
