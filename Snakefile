@@ -57,6 +57,7 @@ rule all:
         plot_htmls.values(),
         "results/plots/susceptible_table.csv",
         "results/plots/susceptible_table.tex",
+        "results/rt_qpcr/rt_qpcr.csv",
         expand("docs/{plot}.html", plot=plot_htmls),
         "docs/index.html",
 
@@ -678,6 +679,23 @@ rule process_contig_counts_and_coverage:
         "environment.yml"
     script:
         "scripts/process_contig_counts_and_coverage.py"
+
+
+rule rt_qpcr:
+    """Compare deep sequencing to China CDC table of RT-qPCR for metagenomic samples."""
+    input:
+        positive_table="data/positive_table.csv",
+        sars2_aligned_by_sample=aggregated_counts_csvs["sars2_aligned_by_sample"],
+    output:
+        csv="results/rt_qpcr/rt_qpcr.csv",
+    params:
+        metagenomic_descriptions=config["metagenomic_descriptions"],
+    log:
+        notebook="results/rt_qpcr/rt_qpcr.ipynb",
+    conda:
+        "environment.yml"
+    notebook:
+        "notebooks/rt_qpcr.py.ipynb"
 
 
 rule make_plots:

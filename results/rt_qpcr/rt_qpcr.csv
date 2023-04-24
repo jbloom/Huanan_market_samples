@@ -1,0 +1,187 @@
+sample,Sample name,Collection date,description,Isolation source,total_reads,preprocessed_reads,SARS2_aligned_reads,percent_preprocessed_reads_aligning_to_SARS2,Sample type,Sampling date,Street No.,Vendor No.,PCR,CT,PCR target,NGS,classification
+06-29-abv1,Env_0620,2020-01-23,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.079e+09,8.5185e+08,0,0,,,,,,,,,PCR- / sequencing-
+1-27-11,Env_0642,2020-01-27,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM (Sewers or sewerage wells),8.218e+08,5.7194e+08,0,0,,,,,,,,,PCR- / sequencing-
+1-27-12,Env_0643,2020-01-27,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM (Sewers or sewerage wells),2.0385e+09,2.0297e+09,0,0,,,,,,,,,PCR- / sequencing-
+1-27-28,Env_0657,2020-01-27,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM (Sewers or sewerage wells),2.9048e+08,2.8935e+08,0,0,,,,,,,,,PCR- / sequencing-
+1-27-33,Env_0660,2020-01-27,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM (Sewers or sewerage wells),9.2725e+07,9.2467e+07,0,0,Water drain,2020/1/27,6,29-33,+,36,ORF1ab,No,PCR+ / sequencing-
+1-27-37,Env_0664,2020-01-27,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM (Sewers or sewerage wells),3.1618e+07,0,0,,Water drain,2020/1/27,10,4,+,35,ORF1ab,No,PCR+ / sequencing-
+1-27-52,Env_0674,2020-01-27,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM (Sewers or sewerage wells),7.0119e+08,6.9828e+08,0,0,,,,,,,,,PCR- / sequencing-
+1-29-19,Env_0697,2020-01-29,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,East Wine of HSM (Sewers or sewerage wells),1.0428e+09,1.0383e+09,0,0,,,,,,,,,PCR- / sequencing-
+1-29-23,Env_0701,2020-01-29,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,East Wine of HSM,1.015e+09,1.0109e+09,0,0,,,,,,,,,PCR- / sequencing-
+1-29-4,Env_0682,2020-01-29,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,East Wine of HSM (Sewers or sewerage wells),1.9902e+08,1.6424e+08,0,0,Water drain,2020/1/29,4,5-7-9,+,36,ORF1ab,No,PCR+ / sequencing-
+1-29-8,Env_0686,2020-01-29,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,East Wine of HSM (Sewers or sewerage wells),3.5903e+08,3.5757e+08,0,0,Water drain,2020/1/29,5,11,+,37,ORF1ab,Yes,PCR+ / sequencing-
+10-31-In2,Env_0617,2020-01-23,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,7.0413e+08,5.6714e+08,0,0,,,,,,,,,PCR- / sequencing-
+10-31-abv2,Env_0619,2020-01-23,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.3608e+09,1.069e+09,0,0,,,,,,,,,PCR- / sequencing-
+629-1-L1,Env_0875,2020-02-29,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.5241e+08,2.5222e+08,0,0,,,,,,,,,PCR- / sequencing-
+629-11-L,Env_0885,2020-02-29,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.8398e+08,2.8371e+08,0,0,,,,,,,,,PCR- / sequencing-
+629-13-L,Env_0887,2020-02-29,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.516e+08,1.5146e+08,0,0,,,,,,,,,PCR- / sequencing-
+629-3-C,Env_0877,2020-02-29,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.5071e+08,2.5045e+08,0,0,,,,,,,,,PCR- / sequencing-
+629-5-L4,Env_0879,2020-02-29,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.4276e+08,1.426e+08,0,0,,,,,,,,,PCR- / sequencing-
+629-8-L7,Env_0882,2020-02-29,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,3.2394e+08,3.2364e+08,0,0,,,,,,,,,PCR- / sequencing-
+629-L-1,Env_0889,2020-02-29,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.4903e+08,1.4892e+08,0,0,,,,,,,,,PCR- / sequencing-
+7-26-BX,Env_0705,2020-02-03,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,3.1603e+08,3.1025e+08,0,0,,,,,,,,,PCR- / sequencing-
+7-26-DH,Env_0712,2020-02-03,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,6.2193e+08,6.1493e+08,0,0,,,,,,,,,PCR- / sequencing-
+7-26-PSN,Env_0708,2020-02-03,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,4.4861e+08,4.401e+08,0,0,,,,,,,,,PCR- / sequencing-
+7-26-PSW,Env_0707,2020-02-03,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,4.5559e+08,4.472e+08,0,0,,,,,,,,,PCR- / sequencing-
+8-25-BX,Env_0714,2020-02-03,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.0727e+09,1.0528e+09,0,0,,,,,,,,,PCR- / sequencing-
+8-25-CK,Env_0716,2020-02-03,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.4805e+09,1.4531e+09,0,0,,,,,,,,,PCR- / sequencing-
+8-25-D1,Env_0753,2020-02-09,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.0955e+09,1.0922e+09,0,0,,,,,,,,,PCR- / sequencing-
+8-25-D2,Env_0754,2020-02-09,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,8.2898e+07,8.2784e+07,0,0,,,,,,,,,PCR- / sequencing-
+8-25-D_Env_0715,Env_0715,2020-02-03,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.3537e+08,2.3505e+08,0,0,,,,,,,,,PCR- / sequencing-
+8-25-D_Env_0717,Env_0717,2020-02-03,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.7853e+09,1.7543e+09,0,0,,,,,,,,,PCR- / sequencing-
+8-25-Long,Env_0756,2020-02-09,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.8544e+08,2.85e+08,0,0,,,,,,,,,PCR- / sequencing-
+8-25-M1,Env_0719,2020-02-03,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,4.4814e+08,4.4041e+08,24,5.4494e-06,Ground inside the stalls,2020/2/3,8,25,+,36.5,ORF1ab,Yes,PCR+ / sequencing+
+8-25-M2,Env_0720,2020-02-03,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.6431e+09,1.6197e+09,0,0,,,,,,,,,PCR- / sequencing-
+A101,Env_0101,2020-01-01,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.5221e+08,1.5036e+08,67,4.4561e-05,Surface of the door,2020/1/1,4,19,+,36.82,ORF1ab/N,Yes,PCR+ / sequencing+
+A14,Env_0014,2020-01-01,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.2475e+08,2.2407e+08,4,1.7852e-06,Surface of packing bag for hairtail,2020/1/1,4,26,+,36.42,ORF1ab/N,Yes,PCR+ / sequencing+
+A15,Env_0015,2020-01-01,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.2548e+08,1.2217e+08,200,0.0001637,Surface of the door,2020/1/1,4,26,+,35.51,ORF1ab/N,Yes,PCR+ / sequencing+
+A18,Env_0018,2020-01-01,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,3.1284e+08,3.1196e+08,226,7.2446e-05,Shoe covers and soles,2020/1/1,7,15-17,+,33.79,ORF1ab/N,Yes,PCR+ / sequencing+
+A2,Env_0002,2020-01-01,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.3229e+08,2.3166e+08,66,2.849e-05,Ground,2020/1/1,7,15-17,+,35.07,ORF1ab/N,Yes,PCR+ / sequencing+
+A33,Env_0033,2020-01-01,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.8129e+08,1.8067e+08,35,1.9372e-05,Garbage truck,2020/1/1,7,,+,34.46,ORF1ab/N,Yes,PCR+ / sequencing+
+A55,Env_0055,2020-01-01,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.5152e+08,2.4987e+08,176,7.0438e-05,Ground,2020/1/1,7,25,+,34.84,ORF1ab/N,Yes,PCR+ / sequencing+
+A61,Env_0061,2020-01-01,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,4.4991e+08,4.479e+08,334,7.457e-05,Ground,2020/1/1,7,20-22-24,+,32.04,ORF1ab/N,Yes,PCR+ / sequencing+
+A63,Env_0063,2020-01-01,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.3195e+08,2.3115e+08,65,2.812e-05,Ground,2020/1/1,7,16-18,+,34.43,ORF1ab/N,Yes,PCR+ / sequencing+
+A87,Env_0087,2020-01-01,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.3466e+08,2.3083e+08,136,5.8919e-05,Surface of the door,2020/1/1,4,28,+,36.94,ORF1ab/N,Yes,PCR+ / sequencing+
+A88,Env_0088,2020-01-01,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.989e+08,1.9804e+08,18,9.0892e-06,Ground,2020/1/1,4,28,+,36.69,ORF1ab/N,Yes,PCR+ / sequencing+
+A90,Env_0090,2020-01-01,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.6447e+08,2.6329e+08,22,8.3557e-06,Ground,2020/1/1,4,26,+,33.14,ORF1ab/N,Yes,PCR+ / sequencing+
+A96,Env_0096,2020-01-01,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,3.7317e+08,3.7194e+08,4,1.0754e-06,Ground,2020/1/1,4,24,+,33.97,ORF1ab/N,Yes,PCR+ / sequencing+
+B17,Env_0138,2020-01-01,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.1312e+08,2.1225e+08,406,0.00019128,Scale,2020/1/1,15,X44,+,34.16,ORF1ab/N,Yes,PCR+ / sequencing+
+B5,Env_0126,2020-01-01,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.2946e+08,2.2868e+08,1460,0.00063843,Ground,2020/1/1,5,6-8,+,29.32,ORF1ab/N,Yes,PCR+ / sequencing+
+C12,Env_0842,2020-02-20,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.7267e+08,1.7241e+08,0,0,,,,,,,,,PCR- / sequencing-
+C17,Env_0847,2020-02-20,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.158e+08,1.1566e+08,0,0,,,,,,,,,PCR- / sequencing-
+C9,Env_0839,2020-02-20,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,3.2227e+08,3.2177e+08,0,0,,,,,,,,,PCR- / sequencing-
+CCDC-454,Env_0873,2020-02-25,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.4059e+08,2.404e+08,0,0,,,,,,,,,PCR- / sequencing-
+CCDC-744,Env_0893,2020-03-02,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.2428e+08,2.2413e+08,0,0,,,,,,,,,PCR- / sequencing-
+CCDC-746,Env_0895,2020-03-02,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.8976e+08,1.8958e+08,0,0,,,,,,,,,PCR- / sequencing-
+CCDC-758,Env_0907,2020-03-02,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.1819e+08,1.1813e+08,0,0,,,,,,,,,PCR- / sequencing-
+CCDC-760,Env_0909,2020-03-02,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.4821e+08,2.4796e+08,0,0,,,,,,,,,PCR- / sequencing-
+CSSQ-1-1,Env_0788,2020-02-09,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,Sewerage well in the surrounding areas,4.1479e+08,4.1344e+08,10,2.4187e-06,,,,,,,,,PCR- / sequencing+
+CSSQ-1-2,Env_0789,2020-02-09,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,Sewerage well in the surrounding areas,6.9501e+08,6.9277e+08,0,0,,,,,,,,,PCR- / sequencing-
+CSSQ-1-3,Env_0790,2020-02-09,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,Sewerage well in the surrounding areas,8.3332e+08,8.3093e+08,0,0,sewerage well in surrounding area,2020/2/9,,,+,37.23,ORF1ab,Yes,PCR+ / sequencing-
+D32,Env_0213,2020-01-01,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.9739e+08,1.9258e+08,326,0.00016928,Surface of a cart,2020/1/1,15,15,+,33.72,ORF1ab/N,Yes,PCR+ / sequencing+
+E-10-29-2,Env_0856,2020-02-20,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.8535e+08,1.8506e+08,0,0,,,,,,,,,PCR- / sequencing-
+E-A-7-1,Env_0858,2020-02-20,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,East Wine of HSM,2.8419e+08,2.8391e+08,0,0,,,,,,,,,PCR- / sequencing-
+E48,Env_0262,2020-01-01,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,East Wine of HSM,3.2726e+08,3.263e+08,10,3.0647e-06,Blood on the ground in front of the door,2020/1/1,9,22,+,35.93,ORF1ab/N,Yes,PCR+ / sequencing+
+E61,Env_0275,2020-01-01,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,East Wine of HSM,2.731e+08,2.7249e+08,57,2.0918e-05,Ground,2020/1/1,6,1-3,+,36.04,ORF1ab/N,Yes,PCR+ / sequencing+
+E7,Env_0221,2020-01-01,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.3724e+08,2.3613e+08,126,5.336e-05,Styrofoam desk in front of the door,2020/1/1,2,5,+,36.44,ORF1ab/N,Yes,PCR+ / sequencing+
+EWS-2#-2,Env_0813,2020-02-15,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,East Wine of HSM (Sewers or sewerage wells),2.7401e+08,2.7352e+08,0,0,East sewage well 2,2020/2/15,,,+,35.32,ORF1ab,Yes,PCR+ / sequencing-
+EWS-3#-2,Env_0815,2020-02-15,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,East Wine of HSM (Sewers or sewerage wells),4.0488e+08,4.0315e+08,0,0,West sewage well 3,2020/2/15,,,+,36.05,ORF1ab,Yes,PCR+ / sequencing-
+F100,Env_0400,2020-01-01,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.6005e+08,2.5889e+08,7202,0.0027819,Ground,2020/1/1,4,X6-X4,+,34.72,ORF1ab/N,Yes,PCR+ / sequencing+
+F46,Env_0346,2020-01-01,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,3.716e+08,3.7042e+08,241,6.506e-05,Ground,2020/1/1,2,24,+,31.8,ORF1ab/N,Yes,PCR+ / sequencing+
+F98,Env_0398,2020-01-01,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,4.0113e+08,3.9974e+08,330,8.2553e-05,Ground,2020/1/1,4,X6-X4,+,34,ORF1ab/N,Yes,PCR+ / sequencing+
+HJ200001-20200112-1,Env_0516,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.1641e+08,1.1641e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200002-20200112-1,Env_0517,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.3114e+08,2.3113e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200003-20200112-1,Env_0518,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.2083e+08,1.208e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200004-20200112-1,Env_0519,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.2731e+08,2.273e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200005-20200112-1,Env_0520,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.1531e+08,1.1529e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200006-20200112-1,Env_0521,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.2884e+08,1.2882e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200007-20200112-1,Env_0522,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.3684e+08,1.3677e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200008-20200112-1,Env_0523,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.5254e+08,1.4797e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200009-20200112-1,Env_0524,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.4994e+08,1.4993e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200010-20200112-1,Env_0525,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.4788e+08,1.4194e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200011-20200112-1,Env_0526,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.9124e+08,5.8499e+07,0,0,,,,,,,,,PCR- / sequencing-
+HJ200012-20200112-1,Env_0527,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.3034e+08,1.3029e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200013-20200112-1,Env_0528,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.2328e+08,1.0891e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200014-20200112-1,Env_0529,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.0747e+08,1.0746e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200015-20200112-1,Env_0530,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.354e+08,1.3539e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200016-20200112-1,Env_0531,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.1647e+08,1.1647e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200017-20200112-1,Env_0532,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.0742e+08,1.0742e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200018-20200112-1,Env_0533,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.3856e+08,1.3855e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200019-20200112-1,Env_0534,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,7.9775e+07,6.9992e+07,0,0,,,,,,,,,PCR- / sequencing-
+HJ200020-20200112-1,Env_0535,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.0598e+08,7.907e+07,0,0,,,,,,,,,PCR- / sequencing-
+HJ200021-20200112-1,Env_0536,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.0044e+08,8.1669e+07,0,0,,,,,,,,,PCR- / sequencing-
+HJ200022-20200112-1,Env_0537,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.3559e+08,1.2357e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200023-20200112-1,Env_0538,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.2836e+08,6.8845e+07,0,0,,,,,,,,,PCR- / sequencing-
+HJ200024-20200112-1,Env_0539,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.0049e+08,9.7913e+07,0,0,,,,,,,,,PCR- / sequencing-
+HJ200025-20200112-1,Env_0540,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.2287e+08,1.2287e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200026-20200112-1,Env_0541,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.1708e+08,1.0406e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200027-20200112-1,Env_0542,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.303e+08,8.9627e+07,0,0,,,,,,,,,PCR- / sequencing-
+HJ200028-20200112-1,Env_0543,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.3572e+08,7.7644e+07,0,0,,,,,,,,,PCR- / sequencing-
+HJ200029-20200112-1,Env_0544,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,9.3556e+07,9.3555e+07,0,0,,,,,,,,,PCR- / sequencing-
+HJ200030-20200112-1,Env_0545,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.3379e+08,1.1351e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200031-20200112-1,Env_0546,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.1983e+08,1.0397e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200032-20200112-1,Env_0547,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.4006e+08,1.4006e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200033-20200112-1,Env_0548,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.1612e+08,1.1612e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200034-20200112-1,Env_0549,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.4863e+08,1.4863e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200035-20200112-1,Env_0550,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.1466e+08,7.1849e+07,0,0,,,,,,,,,PCR- / sequencing-
+HJ200036-20200112-1,Env_0551,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.2995e+08,2.2359e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200038-20200112-1,Env_0553,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.5188e+08,1.0063e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200039-20200112-1,Env_0554,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.4229e+08,1.2257e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200040-20200112-1,Env_0555,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.4819e+08,1.4792e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200041-20200112-1,Env_0556,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.759e+08,1.759e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200042-20200112-1,Env_0557,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.9787e+08,1.8956e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200043-20200112-1,Env_0558,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.8305e+08,8.2607e+07,0,0,,,,,,,,,PCR- / sequencing-
+HJ200044-20200112-1,Env_0559,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.3337e+08,1.2119e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200045-20200112-1,Env_0560,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.0588e+08,1.0588e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200046-20200112-1,Env_0561,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.2191e+08,1.0639e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200047-20200112-1,Env_0562,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.5199e+08,1.4071e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200048-20200112-1,Env_0563,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.2323e+08,1.2312e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200049-20200112-1,Env_0564,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.2318e+08,1.0355e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200050-20200112-1,Env_0565,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.0575e+08,1.0136e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200051-20200112-1,Env_0566,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.1596e+08,1.1596e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200052-20200112-1,Env_0567,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.5403e+08,1.3089e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200053-20200112-1,Env_0568,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.2662e+08,1.2661e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200054-20200112-1,Env_0569,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.6005e+08,1.5721e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200055-20200112-1,Env_0570,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.0581e+08,1.0581e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200056-20200112-1,Env_0571,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.8938e+08,1.6747e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200057-20200112-1,Env_0572,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.1316e+08,1.0702e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200058-20200112-1,Env_0573,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.7174e+08,2.7171e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200059-20200112-1,Env_0574,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.5457e+08,2.4962e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200060-20200112-1,Env_0575,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.803e+08,1.803e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200062-20200112-1,Env_0577,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.7698e+08,1.7695e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200063-20200112-1,Env_0578,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.2259e+08,1.2043e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200065-20200112-1,Env_0580,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.0402e+08,7.2963e+07,0,0,,,,,,,,,PCR- / sequencing-
+HJ200066-20200112-1,Env_0581,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.4286e+08,1.4147e+08,0,0,,,,,,,,,PCR- / sequencing-
+HJ200067-20200112-1,Env_0582,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,7.7126e+07,7.6813e+07,0,0,,,,,,,,,PCR- / sequencing-
+HXJC4-1-1,Env_0800,2020-02-09,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,Sewerage well in the surrounding areas,5.6799e+08,5.661e+08,0,0,,,,,,,,,PCR- / sequencing-
+HXJC4-1-2,Env_0801,2020-02-09,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,Sewerage well in the surrounding areas,6.7334e+08,6.7104e+08,0,0,,,,,,,,,PCR- / sequencing-
+HXJC4-1-3,Env_0802,2020-02-09,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,Sewerage well in the surrounding areas,7.7537e+08,7.7307e+08,0,0,sewerage well in surrounding area,2020/2/9,,,+,36.05,ORF1ab,Yes,PCR+ / sequencing-
+HXJMHL-1-2,Env_0768,2020-02-09,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,Sewerage well in the surrounding areas,6.6598e+08,6.6376e+08,0,0,,,,,,,,,PCR- / sequencing-
+JXRJ-1-1,Env_0770,2020-02-09,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,Sewerage well in the surrounding areas,7.9641e+08,7.94e+08,0,0,,,,,,,,,PCR- / sequencing-
+Outside-5,Env_0759,2020-02-09,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM (Sewers or sewerage wells),6.7552e+08,6.7346e+08,0,0,,,,,,,,,PCR- / sequencing-
+Q37,Env_0552,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.0655e+08,9.0855e+07,5,5.5033e-06,Inner surface of the freezer,2020/1/12,8,25,-,,ORF1ab/N,Yes,PCR- / sequencing+
+Q61,Env_0576,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.1321e+08,2.0695e+08,1,4.832e-07,Cart1,2020/1/12,6,29-31-33,-,,ORF1ab/N,Yes,PCR- / sequencing+
+Q64,Env_0579,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.2041e+08,1.204e+08,5,4.1527e-06,Cart2,2020/1/12,6,29-31-33,+,+,ORF1ab/N,Yes,PCR+ / sequencing+
+Q68,Env_0583,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.1e+08,8.7072e+07,6,6.8909e-06,Ground,2020/1/12,6,29-31-33,+,+,ORF1ab/N,Yes,PCR+ / sequencing+
+Q69,Env_0584,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.0678e+08,1.0678e+08,2,1.873e-06,Feather removal machine,2020/1/12,6,29-31-33,+,+,ORF1ab/N,Yes,PCR+ / sequencing+
+Q70,Env_0585,2020-01-12,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,1.4922e+08,1.455e+08,2,1.3745e-06,Iron container in inner room,2020/1/12,6,29-31-33,-,,ORF1ab/N,Yes,PCR- / sequencing+
+RLC-3,Env_0868,2020-02-22,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,Warehouses related to west wine of HSM,1.2286e+08,1.2225e+08,28,2.2903e-05,Storehouse bag surfaces,2020/2/22,8,25,+,36.18/36.05/32.36,RdRp/N/E,Yes,PCR+ / sequencing+
+SJ-D,Env_0862,2020-02-22,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,Warehouses related to west wine of HSM,1.5425e+08,1.5345e+08,6,3.9101e-06,Storehouse ground,2020/2/22,8,25,+,39.39/39.25/35.48,RdRp/N/E,No,PCR+ / sequencing+
+SJ-L3,Env_0865,2020-02-22,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,Warehouses related to west wine of HSM,1.3813e+08,1.3748e+08,0,0,Storehouse wire fence,2020/2/22,8,25,+,41.77/41.62/37.61,RdRp/N/E,No,PCR+ / sequencing-
+W-8-25-D1,Env_0806,2020-02-15,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.8666e+08,2.8614e+08,0,0,Ground inside the stalls,2020/2/15,8,25,+,36.77,ORF1ab,Yes,PCR+ / sequencing-
+W-8-25-D2,Env_0807,2020-02-15,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,3.3094e+08,3.3031e+08,0,0,Ground inside the stalls,2020/2/15,8,25,+,33.91,ORF1ab,Yes,PCR+ / sequencing-
+W-8-25-L,Env_0808,2020-02-15,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,2.8809e+08,2.8757e+08,0,0,Container,2020/2/15,8,25,+,34.58,ORF1ab,Yes,PCR+ / sequencing-
+W-8-25-L2,Env_0809,2020-02-15,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM,3.1168e+08,3.111e+08,0,0,Container,2020/2/15,8,25,+,37.16,ORF1ab,Yes,PCR+ / sequencing-
+WS-1-1,Env_0742,2020-02-05,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM (Sewers or sewerage wells),3.9338e+08,3.4927e+08,0,0,West sewage well 1,2020/2/5,,,+,36.00,ORF1ab,Yes,PCR+ / sequencing-
+WS-2-1,Env_0746,2020-02-05,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM (Sewers or sewerage wells),3.5528e+08,3.1357e+08,0,0,West sewage well 1,2020/2/5,,,+,37.30,ORF1ab,Yes,PCR+ / sequencing-
+WS-2-3,Env_0748,2020-02-05,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM (Sewers or sewerage wells),1.4843e+08,9.1874e+07,0,0,West sewage well 2,2020/2/5,,,+,36.72,ORF1ab,Yes,PCR+ / sequencing-
+WS-3-1,Env_0749,2020-02-05,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,East Wine of HSM (Sewers or sewerage wells),1.2561e+08,7.9723e+07,0,0,,,,,,,,,PCR- / sequencing-
+WS-4-1,Env_0751,2020-02-05,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,East Wine of HSM (Sewers or sewerage wells),1.2313e+08,7.7922e+07,0,0,,,,,,,,,PCR- / sequencing-
+WS-4-2,Env_0752,2020-02-05,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,East Wine of HSM (Sewers or sewerage wells),2.6557e+08,2.6509e+08,0,0,West sewage well 4,2020/2/5,,,+,37.10,ORF1ab,Yes,PCR+ / sequencing-
+WWS-1#,Env_0816,2020-02-15,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM (Sewers or sewerage wells),2.55e+08,2.4374e+08,0,0,West sewage well 1,2020/2/15,,,+,34.44,ORF1ab,Yes,PCR+ / sequencing-
+WWS-1#-2,Env_0817,2020-02-15,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM (Sewers or sewerage wells),4.4463e+08,4.3332e+08,0,0,West sewage well 1,2020/2/15,,,+,33.63,ORF1ab,Yes,PCR+ / sequencing-
+WWS-1#-3,Env_0818,2020-02-15,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM (Sewers or sewerage wells),3.3061e+08,2.9906e+08,0,0,West sewage well 1,2020/2/15,,,+,33.58,ORF1ab,Yes,PCR+ / sequencing-
+WWS-2#-2,Env_0820,2020-02-15,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM (Sewers or sewerage wells),2.1449e+08,2.1343e+08,4,1.8741e-06,West sewage well 2,2020/2/15,,,+,37.44,ORF1ab,Yes,PCR+ / sequencing+
+WWS-2#-3,Env_0821,2020-02-15,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM (Sewers or sewerage wells),3.4341e+08,3.4276e+08,0,0,West sewage well 2,2020/2/15,,,+,36.88,ORF1ab,Yes,PCR+ / sequencing-
+YCHC2-1-2,Env_0798,2020-02-09,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,Sewerage well in the surrounding areas,8.6805e+08,8.6553e+08,0,0,,,,,,,,,PCR- / sequencing-
+YCHC2-1-3,Env_0799,2020-02-09,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,Sewerage well in the surrounding areas,6.6263e+08,6.6072e+08,0,0,,,,,,,,,PCR- / sequencing-
+w-6-29-33,Env_0828,2020-02-15,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM (Sewers or sewerage wells),3.6774e+08,3.6626e+08,0,0,Water drain,2020/2/15,6,29-33,+,37.97,ORF1ab,Yes,PCR+ / sequencing-
+w-zong-1,Env_0829,2020-02-15,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM (Sewers or sewerage wells),4.3316e+08,4.3119e+08,0,0,Water drain,2020/2/15,1,,+,36.54,ORF1ab,Yes,PCR+ / sequencing-
+wws-1#-0,Env_0830,2020-02-15,RNA sequencing of total nucleic acids from environmental swabs for metagenomics,West Wine of HSM (Sewers or sewerage wells),5.082e+08,5.0606e+08,0,0,West sewage well 1,2020/2/15,1,,+,33.75,ORF1ab,Yes,PCR+ / sequencing-
+A20,Env_0020,,,,,,,,Gloves,2020/1/1,7,15-17,+,32.48,ORF1ab/N,Yes,PCR+ / no sequencing
+F13,Env_0313,,,,,,,,Surface of the wall ,2020/1/1,11,15,+,23.85,ORF1ab/N,Yes,PCR+ / no sequencing
+F33,Env_0333,,,,,,,,Roller shutter,2020/1/1,2,17,+,34.13,ORF1ab/N,Yes,PCR+ / no sequencing
+F54,Env_0354,,,,,,,,Ground,2020/1/1,2,14,+,25.8,ORF1ab/N,Yes,PCR+ / no sequencing
+G93,Env_0509,,,,,,,,Sewage,2020/1/1,8,19-21-23,+,33.23,ORF1ab/N,Yes,PCR+ / no sequencing
+8-25-D,Env_0717,,,,,,,,Ground inside the stalls,2020/2/3,8,25,+,35.9,ORF1ab,Yes,PCR+ / no sequencing
+WS-1-2,Env_0743,,,,,,,,West sewage well 2,2020/2/5,,,+,38.00,ORF1ab,No,PCR+ / no sequencing
+WS-1-3,Env_0744,,,,,,,,West sewage well 3,2020/2/5,,,+,34.01,ORF1ab,No,PCR+ / no sequencing
+WS-1-4,Env_0745,,,,,,,,West sewage well 4,2020/2/5,,,+,38.00,ORF1ab,No,PCR+ / no sequencing
+WS-2-2,Env_0747,,,,,,,,West sewage well 2,2020/2/5,,,+,37.65,ORF1ab,No,PCR+ / no sequencing
+WS-3-2,Env_0750,,,,,,,,West sewage well 3,2020/2/5,,,+,37.60,ORF1ab,No,PCR+ / no sequencing
+zong-1,Env_0762,,,,,,,,Water drain,2020/2/9,1,,+,34.94,ORF1ab,No,PCR+ / no sequencing
+C8,Env_0838,,,,,,,,Wall inside the stalls,2020/2/20,5,stair1-2,+,32.59/-/37.34,RdRp/N/E,No,PCR+ / no sequencing
+SJ-CS,Env_0863,,,,,,,,Storehouse weight scale,2020/2/22,8,25,+,40.21/40.1/36.37,RdRp/N/E,No,PCR+ / no sequencing
+RLC-4,Env_0867,,,,,,,,Storehouse bag surfaces,2020/2/22,8,25,+,41.71/41.53/37.31,RdRp/N/E,No,PCR+ / no sequencing
+WH-17,Env_0601,,,,,,,,floor surface swab collected from Dongxihu Market,2020/1/22,,,+,33.90,ORF1ab,No,PCR+ / no sequencing
+YCHC2-1-1,Env_0797,,,,,,,,sewerage well in surrounding area,2020/2/9,,,+,36.42,ORF1ab,No,PCR+ / no sequencing
