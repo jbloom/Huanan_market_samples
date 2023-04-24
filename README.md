@@ -1,1 +1,3 @@
 [data/CRA010170.xlsx](data/CRA010170.xlsx) is the GSA BioProject metadata sheet downloaded from the NGDC GSA page [https://ngdc.cncb.ac.cn/gsa/browse/CRA010170](https://ngdc.cncb.ac.cn/gsa/browse/CRA010170) on March-29-2023.
+
+[data/positive_table.csv](data/positive_table.csv) is a version of Supplementary Table 2 from [Liu et al (2023)](https://www.nature.com/articles/s41586-023-06043-2), taken from [this link](https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-023-06043-2/MediaObjects/41586_2023_6043_MOESM4_ESM.docx) (archived [here](https://web.archive.org/web/20230405155400/https://static-content.springer.com/esm/art%3A10.1038%2Fs41586-023-06043-2/MediaObjects/41586_2023_6043_MOESM4_ESM.docx)).
