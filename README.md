@@ -10,7 +10,7 @@ The analysis and results are described in **XXX**.
 Key results are in the [./results/](results) subdirectory.
 These include:
 
- - [results/merged_metadata.csv](results/merged_metadata.csv): metadata about the samples extracted by processing files provided on the NGDC by [Liu et al (2023)](https://www.nature.com/articles/s41586-023-06043-2).
+ - [results/metadata/merged_metadata.csv](results/metadata/merged_metadata.csv): metadata about the samples extracted by processing files provided on the NGDC by [Liu et al (2023)](https://www.nature.com/articles/s41586-023-06043-2).
  - [results/crits_christoph_data/check_sha512_vs_crits_christoph.csv](results/crits_christoph_data/check_sha512_vs_crits_christoph.csv): comparison of SHA-512 hashes for the FASTQ files downloaded from the NGDC to those reported in the earlier analysis by [Crits-Christoph et al (2023)](https://zenodo.org/record/7754299#.ZEghB-zMKX0).
  - [results/mitochondrial_genomes/retained.csv](results/mitochondrial_genomes/retained.csv): the set of chordate mitochondrial genomes to which reads were aligned for the metagenomic analysis.
  - [results/aggregated_counts/sars2_aligned_by_run.csv](results/aggregated_counts/sars2_aligned_by_run.csv): number of aligned SARS-CoV-2 reads for each sequencing run.
