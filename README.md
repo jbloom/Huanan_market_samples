@@ -23,7 +23,7 @@ These include:
 
 Note that the pipeline also produces many other results files (some of which are very large) that are not tracked in this repo.
 
-Interactive plots of the results created using [Altair](https://altair-viz.github.io/) are rendered via GitHub Pages at [https://jbloom.github.io/Huanan_market_samples/](https://jbloom.github.io/Huanan_market_samples/)
+Interactive plots of the results created using [Altair](https://altair-viz.github.io/) are rendered from the [./docs/](docs) subdirectory via GitHub Pages at [https://jbloom.github.io/Huanan_market_samples/](https://jbloom.github.io/Huanan_market_samples/)
 
 ## Understanding and running the pipeline
 The entire analysis can be run in automated fashion using [snakemake](https://snakemake.readthedocs.io/).
@@ -46,4 +46,4 @@ Below is a rulegraph of the pipeline built with:
 
     snakemake --forceall --rulegraph | dot -Tpng > rulegraph.png
 
-![Rulegraph of `snakemake` pipeline](results/rulegraph.png)
+![Rulegraph of `snakemake` pipeline](rulegraph.png)
