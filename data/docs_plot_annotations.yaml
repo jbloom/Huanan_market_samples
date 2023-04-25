@@ -1,5 +1,17 @@
 # Annotations for the plots shown via GitHub pages
 
+# Google analytics tag
+google_analytics_tag: |
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-81EG9NVQ9X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-81EG9NVQ9X');
+  </script>
+
 # suffix added to all legends
 legend_suffix: |
   See [https://github.com/jbloom/Huanan_market_samples](https://github.com/jbloom/Huanan_market_samples)

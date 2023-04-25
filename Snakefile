@@ -729,10 +729,12 @@ rule format_plot_for_docs:
     output:
         plot="docs/{plot}.html",
         markdown=temp("docs/{plot}.md"),
+        google_analytics_tag=temp("docs/google_analytics_tag_{plot}.txt"),
     params:
         annotations=lambda wc: docs_plot_annotations["plots"][wc.plot],
         url="https://jbloom.github.io/Huanan_market_samples",
-        legend_suffix=docs_plot_annotations["legend_suffix"]
+        legend_suffix=docs_plot_annotations["legend_suffix"],
+        google_analytics_tag=docs_plot_annotations["google_analytics_tag"].replace('"', '\"'),
     conda:
         "environment.yml"
     shell:
@@ -740,12 +742,14 @@ rule format_plot_for_docs:
         echo "## {params.annotations[title]}\n" > {output.markdown}
         echo "{params.annotations[legend]}\n\n" >> {output.markdown}
         echo "{params.legend_suffix}" >> {output.markdown}
+        echo "{params.google_analytics_tag}" > {output.google_analytics_tag}
         python {input.script} \
             --chart {input.plot} \
             --markdown {output.markdown} \
             --site {params.url} \
             --title "{params.annotations[title]}" \
             --description "{params.annotations[title]}" \
+            --google_analytics_tag {output.google_analytics_tag} \
             --output {output.plot}
         """
 

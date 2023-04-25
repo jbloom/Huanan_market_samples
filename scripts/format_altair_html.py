@@ -12,7 +12,9 @@ from bs4 import BeautifulSoup as bs
 import markdown
 
 
-def annotate_altair_chart(chart_html, annotation_md, twitter_card):
+def annotate_altair_chart(
+    chart_html, annotation_md, twitter_card, google_analytics_tag,
+):
     """
     This function annotates an altair chart with a twitter card and markdown
     description.
@@ -26,6 +28,8 @@ def annotate_altair_chart(chart_html, annotation_md, twitter_card):
         Path to a text file with markdown description to appended to body.
     twitter_card: dict
         Site name, title, description and optionally image for Twitter card.
+    google_analytics_tag : str
+        Path to text with Google analytics tag.
 
     Returns
     -------
@@ -85,7 +89,19 @@ def annotate_altair_chart(chart_html, annotation_md, twitter_card):
         "#vis input, #vis label, #vis span {font-size: 14px; margin: 0px 3px 1px 0px;}"
     )
 
-    return page.prettify()
+    html_str = page.prettify()
+
+    if google_analytics_tag:
+        with open(google_analytics_tag) as f:
+            tag = f.read()
+        if not tag.endswith("\n"):
+            tag = tag + "\n"
+        if html_str.count("</head>\n") == 1:
+            html_str = html_str.replace("</head>\n", "</head>\n" + tag)
+        else:
+            raise ValueError("failed to find exactly one tag end")
+
+    return html_str
 
 
 if __name__ == "__main__":
@@ -138,6 +154,13 @@ if __name__ == "__main__":
     )
 
     parser.add_argument(
+        "--google_analytics_tag",
+        type=str,
+        required=False,
+        help="Path to file containing Google analytics tag.",
+    )
+
+    parser.add_argument(
         "--output",
         type=str,
         required=True,
@@ -156,7 +179,7 @@ if __name__ == "__main__":
         twitter_dictionary["image"] = args.image
     # Get the formated HTML as a string
     annotated_chart = annotate_altair_chart(
-        args.chart, args.markdown, twitter_dictionary
+        args.chart, args.markdown, twitter_dictionary, args.google_analytics_tag,
     )
     # Write out to a file
     with open(args.output, "w") as outfile:
