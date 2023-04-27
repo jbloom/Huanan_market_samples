@@ -14,6 +14,8 @@ google_analytics_tag: |
 
 # suffix added to all legends
 legend_suffix: |
+  See [Bloom et al, bioRxiv, DOI 10.1101/2023.04.25.538336](https://www.biorxiv.org/content/10.1101/2023.04.25.538336v1) for a paper describing this analysis.
+
   See [https://github.com/jbloom/Huanan_market_samples](https://github.com/jbloom/Huanan_market_samples)
   for results files and a fully reproducible computational pipeline.
 
