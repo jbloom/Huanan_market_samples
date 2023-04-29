@@ -245,6 +245,8 @@ rule preprocess_paired_fastq:
             -o {output.r1} \
             -O {output.r2} \
             -w {threads} \
+            --trim_poly_g \
+            --trim_poly_x \
             --json {output.json} \
             --html {output.html}
         """
