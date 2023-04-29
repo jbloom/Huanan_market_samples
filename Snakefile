@@ -56,6 +56,7 @@ rule all:
         "results/contigs/counts_and_coverage/processed_counts.csv",
         plot_htmls.values(),
         "results/plots/susceptible_table.csv",
+        "results/plots/raccoon_dog_long.csv",
         "results/plots/susceptible_table.tex",
         "results/rt_qpcr/rt_qpcr.csv",
         expand("docs/{plot}.html", plot=plot_htmls),
@@ -713,6 +714,7 @@ rule make_plots:
         **plot_htmls,
         susceptible_csv="results/plots/susceptible_table.csv",
         susceptible_tex="results/plots/susceptible_table.tex",
+        raccoon_dog_long="results/plots/raccoon_dog_long.csv",
     log:
         notebook="results/plots/make_plots.ipynb",
     conda:

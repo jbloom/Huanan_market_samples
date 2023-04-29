@@ -19,6 +19,7 @@ These include:
  - [results/aggregated_counts/mito_composition_by_sample.csv](results/aggregated_counts/mito_composition_by_sample.csv): chordate mitochondrial composition for each sample.
  - [results/rt_qpcr/rt_qpcr.csv](results/rt_qpcr/rt_qpcr.csv): SARS-CoV-2 content of samples determined in current sequencing and Ct values from RT-qPCR reported by [Liu et al (2023)](https://www.nature.com/articles/s41586-023-06043-2).
  - [results/plots/susceptible_table.csv](results/plots/susceptible_table.csv): SARS-CoV-2 content of samples with high mitochondrial composition from susceptible species sold live at the market.
+ - [results/plots/raccoon_dog_long.csv](results/plots/raccoon_dog_long.csv): SARS-CoV-2 content of all samples ordered by the percent of the chordate mitochondrial composition from raccoon dogs.
  - [results/contigs/counts_and_coverage/processed_counts.csv](results/contigs/counts_and_coverage/processed_counts.csv): results for aligning assembled contigs to full genomes for selected samples and genomes.
 
 Note that the pipeline also produces many other results files (some of which are very large) that are not tracked in this repo.
