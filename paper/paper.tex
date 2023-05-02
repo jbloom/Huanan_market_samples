@@ -119,7 +119,7 @@ This analysis confirmed that the dataset released on the NGDC contained unmodifi
 
 \subsection{Analysis of mitochondrial sequences validates mammalian metagenomics by Crits-Christoph et al, and also finds abundant non-mammalian chordates}
 To determine the metagenomic content of the samples, I performed an analysis that conceptually parallels that described by \citet{crits2023genetic}.
-Throughout this paper, I report results only for the 169 samples described by the Chinese CDC as ``RNA sequencing of total nucleic acids from environmental swabs for metagenomics,'' and exclude the 4 samples from amplicon-based sequencing of SARS-CoV-2 and the 3 samples that involved RNA sequencing for viral whole-genome assembly (Table~\ref{tab:metadata}).
+Throughout this paper, I report results only for sequencing described by the Chinese CDC as ``RNA sequencing of total nucleic acids from environmental swabs for metagenomics,'' and exclude the small number of samples that involve amplicon-based sequencing of SARS-CoV-2 or RNA sequencing for viral whole-genome assembly (Table~\ref{tab:metadata}).
 
 Briefly, the deep sequencing data were pre-processed to retain only high-quality reads.
 These reads were aligned to the SARS-CoV-2 genome and a representative set of chordate mitochondrial genomes.
@@ -278,6 +278,7 @@ Each point represents a different environmental sample, and the orange text show
 The scales are log10, and values of zero (which cannot be plotted on a log scale) are shown as half the minimum non-zero value observed across all samples.
 See \url{https://jbloom.github.io/Huanan_market_samples/per_species_corr_faceted.html} for an interactive version of this plot that enables mouseover of points for sample details, selection only of samples collected on specific dates or containing at least one SARS-CoV-2 reads, adjustment of scales from log to linear, and adjustment of mitochondrial percent to be of reads mapping to any mitochondria rather than of all reads.
 See \url{https://jbloom.github.io/Huanan_market_samples/per_species_corr_single.html} for similar plots for individual species.
+The plots shown here include only samples with at least 200 aligned mitochondrial reads; that option can be adjusted in the interactive plots.
 \label{fig:per_species_corr_faceted}
 }
 \end{figure*}
@@ -436,7 +437,8 @@ I then used \texttt{CoverM} (\url{https://github.com/wwood/CoverM}) to compute t
 The resulting statistics on alignment counts to SARS-CoV-2 and the mitochondrial genomes for each sequencing run are in Tables~\ref{tab:mito_composition_by_run} and \ref{tab:sars2_aligned_by_run}.
 To get per-sample alignment counts, I aggregated counts for all runs for each sample to get the statistics in Tables~\ref{tab:mito_composition_by_sample} and \ref{tab:sars2_aligned_by_sample}.
 For the mitochondrial genome compositions and all other analyses in this paper, I only included only the samples from metagenomic sequencing, which are annotated with the description ``RNA sequencing of total nucleic acids from environmental swabs for metagenomics'' in the metadata provided by \citet{liu2023surveillance}.
-Further, compositions were only computed for runs with at least 500 reads aligning across all mitochondrial, and species were only retained if they had at least 20\% of all aligned mitochondrial reads and at least 4000 covered based for at least one run.
+Species were only retained in the annotated reference set if they had at least 20\% of all aligned mitochondrial reads and at least 4000 covered based for at least one run, or if they are one of the species specified under the \textit{mitochondrial\_genomes\_to\_keep} key in \url{https://github.com/jbloom/Huanan_market_samples/blob/main/config.yaml}.
+The species specified under that key include all susceptible species studied in \citet{crits2023genetic}, so this criteria does not lead too dropping of any of the species in their study.
 
 \subsection{Assembling and aligning contigs for sample Q61}
 For sample Q61, contigs were also assembled and aligned to full genomes to facilitate comparison to \citet{crits2023genetic}, who also performed a similar analysis only for this sample.
@@ -471,6 +473,7 @@ JDB is on the scientific advisory boards of Apriori Bio, Aerium Therapeutics, In
 Correlation between percent of all reads mapping to SARS-CoV-2 and the mitochondrial genome of each of the indicated species only among samples collected after the first (Jan-1-2020) sampling date.
 Except for the fact that this figure excludes samples from the first date, this figure is otherwise the same as Figure~\ref{fig:per_species_corr_faceted}.
 See \url{https://jbloom.github.io/Huanan_market_samples/per_species_corr_faceted.html} for an interactive version of this plot with numerous options, including allowing further refinement of the sample date range.
+The plots shown here include only samples with at least 200 aligned mitochondrial reads; that option can be adjusted in the interactive plots.
 \label{fig:per_species_corr_faceted_later_dates}
 }
 \end{figure*}
@@ -484,6 +487,7 @@ The correlations between the amount of SARS-CoV-2 and mitochondrial genetic mate
 The top row shows correlations for human, and the bottom row shows correlations for raccoon dog.
 Each column shows the correlations calculated different ways: with a log or linear scale, calculating the mitochondrial percent to be of all reads or just reads mapping to the mitochondria, and showing all samples or only those with at least one SARS-CoV-2 read.
 See \url{https://jbloom.github.io/Huanan_market_samples/per_species_corr_single.html} for interactive versions of the plot panels.
+The plots shown here include only samples with at least 200 aligned mitochondrial reads; that option can be adjusted in the interactive plots.
 \label{fig:different_corrs}
 }
 \end{figure*}

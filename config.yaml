@@ -109,8 +109,9 @@ metagenomic_descriptions:
 mito_composition_filters:
   # only keep runs with  >= this many primary alignments across all mitochondrial genomes
   min_alignments_run_filter: 500
-  # only keep mitochondrial genomes that have >= this percentage of all primary
-  # aligned reads for at least one run
+  # Only keep mitochondrial genomes that have >= this percentage of all primary
+  # aligned reads for at least one run OR if they are specified in the set of species
+  # to retain (see `mitochondrial_genomes_to_keep`).
   min_percent_aligned_genome_filter: 20
   # only keep mitochondrial genomes that have >= this many covered bases for at least one one run
   min_coverage_aligned_genome_filter: 4000
