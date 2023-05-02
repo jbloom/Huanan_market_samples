@@ -1,4 +1,4 @@
-species,sample,% mitochondrial reads from species,reads aligning to SARS2,total pre-processed reads
+species,sample,% chordate mitochondrial reads from species,reads aligning to SARS2,total pre-processed reads
 raccoon dog,HJ200048-20200112-1,79.8,0,123116540
 raccoon dog,HJ200050-20200112-1,69.5,0,101361076
 raccoon dog,HJ200017-20200112-1,61.5,0,107421631

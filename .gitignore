@@ -34,6 +34,8 @@ results/contigs/counts_and_coverage/*
 results/plots/*
 !results/plots/susceptible_table.csv
 !results/plots/susceptible_table.tex
+!results/plots/susceptible_mammal_table.csv
+!results/plots/susceptible_mammal_table.tex
 !results/plots/raccoon_dog_long.csv
 
 !results/rt_qpcr
