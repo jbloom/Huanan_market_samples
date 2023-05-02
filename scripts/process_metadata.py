@@ -25,13 +25,18 @@ assert set(samples.columns).intersection(experiments.columns) == {"Accession", "
 
 metadata = (
     samples
-    .drop(columns="ID")
+    .drop(columns=["ID", "Public description"])
     .rename(columns={"Accession": "BioSample accession"})
     .merge(
         (
             experiments
             .drop(columns="ID")
-            .rename(columns={"Accession": "Experiment accession"})
+            .rename(
+                columns={
+                    "Accession": "Experiment accession",
+                    "Library Construction / Experimental Design": "description",
+                },
+            )
         ),
         on="BioSample accession",
         validate="one_to_many",
@@ -94,7 +99,7 @@ metadata = (
 first_cols = [
     "Sample name",
     "Sample title",
-    "Public description",
+    "description",
     "Collection date",
     "Run accession",
     "BioSample accession",
