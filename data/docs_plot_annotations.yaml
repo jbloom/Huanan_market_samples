@@ -14,7 +14,7 @@ google_analytics_tag: |
 
 # suffix added to all legends
 legend_suffix: |
-  See [Bloom et al, bioRxiv, DOI 10.1101/2023.04.25.538336](https://www.biorxiv.org/content/10.1101/2023.04.25.538336v1) for a paper describing this analysis.
+  See [Bloom et al, bioRxiv, DOI 10.1101/2023.04.25.538336](https://doi.org/10.1101/2023.04.25.538336) for a paper describing this analysis.
 
   See [https://github.com/jbloom/Huanan_market_samples](https://github.com/jbloom/Huanan_market_samples)
   for results files and a fully reproducible computational pipeline.
@@ -189,3 +189,16 @@ plots:
       This plot is modeled on that shown in Figure 4A of the original
       [Liu et al (2022) Research Square](https://assets.researchsquare.com/files/rs-1370392/v1_covered.pdf)
       pre-print.
+
+  ct_vs_reads:
+    title: Correlation of RT-qPCR and SARS-CoV-2 reads in deep sequencing
+    legend: |
+      Correlation between RT-qPCR values reported by Chinese CDC in
+      Supplementary Table 2 from [Liu et al (2023)](https://www.nature.com/articles/s41586-023-06043-2)
+      and the log10 percent of all high-quality reads that map to SARS-CoV-2.
+      The plot shows only metagenomic samples that were deep sequenced. Ct values for samples
+      not listed as positive in the Chinese CDC table are assumed to be 40 (the cutoff, since all samples
+      are reported tested), and samples with no SARS-CoV-2 reads in the sequencing are assigned a value
+      half the lowest value for samples with reads to avoid having to plot zero values on a log scale.
+
+      Mouseover points for details on specific samples.

@@ -61,7 +61,8 @@ rule all:
         "results/plots/susceptible_table.tex",
         "results/plots/susceptible_mammal_table.tex",
         "results/rt_qpcr/rt_qpcr.csv",
-        expand("docs/{plot}.html", plot=plot_htmls),
+        "results/rt_qpcr/ct_vs_reads.html",
+        expand("docs/{plot}.html", plot=list(plot_htmls) + ["ct_vs_reads"]),
         "docs/index.html",
 
 
@@ -693,6 +694,7 @@ rule rt_qpcr:
         sars2_aligned_by_sample=aggregated_counts_csvs["sars2_aligned_by_sample"],
     output:
         csv="results/rt_qpcr/rt_qpcr.csv",
+        html="results/rt_qpcr/ct_vs_reads.html",
     params:
         metagenomic_descriptions=config["metagenomic_descriptions"],
     log:
@@ -732,7 +734,11 @@ rule make_plots:
 rule format_plot_for_docs:
     """Format a specific plot for the GitHub pages docs."""
     input:
-        plot=lambda wc: plot_htmls[wc.plot],
+        plot=lambda wc: (
+            plot_htmls[wc.plot]
+            if wc.plot != "ct_vs_reads"
+            else rules.rt_qpcr.output.html
+        ),
         script="scripts/format_altair_html.py",
     output:
         plot="docs/{plot}.html",
