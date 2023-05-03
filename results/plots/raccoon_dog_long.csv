@@ -1,4 +1,4 @@
-sample,% chordate mitochondria from raccoon dog,% chordate mitochondria from raccoon dog,reads aligning to SARS2,total pre-processed reads,Collection date,top_chordates,top_mammals
+sample,% chordate mitochondria from raccoon dog,% mammal mitochondria from raccoon dog,reads aligning to SARS2,total pre-processed reads,Collection date,top_chordates,top_mammals
 HJ200048-20200112-1,79.8,91.9,0,123116540,2020-01-12,"raccoon dog (80%), spot-billed duck (8%), other (7%), hoary bamboo rat (5%)","raccoon dog (92%), hoary bamboo rat (6%), other (2%)"
 HJ200050-20200112-1,69.5,93.8,0,101361076,2020-01-12,"raccoon dog (69%), spot-billed duck (12%), pigeon (12%), other (7%)","raccoon dog (94%), other (6%)"
 HJ200017-20200112-1,61.5,80.6,0,107421631,2020-01-12,"raccoon dog (61%), other (26%), spotted dove (9%), hog badger (4%)","raccoon dog (81%), other (14%), hog badger (5%)"
