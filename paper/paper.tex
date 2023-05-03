@@ -49,7 +49,7 @@ Both studies concurred that the samples contained genetic material from a variet
 However, neither study systematically analyzed the relationship between the amount of genetic material from SARS-CoV-2 and different animal species.
 Here I implement a fully reproducible computational pipeline that jointly analyzes the number of reads mapping to SARS-CoV-2 and the mitochondrial genomes of chordate species across the full set of samples.
 I validate the presence of genetic material from numerous species, and calculate mammalian mitochondrial compositions similar to those reported by \citet{crits2023genetic}.
-However, the number of SARS-CoV-2 reads is not consistently correlated with reads mapping to any non-human susceptible species.
+However, the number of SARS-CoV-2 reads is not consistently correlated with reads mapping to non-human susceptible species.
 For instance, 14 samples have $>$20\% of their chordate mitochondrial material from raccoon dogs, but only one of these samples contains any SARS-CoV-2 reads, and that sample only has 1 of $\sim$200,000,000 reads mapping to SARS-CoV-2.
 Instead, SARS-CoV-2 reads are most correlated with reads mapping to various fish, such as catfish and largemouth bass.
 These results suggest that while metagenomic analysis of the environmental samples is useful for identifying animals or animal products sold at the market, co-mingling of animal and viral genetic material is unlikely to reliably indicate whether any animals were infected by SARS-CoV-2.
@@ -98,8 +98,8 @@ However, like \citet{crits2023genetic}, the new version of the Chinese CDC paper
 
 Here I systematically analyze the relationship between the metagenomic and SARS-CoV-2 content of all environmental samples for which deep sequencing data are available.
 This analysis confirms that samples contain genetic material from a wide range of species, including some that are susceptible to SARS-CoV-2.
-However, the samples that contain abundant material from raccoon dogs and other non-human susceptible species generally contain little or no SARS-CoV-2 reads.
-Furthermore, the number of SARS-CoV-2 reads is not consistently correlated with reads mapping to any non-human susceptible species, but is instead most correlated with reads from species that are implausible candidates for having been infected with SARS-CoV-2.
+However, the samples that contain abundant material from raccoon dogs and other non-human susceptible species usually contain little or no SARS-CoV-2 reads.
+Furthermore, the number of SARS-CoV-2 reads is not consistently correlated with reads mapping to non-human susceptible species, but is instead generally most correlated with reads from species that are implausible candidates for having been infected with SARS-CoV-2.
 These results suggest that SARS-CoV-2 was widespread at the market by January 2020, and therefore that co-mingling of viral and animal genetic material in environmental samples collected at that time is unlikely to be informative about the original source of the outbreak.
 
 \section{Results}
@@ -262,7 +262,7 @@ To more systematically examine the relationship between SARS-CoV-2 and genetic m
 If the correlation is calculated on a log-log scale as was done in the original Chinese CDC preprint~\citep{liu2022surveillance}, then the five species whose genetic material is most correlated with the abundance of SARS-CoV-2 are (in order) largemouth bass, catfish, cow, carp, and snakehead fish (Figure~\ref{fig:per_species_corr_faceted}).
 None of these species are likely hosts for SARS-CoV-2: non-mammals are not thought to be infectable, and cows were probably sold as animal products rather than live animals.
 There is a modest correlation between the abundance of SARS-CoV-2 and human mitochondrial material, but this correlation is weaker than for several other species (Figure~\ref{fig:per_species_corr_faceted}).
-There is a negative correlation between the abundance of SARS-CoV-2 and mitochondrial material from raccoon dogs and hoary bamboo rats, and at most a very weak positive correlation for other susceptible species thought to have been sold live at the market (Figure~\ref{fig:per_species_corr_faceted}).
+There is a negative correlation between the abundance of SARS-CoV-2 and mitochondrial material from raccoon dogs and hoary bamboo rats, and at most a weak positive correlation for other susceptible species thought to have been sold live at the market (Figure~\ref{fig:per_species_corr_faceted}).
 
 Furthermore, the correlations are highly contingent on the sample set and details of how the statistics are calculated.
 For instance, if we exclude the first sampling timepoint and only look at samples calculated on January-12-2020 or later, then the most correlated species is the Oriental rat snake, with the correlation for humans becoming even weaker and that for raccoon dogs remaining negative (Figure~\ref{fig:per_species_corr_faceted_later_dates}).
@@ -288,23 +288,26 @@ The original Chinese CDC preprint from 2022 had in its fourth figure a plot show
 The preprint annotated one point in the plot to indicate there was a correlation between the amount of SARS-CoV-2 and human genetic material.
 However, the preprint failed to annotate the identity of any other species with genetic material that correlated with SARS-CoV-2 abundance.
 This omission of full species annotations in the correlation plot was widely noted, including in two news articles in \textit{Science} in 2022~\citep{cohen2022anywhere,cohen2022studies}, and a third article in 2023 that re-printed the incompletely annotated plot~\citep{cohen2023unearthed}.
-However, neither of the two more recent studies of the metagenomic data have remedied this omission: \citet{crits2023genetic} did not report any analysis of the abundance of SARS-CoV-2 reads, and the published 2023 version of the Chinese CDC preprint simply dropped the plot altogether~\citep{liu2023surveillance}.
+However, neither of the two more recent studies of the metagenomic data have addressed this omission: \citet{crits2023genetic} did not report any analysis of the abundance of SARS-CoV-2 reads, and the published 2023 version of the Chinese CDC preprint simply dropped the plot altogether~\citep{liu2023surveillance}.
 
 \begin{figure}
 \includegraphics[width=\linewidth]{figures/overall_corr/overall_corr.pdf}
 \caption{
-Correlations between SARS-CoV-2 content and mitochondrial content for all species calculated for samples containing at least one SARS-CoV-2 read from any sampling date (left) or just just the January-12-2020 date when most of the wildlife sampling occurred.
-This plot is designed to mimic the fourth figure of \citet{liu2022surveillance}, and so only shows samples with at least one SARS-CoV-2 read and calculates correlations between the log number of SARS-CoV-2 reads versus the log number of species mitochondrial reads for consistency with \citet{liu2022surveillance}.
-See the interactive version at \url{https://jbloom.github.io/Huanan_market_samples/overall_corr.html} to mouseover all points for details, select different subsets of samples, and calculate the correlations on a linear or log scale.
+Correlations between SARS-CoV-2 content and mitochondrial content for all species.
+Top row show just samples containing at least one SARS-CoV-2 read and bottom row shows samples regardless of SARS-CoV-2 content; left shows samples from all sampling dates and right shows just samples from the January-12-2020 date when most of the wildlife sampling occurred.
+This plot is designed to mimic the fourth figure of \citet{liu2022surveillance}.
+Some key species are labeled; see the interactive version at \url{https://jbloom.github.io/Huanan_market_samples/overall_corr.html} to mouseover all points for details, select different subsets of samples, and calculate the correlations on a linear or log scale.
 \label{fig:overall_corr}
 }
 \end{figure}
 
 To remedy this omission, I used the chordate mitochondrial compositions calculated in the current study to generate plots analogous to that in the original Chinese CDC preprint.
-When the correlations are taken across only samples containing at least one SARS-CoV-2 read (as done in the original Chinese CDC preprint), then the genetic material of several non-human species (largemouth bass, catfish, cow, sheep, pig) is more correlated with SARS-CoV-2 reads than is human material (Figure~\ref{fig:overall_corr}).
+When the correlations are taken across all sampling dates only for samples containing at least one SARS-CoV-2 read (as done in the original Chinese CDC preprint), then the genetic material of several non-human species (largemouth bass, catfish, cow, sheep, pig) is more correlated with SARS-CoV-2 reads than is human material (Figure~\ref{fig:overall_corr}, upper left).
+If the plot is expanded to all samples (regardless of whether or not they contain SARS-CoV-2 reads), the trends are broadly similar, with fish remaining the most correlated species (Figure~\ref{fig:overall_corr}, lower left).
 It is also informative to take the correlations only across samples collected on January-12-2020, which was the date of most intensive sampling of the wildlife stalls (this is when Q61 was collected).
- For January-12-2020 samples, humans are among the species whose genetic material is most correlated with SARS-CoV-2 reads, but goat and spotted dove have roughly equivalent correlations (Figure~\ref{fig:overall_corr}).
-Raccoon dog and bamboo rat genetic material are not positively correlated with SARS-CoV-2 reads in either sample set.
+ For January-12-2020 samples that contain SARS-CoV-2 reads, humans are among the species whose genetic material is most correlated with SARS-CoV-2 reads, but goat and spotted dove have roughly equivalent correlations (Figure~\ref{fig:overall_corr}, upper right).
+ If we include January-12-2020 samples regardless of SARS-CoV-2 content, then snakehead fish and Malayan porcupine are among the most correlated species.
+Raccoon dog and bamboo rat genetic material are not positively correlated with SARS-CoV-2 reads in any of the sample sets.
 See the interactive version of Figure~\ref{fig:overall_corr} at \url{https://jbloom.github.io/Huanan_market_samples/overall_corr.html} to explore other sample subsets.
 
 Note that the correlation plots in Figure~\ref{fig:overall_corr} are not exactly identical to those in the original Chinese CDC preprint.
@@ -379,7 +382,8 @@ I suggest that future work analyzing the spatial distribution of SARS-CoV-2 acro
 Overall my study validates the approach of \citet{crits2023genetic} of using metagenomic analysis of environmental samples to identify animals and animal products sold at the Huanan Seafood Market.
 As noted by \citet{crits2023genetic}, this innovative approach could usefully inform tracing of animals supplied to the market.
 However, the results described here suggest that the utility of these metagenomic analyses does not extend to indicating whether animals at the market were actually infected by virus.
-For instance, the presence of 1 in $\sim$200,000,000 sequencing reads mapping to SARS-CoV-2 in a single sample containing raccoon dog genetic material does not suggest raccoon dogs were infected, given that material from many other species including fish is far more consistently co-mingled with SARS-CoV-2.
+For instance, the presence of 1 in $\sim$200,000,000 sequencing reads mapping to SARS-CoV-2 in a sample containing raccoon dog genetic material does not suggest raccoon dogs were infected, given that material from many other species that certainly were not infected (such as fish) is far more consistently co-mingled with SARS-CoV-2.
+Of course, the lack of association also does not disprove the possibility of infected animals at the market, particularly at a date substantially preceding the Chinese CDC's collection of samples---it simply suggests that analysis of the combined viral and animal content of the available environmental samples is not informative for shedding light on this question either way.
 
 When considered in larger context, the inability of the environmental samples to inform on the origins of the virus is unsurprising.
 These samples were all collected on January-1-2020 or later, which is at least several weeks after the Huanan Seafood Market became a superspreading site for human infections~\citep{li2020early}.
