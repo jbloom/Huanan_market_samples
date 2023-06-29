@@ -425,7 +425,7 @@ The FASTQ files were pre-processed with \texttt{fastp}~\citep{chen2018fastp} to 
 To create an mitochondrial genome alignment reference set, I followed a procedure partially analogous to that described by \citet{crits2023genetic}.
 All mitochondrial genomes in the RefSeq database were downloaded, and then filtered to retain only genomes from the phylum Chordata (in contrast, \citet{crits2023genetic} describe retaining all metazoa mitochondrial genomes).
 The reason I limited to chordate rather than metazoa mitochondrial genomes is that all chordates have very similar length mitochondrial genomes, but at the level of metazoa there is wide variation in mitochondrial genome length.
-The raccoon dog mitochondrial genome was not present in this set, so it was separately downloaded from Genbank accession KX964606.
+The Amur hedgehog mitochondrial genome was not present in this set, so it was separately downloaded from Genbank accession KX964606.
 All the mitochondrial genomes were then filtered to remove highly similar ones.
 To do this, \texttt{Mash}~\citep{ondov2016mash} was used to compute the mash distances between all pairs of mitochondrial genomes.
 To ensure the most relevant mitochondrial genomes were retained, I first specified for manual retention the genomes for all the species listed in the third supplementary file of \citet{crits2023genetic}, as well as genomes for some additional relevant species (these species are listed under the \textit{mitochondrial\_genomes\_to\_keep} key in \url{https://github.com/jbloom/Huanan_market_samples/blob/main/config.yaml}).
