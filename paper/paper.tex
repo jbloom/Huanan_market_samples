@@ -425,7 +425,14 @@ The FASTQ files with the raw deep sequencing data for all samples were downloade
 The FASTQ files were pre-processed with \texttt{fastp}~\citep{chen2018fastp} to remove low-quality reads; all tabulations of number of reads in this paper refer to the high-quality reads that passed this pre-processing step.
 
 To create an mitochondrial genome alignment reference set, I followed a procedure partially analogous to that described by \citet{crits2023genetic}.
-All mitochondrial genomes in the RefSeq database were downloaded, and then filtered to retain only genomes from the phylum Chordata (in contrast, \citet{crits2023genetic} describe retaining all metazoa mitochondrial genomes).
+Note that a similar analysis could also be implemented using more standard metagenomic analysis tools such as Kraken2~\citep{wood2019improved}, as was in fact done in the Chinese CDC study~\citep{liu2023surveillance}.
+The reasons for instead implementing the pipeline used here were as follows:
+\begin{itemize}
+\item To ensure comparability to \citet{crits2023genetic} by using an approach that parallels the one they described.
+\item To use a reference set that includes all of the potentially susceptible species sold at the market: many of these species lack full nuclear genomes on RefSeq, and one (Amur hedgehog) doesn't even have a mitochondrial genome on RefSeq. Therefore, the manual process used to build the mitochondrial reference set described below was necessary to ensure all these species were in the reference.
+\end{itemize}
+
+For the current study, all mitochondrial genomes in the RefSeq database were downloaded, and then filtered to retain only genomes from the phylum Chordata (in contrast, \citet{crits2023genetic} describe retaining all metazoa mitochondrial genomes).
 The reason I limited to chordate rather than metazoa mitochondrial genomes is that all chordates have very similar length mitochondrial genomes, but at the level of metazoa there is wide variation in mitochondrial genome length.
 The Amur hedgehog mitochondrial genome was not present in this set, so it was separately downloaded from Genbank accession KX964606.
 All the mitochondrial genomes were then filtered to remove highly similar ones.

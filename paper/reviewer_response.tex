@@ -122,6 +122,24 @@ However, I do think that hypothetically if there had been very strong patterns i
 
 2. There is very robust literature on estimating species abundance from RNASeq-type metagenomic data. Specialized tools (e.g. Kraken 2) exist for efficient and accurate classification of such reads. It would be worthwhile to explain briefly why it is necessary to develop a "de novo" pipeline. Many commonly recognized issues (e.g. short reads which are not diagnostic at species level because they are found in multiple genomes) are well understood and quantified. C-C (presumably) used contigs to address this lack of ``read-level'' precision (they are very SHORT in the data discussed), but that's a hack.
 
+\response{
+This is an excellent question.
+My primary reason for using the \textit{de novo} mitochondrial pipeline rather than something like Kraken2 was to enhance the comparability of my results to those of Crits-Christoph et al, since I thought a major question was likely to be if any discrepancies between their findings and mine were due to methodological differences.
+Crits-Christoph et al did not make the relevant code for the metagenomic analyses publicly available alongside their report, so I wrote a \textit{de novo} pipeline that mirrored what they described in the methods of their report.
+
+There are also several technical reasons why standard use of Kraken2 with off-the-shelf reference genome sets would not work:
+\begin{itemize}
+\item A standard Kraken2 pre-built genomic database would not be suitable for this study, as some of the species of particular interest (eg, bamboo rat) do not even have sequenced genomes on RefSeq.
+\item Use of mitochondrial rather than nuclear genomes is therefore probably preferable because a much wider range of species, including essentially all the potentially susceptible non-human species at the market, have fully sequenced mitochondrial genomes.
+\item Although this is not clearly explained in the methods of Crits-Christoph et al, at the current time at least one of the species that is a focus of their study (Amur hedgehog) does not even have a mitochondrial genome on RefSeq, and that sequence had to be obtained elsewhere manually from Genbank (see methods of my pre-print). Therefore, it required some steps beyond just downloading RefSeq mitochondrial genomes to build a reference set comparable to that used by Crits-Christoph et al.
+\item Given these complexities, I wanted to be sure I explicitly understood how all steps were being handled in reference building and handling of multi-mapping reads. This made me prefer a pipeline where I had written each step explicitly rather than a package like Kracken2 which streamlines several steps together.
+\end{itemize}
+
+Nonetheless, I think a similar analysis could have been performed using Kraken2, and I mostly took the approach here to ensure as much comparability as possible to the report by Crits-Christoph et al.
+
+I have added text to the portion of the manuscript that explains the methods used for this part of the analysis explaining the points above.
+}
+
 3. One specific issue with the minimap2 mapping to a concatenome is how "non-uniquely" mapping reads are dealt with. "Methods" mention something about using only primary maps, but more discussion is warranted. Otherwise, reads which could be similarly diagnostic of multiple species (assuming there are some), would simply be assigned to the first genome in the concatenated string. Maybe this is not an issue here, but should be discussed.
 
 4. I think the point of inconsistent calling of +/- SARS-CoV-2 samples by the original authors of the samples is VERY important and needs to be emphasized, especially because the positivity pattern was used to make very strong spatial correlation claims by Worobey and others. I would also suggest that instead of simply stating that 1/200M is statistically indistinguishable from 0/200M, it might be more informative to talk about limits of detection. In other words, if we accept 1/200M as a positive, we cannot rule out 0/200M as being positive, and perhaps talk about how many reads you would actually need to make some statistically sound claims (as a function of total read \#). You could put this in Table 1, for example.
