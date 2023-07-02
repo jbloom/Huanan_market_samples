@@ -131,16 +131,6 @@ This set included all the mammalian mitochondrial genomes from all species for w
 The accessions for the 4,170 chordate mitochondrial genomes that formed this set are listed in Table~\ref{tab:mito_retained}.
 The counts of reads mapping uniquely to each mitochondrial genome for each sequencing run and sample are provided in Tables~\ref{tab:mito_composition_by_run} and \ref{tab:mito_composition_by_sample}, respectively.
 
-\begin{figure*}
-\includegraphics[width=\linewidth]{figures/crits_christoph_vs_current_run_corr.pdf}
-\caption{
-Correlation of the number of read counts mapping to mitochondrial genomes of mammalian species between the current study and \citet{crits2023genetic} for each sequencing run shared across the studies.
-The correlation is calculated only across species for which \citet{crits2023genetic} provide read counts in the third supplementary figure of their report, and only for runs for which both studies find $\ge$50 reads mapping to that set of species.
-See \url{https://jbloom.github.io/Huanan_market_samples/crits_christoph_vs_current_run_corr.html} for an interactive version of this plot that enables mouseover of points for details on specific runs, and adjustment of the threshold for how many total aligned mitochondrial reads a run must contain to be shown in this plot.
-\label{fig:crits_christoph_vs_current_run_corr}
-}
-\end{figure*}
-
 I compared the mitochondrial compositions of the samples determined by my analysis to those reported by \citet{crits2023genetic}.
 Note that while \citet{crits2023genetic} describe aligning the sequencing data to all metazoa mitochondria, they only report alignment counts for mammals.
 The aligned read counts for mammals from my analysis are highly correlated with those reported by \citet{crits2023genetic} for all sequencing runs with a reasonable number of total counts (Figure~\ref{fig:crits_christoph_vs_current_run_corr}).
@@ -486,6 +476,18 @@ JDB is on the scientific advisory boards of Apriori Bio, Aerium Therapeutics, In
 \setcounter{figure}{0}
 \renewcommand{\thetable}{S\arabic{table}}
 \setcounter{table}{0}
+
+\clearpage
+
+\begin{figure*}
+\includegraphics[width=\linewidth]{figures/crits_christoph_vs_current_run_corr.pdf}
+\caption{
+Correlation of the number of read counts mapping to mitochondrial genomes of mammalian species between the current study and \citet{crits2023genetic} for each sequencing run shared across the studies.
+The correlation is calculated only across species for which \citet{crits2023genetic} provide read counts in the third supplementary figure of their report, and only for runs for which both studies find $\ge$50 reads mapping to that set of species.
+See \url{https://jbloom.github.io/Huanan_market_samples/crits_christoph_vs_current_run_corr.html} for an interactive version of this plot that enables mouseover of points for details on specific runs, and adjustment of the threshold for how many total aligned mitochondrial reads a run must contain to be shown in this plot.
+\label{fig:crits_christoph_vs_current_run_corr}
+}
+\end{figure*}
 
 \clearpage
 
