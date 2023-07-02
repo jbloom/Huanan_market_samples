@@ -96,9 +96,29 @@ Comments to the Author
 
 In this paper, Bloom performs an independent analysis of metagenomic environmental samples from the Huanan Seafood market obtained through Chinese surveillance efforts. Because of the extensive press coverage and vigorous debates on social media regarding various claims and counter-claims about whether or not these data can be used to argue that potential animal intermediate hosts of SARS-CoV-2 (e.g. infected raccoon dogs) were present in the market, Bloom's analysis is valuable. Without this context, it would not be remarkable or publishable. However, it provides a very important null result, and also highlights a number of questionable scientific practices and overzealous interpretations by others. It should be therefore be published. I also commend Bloom on his unfailing commitment to reproducibility, with all code, and results made available (and usable)
 
+\response{
+I agree that this paper essentially just shows that these samples don't tell us much about the origin of the virus.
+Normally, that would not be a finding of particular interest, but because there has been so much intense speculation about this question this paper is an example where an inconclusive or null result (simply showing that the data can't answer the question) is of interest.
+
+I am glad the reviewer found the code and plots useful, and am hopeful that others have also used them to explore these data more.
+}
+
 I have several specific comments/suggestions which I believe could strengthen the manuscript and improve its readability
 
 1. I think it is critically important to specifically state that EVEN IF there was strong positive correlation between mammalian read counts and SC-2 read counts, it would still not be possible to use these data to argue that ANY particular animal was infected. Correlation $\ne$ causation, and there are too many confounders to note.
+
+\response{
+I am not certain agree with this point (see also the last point made by Reviewer 1 and my response).
+
+I fully agree that these particular data aren't sufficient to tell either way whether any animal was infected.
+But one can hypothetically imagine a scenario in which there was an extremely strong correlation between SARS-CoV-2 content and genetic material from a single species.
+For instance, if all the samples with appreciable SARS-CoV-2 were dominated by raccoon dog material and no other samples had any SARS-CoV-2, that would in my view be strong evidence for infected raccoon dogs.
+Likewise if all the samples with appreciable SARS-CoV-2 were dominated by human genetic material it would strongly suggest humans were shedding the virus.
+Of course, in actuality it turns out that there isn't any trend like that, and to the extent there is any correlation it is with species that don't make sense as having been infected.
+So I fully agree that it turns out that these samples are not sufficient to show that any particular animal was infected, and there are plenty of reasons we can see in hindsight why this is the case (samples collected late, low viral content, lots of mixing of material from different species, samples collected at different times, etc).
+
+However, I do think that hypothetically if there had been very strong patterns in the data it could have provided strong evidence for infected animals of a particular species, so I don't really feel comfortable stating that the samples could not have been informative even in principle.
+}
 
 2. There is very robust literature on estimating species abundance from RNASeq-type metagenomic data. Specialized tools (e.g. Kraken 2) exist for efficient and accurate classification of such reads. It would be worthwhile to explain briefly why it is necessary to develop a "de novo" pipeline. Many commonly recognized issues (e.g. short reads which are not diagnostic at species level because they are found in multiple genomes) are well understood and quantified. C-C (presumably) used contigs to address this lack of ``read-level'' precision (they are very SHORT in the data discussed), but that's a hack.
 
