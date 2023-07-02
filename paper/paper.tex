@@ -129,7 +129,7 @@ These reads were aligned to the SARS-CoV-2 genome and a representative set of ch
 %The set of mitochondrial genomes was assembled by downloading all NCBI RefSeq genomes, filtering for those from chordates, and removing genomes that were highly similar to other retained genomes (within a Mash distance of $<$0.07).
 This set included all the mammalian mitochondrial genomes from all species for which alignments were reported in \citet{crits2023genetic}.
 The accessions for the 4,170 chordate mitochondrial genomes that formed this set are listed in Table~\ref{tab:mito_retained}.
-The counts of reads mapping to each mitochondrial genome for each sequencing run and sample are provided in Tables~\ref{tab:mito_composition_by_run} and \ref{tab:mito_composition_by_sample}, respectively.
+The counts of reads mapping uniquely to each mitochondrial genome for each sequencing run and sample are provided in Tables~\ref{tab:mito_composition_by_run} and \ref{tab:mito_composition_by_sample}, respectively.
 
 \begin{figure*}
 \includegraphics[width=\linewidth]{figures/crits_christoph_vs_current_run_corr.pdf}
@@ -446,6 +446,8 @@ This concatenation of the SARS-CoV-2 and mitochondrial genomes served as the ref
 
 The sequencing reads were then aligned to this genome using \texttt{minimap2}~\citep{li2018minimap2} in the \texttt{sr} (short-read) mode.
 The resulting alignments were filtered to only retain primary alignments with mapping quality of at least 4.
+Note that one effect of counting only primary alignments with mapping quality $>$0 (4 in this case) is to only count reads that map uniquely---that is, they map better to the mitochondrial genome of one species than all other species in the reference.
+This is because although \texttt{minimap2} assigns the primary mapping randomly  if there are multiple sequences in the reference with equally good mappings, a read will only have a mapping quality that exceeds zero if it maps to one location better than all other locations.
 
 I then used \texttt{CoverM} (\url{https://github.com/wwood/CoverM}) to compute the number of aligned reads for each run, requiring alignment lengths of at least 40 nucleotides with at least 95\% identity, and excluding the 100 nucleotides at the contig ends.
 The resulting statistics on alignment counts to SARS-CoV-2 and the mitochondrial genomes for each sequencing run are in Tables~\ref{tab:mito_composition_by_run} and \ref{tab:sars2_aligned_by_run}.

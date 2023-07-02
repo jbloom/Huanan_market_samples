@@ -142,6 +142,27 @@ I have added text to the portion of the manuscript that explains the methods use
 
 3. One specific issue with the minimap2 mapping to a concatenome is how "non-uniquely" mapping reads are dealt with. "Methods" mention something about using only primary maps, but more discussion is warranted. Otherwise, reads which could be similarly diagnostic of multiple species (assuming there are some), would simply be assigned to the first genome in the concatenated string. Maybe this is not an issue here, but should be discussed.
 
+\response{
+This is a great question, because as the reviewer notes the number of aligned reads will depend on how non-uniquely mapping reads are handled.
+Briefly, these are reads that map to two different species in the reference equally well.
+This happens with some reads, although the rate at which it occurs is reduced by use of only mitochondrial genomes in the reference (which are much shorter than nuclear genomes) and the filtering of the reference set to remove nearly identical mitochondrial genomes.
+
+The current pipeline only counts reads that map better to one species than any other species.
+As the reviewer notes, if we simply took all primary alignments that would not be sufficient to guarantee consideration of only uniquely best mapping reads, because if a read maps equally well to two sequences (ie, species) in the reference then \texttt{minimap2} (the aligner used here) will randomly assign the primary mapping to one of the two.
+(Note \texttt{minimap2} chooses the primary alignment randomly among equally good hits, not by taking the first of the concatenated genome.)
+So primary aligned reads are \emph{not} guaranteed to be reads that have uniquely best mapping locations, and so could match equally well to multiple species.
+
+However, as described briefly in the Methods of the original version of my paper, my analysis only counts primary mappings that \emph{also have a mapping quality of at least 4}.
+The mapping quality is an indicator of how confidently a read maps to a specific location in the reference versus all other locations, and read will only have a mapping quality $>$0 if the primary mapping is better than all other mappings.
+Therefore, the combined requirement that reads be primary and have a mapping quality greater than zero has the effect of only counting reads that uniquely map best to just one species.
+
+I have elaborated to better explain this point in the relevant section of the Methods, as suggested by the reviewer.
+
+Note also that in the \texttt{config.yaml} file for the pipeline, you can change the minimum mapping quality from 4 to 0 and re-run the pipeline.
+If you do that, non-uniquely mapping reads are assigned randomly to one of the best-mapping reference species, which has the net effect (averaged over many reads) of giving a fractional score for these reads (eg, 0.5 for a read that maps to two species).
+If you re-run the pipeline with this option, you will see that although the quantitative results shift some, the qualitative conclusions are largely unchanged.
+}
+
 4. I think the point of inconsistent calling of +/- SARS-CoV-2 samples by the original authors of the samples is VERY important and needs to be emphasized, especially because the positivity pattern was used to make very strong spatial correlation claims by Worobey and others. I would also suggest that instead of simply stating that 1/200M is statistically indistinguishable from 0/200M, it might be more informative to talk about limits of detection. In other words, if we accept 1/200M as a positive, we cannot rule out 0/200M as being positive, and perhaps talk about how many reads you would actually need to make some statistically sound claims (as a function of total read \#). You could put this in Table 1, for example.
 
 5. I think several figures can be removed from the printed manuscript without information loss. For example Figure 1 shows a lot of near ~1 correlations, and Figure 4 shows a lot of "Rorschach blot" scatter-shots of points.
