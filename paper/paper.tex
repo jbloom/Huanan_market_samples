@@ -323,7 +323,7 @@ Subsequent studies that have re-analyzed the Chinese CDC data have re-used their
 \begin{table}
 \caption{
 Inconsistency in criteria used to classify SARS-CoV-2 positivity in Chinese CDC study, illustrated with four example samples.
-There is no consistent rationale for classifying Q61 as positive but E-10-29-2 and A1 as negative: all three were reported negative by RT-qPCR, and A1 was not analyzed by sequencing while the difference in the number of SARS-CoV-2 reads between Q61 and E-10-29-2 is not statistically significant.
+There is no consistent rationale for classifying Q61 as positive but E-10-29-2 and A1 as negative: all three were reported negative by RT-qPCR, and A1 was not analyzed by sequencing while the difference in the number of SARS-CoV-2 reads between Q61 and E-10-29-2 is not statistically significant ($P = 1$ for both Fisher exact or $\chi^2$ test).
 RT-qPCR results are from the second supplementary table of \citet{liu2023surveillance} (or equivalently the first table of \citet{liu2022surveillance}).
 \label{tab:consistency}
 }
@@ -344,10 +344,14 @@ A1 & negative & not sequenced & negative \\
 \end{table}
 
 Now that the full data are available, we can examine the criteria used to classify samples as positive or negative for SARS-CoV-2.
-It appears that the Chinese CDC classified samples as positive if they met \emph{either} of two criteria: they tested positive for SARS-CoV-2 by RT-qPCR, \emph{or} they were metagenomically sequenced and contained at least one read mapping to SARS-CoV-2.
+It appears that the Chinese CDC classified samples as positive if they met \emph{either} of two criteria: they tested positive for SARS-CoV-2 by RT-qPCR, \emph{or} they were metagenomically sequenced and contained at least one read mapping to SARS-CoV-2 (Table~\ref{tab:rt-qpcr} gives sequencing and RT-qPCR data for all samples that were either sequenced or called positive by the Chinese CDC).
 However, these criteria are not consistent because not all samples were analyzed by both methods, and the differences in the number of SARS-CoV-2 reads in the sequencing data are often not statistically significant between samples classified as positive versus negative.
 This inconsistency is illustrated in Table~\ref{tab:consistency} for four example samples: F100 is clearly positive (it both tested positive by RT-qPCR and contained thousands of reads mapping to SARS-CoV-2), but there is no statistical rationale for classifying Q61 as positive but E-10-29-2 and A1 as negative.
-See Table~\ref{tab:rt-qpcr} for merged sequencing and RT-qPCR data for all samples that were either sequenced or called as positive by the Chinese CDC.
+
+To see the lack of statistical rationale for classifying Q61 as positive but E-10-29-2 as negative (Table~\ref{tab:consistency}), we can use a Fisher exact test (or alternatively a $\chi^2$ test) to test the null hypothesis that the reads in samples Q61 and E-10-29-2 are drawn from the same underlying distribution of viral and non-viral reads given that we observe 1 in $2.1 \times 10^8$ SARS-CoV-2 reads in Q61 and 0 in $1.9 \times 10^8$ SARS-CoV-2 reads in E-10-29-2.
+Such an analysis shows that we cannot reject the null hypothesis that samples Q61 and E-10-29-2 have reads drawn from the same underlying distribution; this null hypothesis could only be rejected at a significance level of $P \le 0.05$ if sample Q61 contained $\ge$6 SARS-CoV-2 reads.
+The lack of rationale is even more obvious when comparing Q61 and A1 (Table~\ref{tab:consistency}): both samples were negative by RT-qPCR, but Q61 was called positive based on metagenomic sequencing whereas A1 was never sequenced.
+Therefore, if Q61 is called as positive then A1 should be called as indeterminate, since it was never subjected to the assay used to call Q61 as positive.
 
 \section{Discussion}
 I have described the first full analysis of the association between the abundance of SARS-CoV-2 and genetic material from different animal species in environmental samples collected by the Chinese CDC from the Huanan Seafood Market.

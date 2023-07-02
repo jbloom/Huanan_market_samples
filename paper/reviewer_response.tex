@@ -165,6 +165,17 @@ If you re-run the pipeline with this option, you will see that although the quan
 
 4. I think the point of inconsistent calling of +/- SARS-CoV-2 samples by the original authors of the samples is VERY important and needs to be emphasized, especially because the positivity pattern was used to make very strong spatial correlation claims by Worobey and others. I would also suggest that instead of simply stating that 1/200M is statistically indistinguishable from 0/200M, it might be more informative to talk about limits of detection. In other words, if we accept 1/200M as a positive, we cannot rule out 0/200M as being positive, and perhaps talk about how many reads you would actually need to make some statistically sound claims (as a function of total read \#). You could put this in Table 1, for example.
 
+\response{
+I agree that the calling of samples as positive / negative based on the binary presence / absence of any SARS-CoV-2 read is not statistically well supported, as we cannot reject the null hypothesis that the underlying amount of SARS-CoV-2 is significantly lower in a sample with 0 in 200-million SARS-CoV-2 reads versus a sample with 1 in 200-million SARS-CoV-2 reads.
+If we use a Fisher exact test and compare two samples with 200-million total reads one of which has 0 SARS-CoV-2 reads and the other of which has $N$ SARS-CoV-2 reads, we can only reject the null hypothesis that the two samples are drawn from reads with the same underlying distribution of SARS-CoV-2 content at $P \le 0.05$ when $N \ge 6$.
+
+Therefore, as suggested by the reviewer, I have expanded on the relevant portion of the text explaining this fact, and described what threshold is needed for statistical significance on the statement that the SARS-CoV-2 content of the two samples is significantly different.
+
+That said, I have not included any claims about how this fact would affect the conclusions that have been drawn by Worobey and others.
+Certainly it is a factor that needs to be considered---however, many of the samples analyzed by Worobey and co-workers were also analyzed by RT-qPCR in addition to next-generation sequencing, so substantially more analysis of the full dataset and spatial distribution of samples is needed to determine how the above point might affect any conclusions by Worobey et al.
+That analysis is beyond the scope of the current study, so here I have simply noted the lack of statistical rigor in how samples have been called positive / negative from deep-sequencing data by the Chinese CDC, but have refrained from speculating on how exactly that might impact downstream analyses using the Chinese CDC's positive / negative classifications.
+}
+
 5. I think several figures can be removed from the printed manuscript without information loss. For example Figure 1 shows a lot of near ~1 correlations, and Figure 4 shows a lot of "Rorschach blot" scatter-shots of points.
 
 6. For regression analyses, I might suggest something more robust to outliers that linear/rank regression. Theil-Sen estimators, or quantile regression might be better here.
