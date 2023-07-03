@@ -1,0 +1,864 @@
+\documentclass[9pt,twocolumn,twoside]{gsajnl_modified}
+% Use the documentclass option 'lineno' to view line numbers
+
+\usepackage[htt]{hyphenat}  % https://tex.stackexchange.com/a/543
+\usepackage[export]{adjustbox}
+\usepackage{xurl}
+\usepackage{stfloats}
+\usepackage{multirow}
+\usepackage{makecell}
+ \renewcommand\theadfont{}
+\usepackage[leftcaption]{sidecap}
+\sidecaptionvpos{figure}{t}
+
+\renewcommand{\topfraction}{0.9}	% max fraction of floats at top
+    \renewcommand{\bottomfraction}{0.8}	% max fraction of floats at bottom
+    %   Parameters for TEXT pages (not float pages):
+    \setcounter{topnumber}{2}
+    \setcounter{bottomnumber}{2}
+    \setcounter{totalnumber}{4}     % 2 may work better
+    \setcounter{dbltopnumber}{2}    % for 2-column pages
+    \renewcommand{\dbltopfraction}{0.9}	% fit big float above 2-col. text
+    \renewcommand{\textfraction}{0.07}	% allow minimal text w. figs
+    %   Parameters for FLOAT pages (not text pages):
+    \renewcommand{\floatpagefraction}{0.7}	% require fuller float pages
+	% N.B.: floatpagefraction MUST be less than topfraction !!
+    \renewcommand{\dblfloatpagefraction}{0.7}	% require fuller float pages
+
+\newcommand\jdbcomment[1]{\textcolor{red}{[#1]}}
+\newcommand\rancomment[1]{\textcolor{blue}{[#1]}}
+
+\title{Association between SARS-CoV-2 and metagenomic content of samples from the Huanan Seafood Market}
+
+\author[]{\Large Jesse D. Bloom}
+
+\affil[]{Fred Hutchinson Cancer Center; Howard Hughes Medical Institute
+
+}
+
+\keywords{}
+
+\runningtitle{} % For use in the footer
+\runningauthor{}
+
+\begin{abstract}
+The role of the Huanan Seafood Market in the early SARS-CoV-2 outbreak remains unclear.
+Recently the Chinese CDC released data from deep sequencing of environmental samples collected from the market after it was closed on January-1-2020~\citep{liu2023surveillance}.
+Prior to this release, \citet{crits2023genetic} analyzed data from a subset of the samples.
+Both studies concurred that the samples contained genetic material from a variety of species, including some like raccoon dogs that are susceptible to SARS-CoV-2.
+However, neither study systematically analyzed the relationship between the amount of genetic material from SARS-CoV-2 and different animal species.
+Here I implement a fully reproducible computational pipeline that jointly analyzes the number of reads mapping to SARS-CoV-2 and the mitochondrial genomes of chordate species across the full set of samples.
+I validate the presence of genetic material from numerous species, and calculate mammalian mitochondrial compositions similar to those reported by \citet{crits2023genetic}.
+However, the number of SARS-CoV-2 reads is not consistently correlated with reads mapping to non-human susceptible species.
+For instance, 14 samples have $>$20\% of their chordate mitochondrial material from raccoon dogs, but only one of these samples contains any SARS-CoV-2 reads, and that sample only has 1 of $\sim$200,000,000 reads mapping to SARS-CoV-2.
+Instead, SARS-CoV-2 reads are most correlated with reads mapping to various fish, such as catfish and largemouth bass.
+These results suggest that while metagenomic analysis of the environmental samples is useful for identifying animals or animal products sold at the market, co-mingling of animal and viral genetic material is unlikely to reliably indicate whether any animals were infected by SARS-CoV-2.
+\end{abstract}
+
+\begin{document}
+
+\maketitle
+\thispagestyle{firststyle}
+%\marginmark
+\firstpagefootnote
+
+\correspondingauthoraffiliation{}{\href{mailto:jbloom@fredhutch.org}{jbloom@fredhutch.org}}
+\vspace{-33pt}% Only used for adjusting extra space in the left column of the first page
+
+\lettrine[lines=2]{\color{color2}I}{}nitial reports from Chinese officials about the outbreak that eventually became the SARS-CoV-2 pandemic described patients associated with the Huanan Seafood Market, and said there was no evidence of significant human-to-human transmission~\citep{ProMED2109, healthcommission2019, healthcommission2020, who2020}.
+These two claims implied that the infections likely originated from a non-human source within the market.
+
+But by mid to late January of 2020, it was clear SARS-CoV-2 was spreading from human to human, and had been for some time~\citep{chan2020familial,phan2020importation,li2020early,nishiura2020initial}.
+In addition, Chinese scientists published papers reporting that some of the earliest identified human cases in December 2019 had no link to the Huanan Seafood Market~\citep{huang2020clinical,chen2020epidemiological}.
+Thus began a debate that continues to this day: was the market an initial source of zoonotic infections from animals, or was it simply a superspreading site that amplified earlier human infections from another source~\citep{cohen2020wuhan}?
+
+It is universally agreed that there were human cases of SARS-CoV-2 at the Huanan Seafood Market by mid December of 2019~\citep{li2020early}.
+It is also known that some animals susceptible to SARS-CoV-2 were sold at the market~\citep{xiao2021animal}.
+The unanswered question is if any animals were infected, and if so whether they infected humans or were infected by them.
+
+In early 2022, the Chinese CDC posted a preprint on \textit{Research Square} describing their sampling of the market beginning immediately after its closure on January-1-2020~\citep{liu2022surveillance}.
+The Chinese CDC collected samples from both the environment and animals / animal products.
+They reported that none of the 457 animal samples tested positive for SARS-CoV-2, but that 73 of 923 environmental samples tested positive.
+A significant caveat of the Chinese CDC study is that all the samples were collected on January-1-2020 or later, which is \emph{at least} a month after the first human infections in Wuhan~\citep{odni2022,zhang2020viral,van2020emergence,pipes2021assessing}.
+Despite this significant caveat, the data reported in the Chinese CDC study has been variously interpreted to support arguments that virus in the market was human derived~\citep{liu2022surveillance}, that the outbreak originated from live animals sold in the market~\citep{worobey2022huanan}, or that the virus spread among humans in Mahjong rooms or toilets in the market~\citep{courtier2022sars}.
+
+One aspect of the data gathered by the Chinese CDC that was \emph{not} thoroughly analyzed in their 2022 preprint was the metagenomic content of the environmental samples. 
+The 2022 Chinese CDC preprint simply reported that the number of SARS-CoV-2 reads in deep sequencing of the samples was correlated with the number of human reads (fourth figure of \citet{liu2022surveillance}), but did not specify correlations for other species and did not provide the raw sequencing data.
+Other scientists pointed out that if the raw data were shared, it would be possible to expand upon the analysis in the 2022 Chinese CDC preprint to determine if the abundance of SARS-CoV-2 genetic material correlated with material from other species~\citep{cohen2022anywhere,cohen2022studies}.
+
+At some point after posting their 2022 preprint, the Chinese CDC uploaded raw sequencing data for some environmental samples to the GISAID database, where they were subsequently downloaded and analyzed by another group of scientists.
+News of this analysis leaked to the media, which published stories emphasizing the co-mingling of genetic material from raccoon dogs and SARS-CoV-2 in one of the samples~\citep{wu2023atlantic,mueller2023nytimes}.
+The next week, the scientists published their report~\citep{crits2023genetic}, which described bioinformatic analyses showing that some environmental samples contained genetic material from animals susceptible to SARS-CoV-2, including raccoon dogs.
+However, although \citet{crits2023genetic} analyzed the mammalian metagenomic content of the partial set of samples they obtained from GISAID, they did not report any analysis of the SARS-CoV-2 content of the samples.
+
+A week later, the Chinese CDC posted an updated version of their preprint on the \textit{ChinaXiv} server~\citep{liu2023surveillance-chinaxiv} and released the full set of raw sequencing data in public databases.
+This updated preprint, and a version published by \textit{Nature} the next week~\citep{liu2023surveillance} emphasized different aspects of the data than \citet{crits2023genetic}.
+Specifically, although the Chinese CDC concurred that some of the environmental samples contained material from raccoon dogs and other susceptible species, they stated that material from many species was found, and that raccoon dog material was more commonly identified in SARS-CoV-2 negative samples.
+However, like \citet{crits2023genetic}, the new version of the Chinese CDC paper~\citep{liu2023surveillance} did not analyze the association between the amount of SARS-CoV-2 and animal material in the samples, and even removed the figure from the original preprint~\citep{liu2022surveillance} that showed that the number of SARS-CoV-2 reads was correlated with reads from both humans and several unidentified species.
+
+Here I systematically analyze the relationship between the metagenomic and SARS-CoV-2 content of all environmental samples for which deep sequencing data are available.
+This analysis confirms that samples contain genetic material from a wide range of species, including some that are susceptible to SARS-CoV-2.
+However, the samples that contain abundant material from raccoon dogs and other non-human susceptible species usually contain little or no SARS-CoV-2 reads.
+Furthermore, the number of SARS-CoV-2 reads is not consistently correlated with reads mapping to non-human susceptible species, but is instead generally most correlated with reads from species that are implausible candidates for having been infected with SARS-CoV-2.
+These results suggest that SARS-CoV-2 was widespread at the market by January 2020, and therefore that co-mingling of viral and animal genetic material in environmental samples collected at that time is unlikely to be informative about the original source of the outbreak.
+
+\section{Results}
+
+\subsection{Deep sequencing data deposited in public databases on March-29-2023 by the Chinese CDC are a superset of the data analyzed by Crits-Christoph et al earlier that month}
+On March-29-2023, the Chinese CDC released raw deep sequencing data for samples taken from the Huanan Market in early 2020.
+These data were released on the NGDC database under accession CRA010170 (\url{https://ngdc.cncb.ac.cn/gsa/browse/CRA010170}).
+
+I created a fully reproducible computational pipeline that downloaded and analyzed the full dataset from the NGDC (my pipeline is available at \url{https://github.com/jbloom/Huanan_market_samples}).
+The dataset consists of 696 FASTQ files from 395 deep sequencing runs of 176 samples, with the total size of the gzipped files exceeding three terabytes.
+
+Prior to the full posting of the dataset on the NGDC by the Chinese CDC, \citet{crits2023genetic} downloaded and analyzed 227 FASTQ files that had been uploaded to the GISAID database by the Chinese CDC.
+When news of the analysis by \citet{crits2023genetic} became public, GISAID reportedly revoked access to the data and stated that the set of files that had been downloaded was incomplete~\citep{cohen2023new,gisaid_statement}.
+
+To determine the relationship between the 696 FASTQ files released by the Chinese CDC on the NGDC on March-29-2023 and the 227 files downloaded earlier that month by \citet{crits2023genetic}, I computed the SHA-512 hashes for all the NGDC FASTQ files and compared them to the hashes reported in Table S1 of \citet{crits2023genetic}.
+This analysis confirmed that the dataset released on the NGDC contained unmodified versions of all 227 FASTQ files downloaded by \citet{crits2023genetic}, plus an additional 469 FASTQ files (Tables~\ref{tab:sha526} and \ref{tab:metadata}).
+
+\subsection{Analysis of mitochondrial sequences validates mammalian metagenomics by Crits-Christoph et al, and also finds abundant non-mammalian chordates}
+To determine the metagenomic content of the samples, I performed an analysis that conceptually parallels that described by \citet{crits2023genetic}.
+Throughout this paper, I report results only for sequencing described by the Chinese CDC as ``RNA sequencing of total nucleic acids from environmental swabs for metagenomics,'' and exclude the small number of samples that involve amplicon-based sequencing of SARS-CoV-2 or RNA sequencing for viral whole-genome assembly (Table~\ref{tab:metadata}).
+
+Briefly, the deep sequencing data were pre-processed to retain only high-quality reads.
+These reads were aligned to the SARS-CoV-2 genome and a representative set of chordate mitochondrial genomes.
+%The set of mitochondrial genomes was assembled by downloading all NCBI RefSeq genomes, filtering for those from chordates, and removing genomes that were highly similar to other retained genomes (within a Mash distance of $<$0.07).
+This set included all the mammalian mitochondrial genomes from all species for which alignments were reported in \citet{crits2023genetic}.
+The accessions for the 4,170 chordate mitochondrial genomes that formed this set are listed in Table~\ref{tab:mito_retained}.
+The counts of reads mapping to each mitochondrial genome for each sequencing run and sample are provided in Tables~\ref{tab:mito_composition_by_run} and \ref{tab:mito_composition_by_sample}, respectively.
+
+\begin{figure*}
+\includegraphics[width=\linewidth]{figures/crits_christoph_vs_current_run_corr.pdf}
+\caption{
+Correlation of the number of read counts mapping to mitochondrial genomes of mammalian species between the current study and \citet{crits2023genetic} for each sequencing run shared across the studies.
+The correlation is calculated only across species for which \citet{crits2023genetic} provide read counts in the third supplementary figure of their report, and only for runs for which both studies find $\ge$50 reads mapping to that set of species.
+See \url{https://jbloom.github.io/Huanan_market_samples/crits_christoph_vs_current_run_corr.html} for an interactive version of this plot that enables mouseover of points for details on specific runs, and adjustment of the threshold for how many total aligned mitochondrial reads a run must contain to be shown in this plot.
+\label{fig:crits_christoph_vs_current_run_corr}
+}
+\end{figure*}
+
+I compared the mitochondrial compositions of the samples determined by my analysis to those reported by \citet{crits2023genetic}.
+Note that while \citet{crits2023genetic} describe aligning the sequencing data to all metazoa mitochondria, they only report alignment counts for mammals.
+The aligned read counts for mammals from my analysis are highly correlated with those reported by \citet{crits2023genetic} for all sequencing runs with a reasonable number of total counts (Figure~\ref{fig:crits_christoph_vs_current_run_corr}).
+My analysis and that of \citet{crits2023genetic} are independently implemented, and use different alignment programs, reference genome sets, and quality filtering criteria---so the fact that the two analyses give highly correlated results is reassuring.
+
+Despite the strong correlation between my analysis and that by \citet{crits2023genetic} on a common set of mammalian mitochondrial genomes, it is important to emphasize that the results are dependent on the genomes to which the reads are aligned.
+For instance, Figure~\ref{fig:composition} shows the composition of sample Q61 as determined by aligning reads to different genome sets.
+My analysis recapitulates the finding of \citet{crits2023genetic} that raccoon dogs make the largest contribution to the mammalian mitochondrial genetic material in this sample---but if the analysis is expanded to all chordates, then duck mitochondrial genetic material is more abundant (Figure~\ref{fig:composition}A).
+But raccoon dog is more abundant than duck if the analysis is instead performed by assembling contigs and then aligning to the full genomes of raccoon dogs, ducks, and several other species, in line with the findings of \citet{crits2023genetic}.
+These results are a reminder that the measured metagenomic composition is contingent upon the method and reference set used.
+Throughout the rest of this paper, I use compositions calculated from reads mapping to mitochondrial genomes rather than contigs mapped to the full genomes for two reasons: (1) this parallels the approach of \citet{crits2023genetic} who only reported mitochondrial composition for samples other than Q61, and (2) a number of relevant species only have mitochondrial but not full genomes available in NCBI.
+
+The interactive figure at \url{https://jbloom.github.io/Huanan_market_samples/mito_composition.html} enables the reader to examine the mitochondrial composition of each sample over both mammals and chordates.
+
+\begin{figure*}
+\includegraphics[width=\linewidth]{figures/composition.pdf}
+\caption{
+Metagenomic composition of sample Q61.
+{\bf (A)}
+Composition as determined by aligning reads to mitochondrial genomes.
+From left to right: composition determined in current study across all chordates, composition determined in current study across all mammals, composition reported in \citet{crits2023genetic} for just mammals shown in the first figure of their report, and composition reported \citet{crits2023genetic} across all mammals in the third supplementary table of their report.
+{\bf (B)}
+Composition determined in the current study by aligning assembled contigs to the four indicated genomes; this composition is similar to that reported in the third figure of \citet{crits2023genetic}.
+See \url{https://jbloom.github.io/Huanan_market_samples/mito_composition.html} for an interactive version of (A) that allows similar pie charts to be viewed for any sample.
+See \url{https://jbloom.github.io/Huanan_market_samples/genomic_contig_composition.html} for an interactive version of (B).
+\label{fig:composition}
+}
+\end{figure*}
+
+\subsection{Most environmental samples contain little or no SARS-CoV-2 reads}
+To quantify the SARS-CoV-2 content of the samples, I plotted the percentage of all high-quality reads that aligned to SARS-CoV-2 (Figure~\ref{fig:sars2_aligned}, Table~\ref{tab:sars2_aligned_by_run}, Table~\ref{tab:sars2_aligned_by_sample}).
+Over three-quarters of the samples had no reads aligning to SARS-CoV-2, and most of the rest only had a small number of viral reads.
+
+Despite the fact that most samples were sequenced to depths that exceeded 100,000,000 reads, only two samples had $>$1,000 reads mapping to SARS-CoV-2 (F100 and B5).
+These samples were both collected on January-1-2020 and had a chordate mitochondrial composition dominated by catfish and largemouth bass (see interactive version of Figure~\ref{fig:sars2_aligned} at \url{https://jbloom.github.io/Huanan_market_samples/sars2_aligned_vertical.html}).
+
+\begin{figure*}
+\centerline{\includegraphics[width=0.85\linewidth]{figures/sars2_aligned.pdf}}
+\caption{
+Percentage of high-quality reads that align to SARS-CoV-2 for each sample.
+Points are colored according to the date that the sample was collected.
+Note the x-axis uses a symlog scale.
+See \url{https://jbloom.github.io/Huanan_market_samples/sars2_aligned_vertical.html} for an interactive version of this plot where you can mouseover points for details including the mitochondrial composition of each sample, and select only samples from specific dates or from locations.
+\label{fig:sars2_aligned}
+}
+\end{figure*}
+
+Most samples with the highest SARS-CoV-2 content were collected on the Chinese CDC's first sampling date of January-1-2020, but some samples with SARS-CoV-2 reads were collected on later dates (Figure~\ref{fig:sars2_aligned}).
+The non-January-1 sample with the most SARS-CoV-2 was RLC-3, which was collected on February-2-2022 and had chordate mitochondrial composition dominated by rat snake, spotted dove, and human (interactive version of Figure~\ref{fig:sars2_aligned}).
+
+\begin{table}
+\caption{
+Reads mapping to SARS-CoV-2 out of all high-quality (pre-processed) reads for samples with $\ge$20\% of their chordate mitochondrial composition from a susceptible non-human species as defined in \citet{crits2023genetic}.
+Samples with non-zero SARS-CoV-2 reads are in bold.
+See Table~\ref{tab:susceptible_mammal} for a similar table that shows mammalian rather than chordate composition.
+This table uses a 20\% cutoff due to space considerations; to see similar data tabulated for all samples with no cutoff, see the much larger Table~\ref{tab:raccoon_dog_long} (for raccoon dog) and Table~\ref{tab:mito_composition_by_sample} (for all species).
+\label{tab:susceptible}
+}
+{\scriptsize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{llrrr}
+\toprule
+species      &   sample              & \makecell[r]{chordate \\ mitochondrial \\ reads from \\ species} &  \makecell[r]{reads \\ aligning \\ to SARS2} & \makecell[r]{ total pre-\\processed \\ reads} \\ 
+\midrule
+\multirow{14}{*}{raccoon dog} & HJ200048-20200112-1 &                                80\% &                        0 &                   $1.2\times 10^8$ \\
+                 & HJ200050-20200112-1 &                                69\% &                        0 &                     $1.0 \times 10^8$ \\
+                 & HJ200017-20200112-1 &                                61\% &                        0 &                   $1.1 \times 10^8$ \\
+                 & HJ200023-20200112-1 &                                58\% &                        0 &                   $6.9 \times 10^7$ \\
+                 & HJ200011-20200112-1 &                                41\% &                        0 &                   $5.8 \times 10^7$ \\
+                 & HJ200012-20200112-1 &                                39\% &                        0 &                   $1.3 \times 10^8$ \\
+                 & {\bf Q61} &                                {\bf 32\%} &                        {\bf 1} &                   $\mathbf{2.1 \times 10^8}$ \\
+                 & HJ200019-20200112-1 &                                30\% &                        0 &                     $7.0 \times 10^7$ \\
+                 & HJ200006-20200112-1 &                                29\% &                        0 &                   $1.3 \times 10^8$ \\
+                 & HJ200001-20200112-1 &                                28\% &                        0 &                   $1.2 \times 10^8$ \\
+                 & HJ200018-20200112-1 &                                26\% &                        0 &                   $1.4 \times 10^8$ \\
+                 & HJ200044-20200112-1 &                                25\% &                        0 &                   $1.2 \times 10^8$ \\
+                 & HJ200047-20200112-1 &                                22\% &                        0 &                   $1.4 \times 10^8$ \\
+                 & 629-3-C &                                22\% &                        0 &                   $2.5 \times 10^8$ \\
+\cline{1-5}
+\multirow{6}{*}{hoary bamboo rat} & HJ200065-20200112-1 &                                48\% &                        0 &                   $7.3 \times 10^7$ \\
+                 & HJ200062-20200112-1 &                                40\% &                        0 &                   $1.8 \times 10^8$ \\
+                 & 629-5-L4 &                                35\% &                        0 &                   $1.4 \times 10^8$ \\
+                 & 629-13-L &                                33\% &                        0 &                   $1.5 \times 10^8$ \\
+                 & 629-1-L1 &                                30\% &                        0 &                   $2.5 \times 10^8$ \\
+                 & HJ200049-20200112-1 &                                23\% &                        0 &                     $1.0 \times 10^8$ \\
+\cline{1-5}
+\multirow{6}{*}{Amur hedgehog} & W-8-25-L2 &                                56\% &                        0 &                   $3.1 \times 10^8$ \\
+                 & HJ200040-20200112-1 &                                51\% &                        0 &                   $1.5 \times 10^8$ \\
+                 & HJ200039-20200112-1 &                                30\% &                        0 &                   $1.2 \times 10^8$ \\
+                 & {\bf 8-25-M1} &                                {\bf 30\%} &                      {\bf 24} &                   $\mathbf{4.4 \times 10^8}$ \\
+                 & HJ200038-20200112-1 &                                23\% &                        0 &                     $1.0 \times 10^8$ \\
+                 & W-8-25-D2 &                                22\% &                        0 &                   $3.3 \times 10^8$ \\
+\cline{1-5}
+Malayan porcupine & {\bf Q70} &                                {\bf 85\%} &                        {\bf 2} &                   $\mathbf{1.5 \times 10^8}$ \\
+\cline{1-5}
+Himalayan marmot & HJ200005-20200112-1 &                                30\% &                        0 &                   $1.2 \times 10^8$ \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+The Q61 sample that was the focus of the raccoon-dog centered media coverage~\citep{wu2023atlantic,mueller2023nytimes} preceding the report by \citet{crits2023genetic} is one of 70 samples collected on January-12-2020 from the west wing of the market.
+Six of these samples contained SARS-CoV-2 reads, while the other 64 had no SARS-CoV-2 reads (Figure~\ref{fig:sars2_aligned}).
+Sample Q61, which has a mitochondrial metagenomic composition dominated by duck and raccoon dog, had 1 of $\sim2.1 \times 10^8$ high-quality reads mapping to SARS-CoV-2 (interactive version of Figure~\ref{fig:sars2_aligned}).
+The samples from January-12-2020 with the most SARS-CoV-2 reads were Q68, Q37, and Q64; species that contributed $\ge$10\% of chordate mitochondrial reads in these samples were chicken, dog, duck, Chinese salamander, rabbit, and various snakes.
+
+ Overall, there were SARS-CoV-2 reads in just 3 of the 28 samples with at least 20\% of their chordate mitochondrial composition from the non-human susceptible species thought to have been sold live in the market (Table~\ref{tab:susceptible}).
+There were 14 samples with at least 20\% chordate mitochondrial composition from raccoon dogs, but only sample Q61 contained any SARS-CoV-2 reads (1 of $\sim2.1 \times 10^8$ high-quality reads).
+None of the six samples with at least 20\% chordate mitochondrial composition from bamboo rats contained any SARS-CoV-2 reads.
+There was one sample each with at least 20\% chordate mitochondrial composition from Amur hedgehog and Malayan porcupine that contained SARS-CoV-2 reads (Table~\ref{tab:susceptible}).
+If mitochondrial composition is instead analyzed only among mammals rather than chordates, Q61 is still the only sample with at least 20\% raccoon dog composition that contains any SARS-CoV-2 reads (Table~\ref{tab:susceptible_mammal}).
+There is one sample with at least 20\% of its mammalian (but not chordate) mitochondrial composition from bamboo rat that contains a small number of SARS-CoV-2 reads (Table~\ref{tab:susceptible_mammal}).
+
+Note that the 20\% cutoff applied in Tables~\ref{tab:susceptible} and \ref{tab:susceptible_mammal} is not integral to the analysis, but is just a way to subset on samples containing the most material from the species of interest to make the tables small enough to easily visualize.
+See Tables~\ref{tab:raccoon_dog_long} and \ref{tab:mito_composition_by_sample} for much larger tables that show comparable data for all samples with respect to the raccoon dog or overall mitochondrial composition, respectively.
+For instance, Table~\ref{tab:raccoon_dog_long} shows that there are a few samples with lower raccoon dog mitochondrial composition that also contain some SARS-CoV-2 reads.
+However, ultimately these very large tables are difficult to visualize, and so the relationship between SARS-CoV-2 and mitochondrial content for each species for all samples is probably more facilely visualized using the interactive versions of the scatter plots described in the next subsection.
+
+\subsection{Correlations of abundance of SARS-CoV-2 to mitochondrial genetic material from various species}
+To more systematically examine the relationship between SARS-CoV-2 and genetic material from different chordates, I calculated the correlation between the number of reads mapping to SARS-CoV-2 versus the mitochondrial genome of each species across all samples.
+If the correlation is calculated on a log-log scale as was done in the original Chinese CDC preprint~\citep{liu2022surveillance}, then the five species whose genetic material is most correlated with the abundance of SARS-CoV-2 are (in order) largemouth bass, catfish, cow, carp, and snakehead fish (Figure~\ref{fig:per_species_corr_faceted}).
+None of these species are likely hosts for SARS-CoV-2: non-mammals are not thought to be infectable, and cows were probably sold as animal products rather than live animals.
+There is a modest correlation between the abundance of SARS-CoV-2 and human mitochondrial material, but this correlation is weaker than for several other species (Figure~\ref{fig:per_species_corr_faceted}).
+There is a negative correlation between the abundance of SARS-CoV-2 and mitochondrial material from raccoon dogs and hoary bamboo rats, and at most a weak positive correlation for other susceptible species thought to have been sold live at the market (Figure~\ref{fig:per_species_corr_faceted}).
+
+Furthermore, the correlations are highly contingent on the sample set and details of how the statistics are calculated.
+For instance, if we exclude the first sampling timepoint and only look at samples calculated on January-12-2020 or later, then the most correlated species is the Oriental rat snake, with the correlation for humans becoming even weaker and that for raccoon dogs remaining negative (Figure~\ref{fig:per_species_corr_faceted_later_dates}).
+The correlations also change if only consider samples containing a non-zero number of SARS-CoV-2 reads, or calculate correlations on a linear rather than log scale (Figure~\ref{fig:different_corrs}).
+The interactive versions of the correlation plots at \url{https://jbloom.github.io/Huanan_market_samples/per_species_corr_faceted.html} and \url{https://jbloom.github.io/Huanan_market_samples/per_species_corr_single.html} enable the reader to explore the correlations for different sample subsets and methods of calculating the statistics.
+%Exploration of these interactive plots shows that it takes a great deal of cherry picking of parameter combinations to put any plausibly infectable hosts at the top of the list of species whose mitochondrial material is most correlated with the abundance of SARS-CoV-2.
+
+\begin{figure*}
+\includegraphics[width=\linewidth]{figures/per_species_corr_faceted.png}
+\caption{
+Correlation between percent of all reads mapping to SARS-CoV-2 and the mitochondrial genome of each of the indicated species.
+Each point represents a different environmental sample, and the orange text shows the Pearson correlation.
+The scales are log10, and values of zero (which cannot be plotted on a log scale) are shown as half the minimum non-zero value observed across all samples.
+See \url{https://jbloom.github.io/Huanan_market_samples/per_species_corr_faceted.html} for an interactive version of this plot that enables mouseover of points for sample details, selection only of samples collected on specific dates or containing at least one SARS-CoV-2 reads, adjustment of scales from log to linear, and adjustment of mitochondrial percent to be of reads mapping to any mitochondria rather than of all reads.
+See \url{https://jbloom.github.io/Huanan_market_samples/per_species_corr_single.html} for similar plots for individual species.
+The plots shown here include only samples with at least 200 aligned mitochondrial reads; that option can be adjusted in the interactive plots.
+\label{fig:per_species_corr_faceted}
+}
+\end{figure*}
+
+\subsection{Fully annotated correlation figure analogous to that in the original Chinese CDC preprint}
+The original Chinese CDC preprint from 2022 had in its fourth figure a plot showing the correlation between the amount of SARS-CoV-2 and genetic material from various animal species in the environmental samples~\citep{liu2022surveillance}.
+The preprint annotated one point in the plot to indicate there was a correlation between the amount of SARS-CoV-2 and human genetic material.
+However, the preprint failed to annotate the identity of any other species with genetic material that correlated with SARS-CoV-2 abundance.
+This omission of full species annotations in the correlation plot was widely noted, including in two news articles in \textit{Science} in 2022~\citep{cohen2022anywhere,cohen2022studies}, and a third article in 2023 that re-printed the incompletely annotated plot~\citep{cohen2023unearthed}.
+However, neither of the two more recent studies of the metagenomic data have addressed this omission: \citet{crits2023genetic} did not report any analysis of the abundance of SARS-CoV-2 reads, and the published 2023 version of the Chinese CDC preprint simply dropped the plot altogether~\citep{liu2023surveillance}.
+
+\begin{figure}
+\includegraphics[width=\linewidth]{figures/overall_corr/overall_corr.pdf}
+\caption{
+Correlations between SARS-CoV-2 content and mitochondrial content for all species.
+Top row show just samples containing at least one SARS-CoV-2 read and bottom row shows samples regardless of SARS-CoV-2 content; left shows samples from all sampling dates and right shows just samples from the January-12-2020 date when most of the wildlife sampling occurred.
+This plot is designed to mimic the fourth figure of \citet{liu2022surveillance}.
+Some key species are labeled; see the interactive version at \url{https://jbloom.github.io/Huanan_market_samples/overall_corr.html} to mouseover all points for details, select different subsets of samples, and calculate the correlations on a linear or log scale.
+\label{fig:overall_corr}
+}
+\end{figure}
+
+To remedy this omission, I used the chordate mitochondrial compositions calculated in the current study to generate plots analogous to that in the original Chinese CDC preprint.
+When the correlations are taken across all sampling dates only for samples containing at least one SARS-CoV-2 read (as done in the original Chinese CDC preprint), then the genetic material of several non-human species (largemouth bass, catfish, cow, sheep, pig) is more correlated with SARS-CoV-2 reads than is human material (Figure~\ref{fig:overall_corr}, upper left).
+If the plot is expanded to all samples (regardless of whether or not they contain SARS-CoV-2 reads), the trends are broadly similar, with fish remaining the most correlated species (Figure~\ref{fig:overall_corr}, lower left).
+It is also informative to take the correlations only across samples collected on January-12-2020, which was the date of most intensive sampling of the wildlife stalls (this is when Q61 was collected).
+ For January-12-2020 samples that contain SARS-CoV-2 reads, humans are among the species whose genetic material is most correlated with SARS-CoV-2 reads, but goat and spotted dove have roughly equivalent correlations (Figure~\ref{fig:overall_corr}, upper right).
+ If we include January-12-2020 samples regardless of SARS-CoV-2 content, then snakehead fish and Malayan porcupine are among the most correlated species.
+Raccoon dog and bamboo rat genetic material are not positively correlated with SARS-CoV-2 reads in any of the sample sets.
+See the interactive version of Figure~\ref{fig:overall_corr} at \url{https://jbloom.github.io/Huanan_market_samples/overall_corr.html} to explore other sample subsets.
+
+Note that the correlation plots in Figure~\ref{fig:overall_corr} are not exactly identical to those in the original Chinese CDC preprint.
+Since \citet{liu2022surveillance} do not provide sufficiently detailed methods to fully reproduce their analysis, it is impossible to definitively determine the source of the discrepancy---but it is likely due to the inclusion of different genomes in the reference sets used to calculate the metagenomic composition of the samples.
+
+\subsection{The low SARS-CoV-2 read counts raise questions about the consistency of the approach use to call sample positivity}
+The Chinese CDC study includes a table that classifies which environmental samples were positive for SARS-CoV-2 (this is first main table in \citet{liu2022surveillance} and the second supplementary table in \citet{liu2023surveillance}).
+Subsequent studies that have re-analyzed the Chinese CDC data have re-used their classifications of sample positivity~\citep{worobey2022huanan,courtier2022sars,crits2023genetic}.
+
+\begin{table}
+\caption{
+Inconsistency in criteria used to classify SARS-CoV-2 positivity in Chinese CDC study, illustrated with four example samples.
+There is no consistent rationale for classifying Q61 as positive but E-10-29-2 and A1 as negative: all three were reported negative by RT-qPCR, and A1 was not analyzed by sequencing while the difference in the number of SARS-CoV-2 reads between Q61 and E-10-29-2 is not statistically significant.
+RT-qPCR results are from the second supplementary table of \citet{liu2023surveillance} (or equivalently the first table of \citet{liu2022surveillance}).
+\label{tab:consistency}
+}
+{\footnotesize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{llll}
+\toprule
+sample & \makecell[l]{RT-qPCR test \\ result (Ct)} & \makecell[l]{sequencing reads \\ mapping to SARS-CoV-2 \\ out of high-quality reads} & \makecell[l]{classification in \\ Chinese CDC study} \\
+\midrule
+F100 & positive (34.7) & 7,200 out of $2.6 \times 10^8$ & positive \\
+Q61 & negative & 1 out of $2.1 \times 10^8$ & positive \\
+E-10-29-2 & negative & 0 out of $1.9 \times 10^8$ & negative \\
+A1 & negative & not sequenced & negative \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+Now that the full data are available, we can examine the criteria used to classify samples as positive or negative for SARS-CoV-2.
+It appears that the Chinese CDC classified samples as positive if they met \emph{either} of two criteria: they tested positive for SARS-CoV-2 by RT-qPCR, \emph{or} they were metagenomically sequenced and contained at least one read mapping to SARS-CoV-2.
+However, these criteria are not consistent because not all samples were analyzed by both methods, and the differences in the number of SARS-CoV-2 reads in the sequencing data are often not statistically significant between samples classified as positive versus negative.
+This inconsistency is illustrated in Table~\ref{tab:consistency} for four example samples: F100 is clearly positive (it both tested positive by RT-qPCR and contained thousands of reads mapping to SARS-CoV-2), but there is no statistical rationale for classifying Q61 as positive but E-10-29-2 and A1 as negative.
+See Table~\ref{tab:rt-qpcr} for merged sequencing and RT-qPCR data for all samples that were either sequenced or called as positive by the Chinese CDC.
+
+\section{Discussion}
+I have described the first full analysis of the association between the abundance of SARS-CoV-2 and genetic material from different animal species in environmental samples collected by the Chinese CDC from the Huanan Seafood Market.
+This analysis expands upon prior work by \citet{liu2023surveillance} and \citet{crits2023genetic} in several ways.
+
+First, I establish that the full set of sequencing data uploaded to public databases by the Chinese CDC at the end of March 2023 contains unmodified versions of all files earlier analyzed by \citet{crits2023genetic}, as well as a large number of additional files.
+Therefore, regardless of the disputes about the original access to these files~\citep{cohen2023new,gisaid_statement,crits2023genetic}, all the files earlier posted on GISAID are now available without alteration in public databases.
+
+Second, I validate the finding of both \citet{crits2023genetic} and \citet{liu2023surveillance} that the environmental samples contain genetic material from many species, including humans, various fish, various snakes, cows, goats, pigs, sheep, birds such as ducks and spotted doves, raccoon dogs, bamboo rats, and a long list of other animals.
+I am only able to quantitatively compare my analyses of metagenomic compositions to the mammalian compositions reported by \citet{crits2023genetic}, since \citet{liu2023surveillance} provide neither numerical results nor relevant computer code, and \citet{crits2023genetic} only provide numerical results for mammalian species.
+For mammalian species, the compositions determined by my analyses are highly correlated with those reported by \citet{crits2023genetic}, which provides a reassuring robustness check on both analyses.
+However, it is important to emphasize that metagenomic compositions depend on the methods and reference genomes used, so future analyses using different approaches (e.g., full versus mitochondrial genomes) would likely yield somewhat different results.
+I suggest future work should provide full computer code and tabulated results for all species (as done in the current study) to facilitate reproducibility and comparability across studies.
+
+Third, I perform the first comprehensive analysis of the association between the abundance of SARS-CoV-2 and mitochondrial genetic material across all environmental samples.
+This analysis reveals that the greatest co-mingling of viral and animal material involves species that were almost certainly not infected by SARS-CoV-2, such as fish (e.g., largemouth bass, catfish) and livestock (e.g., cows, sheep, goats).
+Consistent with analyses by the Chinese CDC~\citep{liu2022surveillance}, I find some correlation between the abundance of SARS-CoV-2 and human genetic material, but this correlation is weaker than for several non-infectable animals and so on its own is insufficient to identify the source of the viral material.
+Mitochondrial material from most susceptible non-human species sold live at the market is negatively correlated with the presence of SARS-CoV-2: 13 of the 14 samples with at least 20\% of their chordate mitochondrial material from raccoon dogs contain no SARS-CoV-2 reads, and the other sample contains just 1 of $\sim$200,000,000 reads mapping to SARS-CoV-2.
+Likewise, none of the six samples with at least 20\% bamboo rat mitochondrial material contain any SARS-CoV-2 reads.
+These findings are compatible with the results in \citet{crits2023genetic}, since that study did not report any analysis of SARS-CoV-2 content.
+However, they are somewhat inconsistent with related media articles that emphasized co-mingling of raccoon dog and viral material~\citep{wu2023atlantic,mueller2023nytimes}---in fact, raccoon dogs are one of the species with the least co-mingling of their genetic material and SARS-CoV-2.
+The basic finding that SARS-CoV-2 material is not associated with material from susceptible non-human species sold live at the market is largely robust to examining subsets of the samples (such as just those collected on specific dates), and I provide interactive plots to facilitate visualizing the data in different ways.
+
+Fourth, I create a version of the SARS-CoV-2 versus species correlation plot in the fourth figure of the original Chinese CDC preprint~\citep{liu2022surveillance}, but with full annotation of all species.
+The identity of the non-human species correlated with SARS-CoV-2 content had previously been the subject of speculation~\citep{cohen2022anywhere, cohen2022studies, cohen2023unearthed}.
+It turns out these species are fish and livestock that are unlikely candidates for having been infected with SARS-CoV-2.
+Even if the plot is restricted to just samples collected on the date of most intense sampling of wildlife stalls (January-12-2020), no non-human susceptible species is among those most correlated with SARS-CoV-2 content. 
+
+Fifth, my analysis calls into question the consistency of the criteria used to classify environmental samples as positive versus negative.
+For instance, sample Q61 became the subject of widespread media coverage~\citep{wu2023atlantic, mueller2023nytimes} because it contains raccoon dog genetic material and was classified as SARS-CoV-2 positive by the Chinese CDC.
+However, this sample tested negative by RT-qPCR and appears to have been called positive on the basis of containing 1 of $\sim$200,000,000 reads that mapped to SARS-CoV-2.
+But all environmental samples contain a mix of genetic material from numerous sources, so it is not consistent to classify this particular sample as positive when hundreds of other samples that also tested negative by RT-qPCR are classified as negative because they were never sequenced or had SARS-CoV-2 content statistically indistinguishable from 1 of $\sim$200,000,000 reads.
+I suggest that future work analyzing the spatial distribution of SARS-CoV-2 across the Huanan Seafood Market~\citep{worobey2022huanan,courtier2022sars,crits2023genetic} consider the quantitative content of samples (such as determined from deep sequencing in the current study, or the Ct values in \citet{liu2023surveillance}), and only include negative samples subjected to the full set of measurements used to classify other samples as positive.
+
+Overall my study validates the approach of \citet{crits2023genetic} of using metagenomic analysis of environmental samples to identify animals and animal products sold at the Huanan Seafood Market.
+As noted by \citet{crits2023genetic}, this innovative approach could usefully inform tracing of animals supplied to the market.
+However, the results described here suggest that the utility of these metagenomic analyses does not extend to indicating whether animals at the market were actually infected by virus.
+For instance, the presence of 1 in $\sim$200,000,000 sequencing reads mapping to SARS-CoV-2 in a sample containing raccoon dog genetic material does not suggest raccoon dogs were infected, given that material from many other species that certainly were not infected (such as fish) is far more consistently co-mingled with SARS-CoV-2.
+Of course, the lack of association also does not disprove the possibility of infected animals at the market, particularly at a date substantially preceding the Chinese CDC's collection of samples---it simply suggests that analysis of the combined viral and animal content of the available environmental samples is not informative for shedding light on this question either way.
+
+When considered in larger context, the inability of the environmental samples to inform on the origins of the virus is unsurprising.
+These samples were all collected on January-1-2020 or later, which is at least several weeks after the Huanan Seafood Market became a superspreading site for human infections~\citep{li2020early}.
+Therefore, by the time the samples were collected, SARS-CoV-2 had been spread widely across the market by humans regardless of its original source---as evidenced by the results reported here, which show viral genetic material coincident with material from myriad animals ranging from fish to snakes to mammals. 
+The first human infections with SARS-CoV-2 in Wuhan occurred no later than November of 2019~\citep{odni2022,zhang2020viral,van2020emergence,pipes2021assessing}, which is over a month before the Chinese CDC reports that it began to collect samples from the market.
+For this reason, further insight into the origins and early spread of SARS-CoV-2 will likely require learning more about events or cases that occurred no later than November or early December of 2019. 
+
+
+\section{Limitations of this study}
+This study has limitations related to the data, methodology, and samples themselves.
+
+For the data, all sequencing files and related annotations derive from information shared by the Chinese CDC.
+The description of how samples were processed prior to sequencing lacks detail: for instance, \citet{liu2023surveillance} say ``human nucleic acid was removed'' but not precisely how this was done.
+Additionally, the data were released after China's State Council ordered in March of 2020 that all publications and information related to COVID-19 be reviewed by a centralized task force~\citep{kang2020china}.
+It is possible that this centralized Chinese government review influenced which data were released~\citep{hvistendahl2023}.
+
+For the methodology, the metagenomic compositions were calculated by alignment to a reference set of mitochondrial genomes from a large but still incomplete set of species.
+It is possible that some species that deposited genetic material do not have exact matches in this reference set, so slightly different results might be obtained if a different reference set was used.
+Similarly, this study analyzed chordate mitochondrial genomes: different results would be obtained if the reference genome set was expanded (e.g., to all metazoa) or shrunk (e.g., only to mammals), or if the reads were aligned to full rather than mitochondrial genomes.
+In addition, the results might slightly change with different parameters for read alignment, quality filtering, etc.
+To ensure transparency of the methodology in this study, I have provided a fully reproducible computational pipeline (\url{https://github.com/jbloom/Huanan_market_samples}).
+In addition, I have provided interactive plots of the results to help the reader explore the effects of different parameter choices on the final results (\url{https://jbloom.github.io/Huanan_market_samples/}).
+
+The major limitation of the samples is that they were all collected on January-1-2020 or later, which is well after the first human SARS-CoV-2 infections in Wuhan.
+The lateness of the sampling relative to the origin of the outbreak limits the conclusions that can be drawn.
+
+{\small
+
+\section{Methods}
+\subsection{Code and data availability}
+See \url{https://github.com/jbloom/Huanan_market_samples} for a GitHub repository containing a fully reproducible Snakemake~\citep{molder2021sustainable} computational pipeline implementing the analysis described in this paper, starting with downloading of the raw data from NGDC and proceeding all the way through to rendering of the plots shown in the figures.
+That GitHub repository also includes files containing key numerical results.
+See \url{https://jbloom.github.io/Huanan_market_samples/} for interactive plots of the results rendered using Altair~\citep{vanderplas2018altair}.
+
+\subsection{Processing and alignment of deep sequencing data}
+The FASTQ files with the raw deep sequencing data for all samples were downloaded from the NGDC project CRA010170 (\url{https://ngdc.cncb.ac.cn/gsa/browse/CRA010170}).
+The FASTQ files were pre-processed with \texttt{fastp}~\citep{chen2018fastp} to remove low-quality reads; all tabulations of number of reads in this paper refer to the high-quality reads that passed this pre-processing step.
+
+To create an mitochondrial genome alignment reference set, I followed a procedure partially analogous to that described by \citet{crits2023genetic}.
+All mitochondrial genomes in the RefSeq database were downloaded, and then filtered to retain only genomes from the phylum Chordata (in contrast, \citet{crits2023genetic} describe retaining all metazoa mitochondrial genomes).
+The reason I limited to chordate rather than metazoa mitochondrial genomes is that all chordates have very similar length mitochondrial genomes, but at the level of metazoa there is wide variation in mitochondrial genome length.
+The raccoon dog mitochondrial genome was not present in this set, so it was separately downloaded from Genbank accession KX964606.
+All the mitochondrial genomes were then filtered to remove highly similar ones.
+To do this, \texttt{Mash}~\citep{ondov2016mash} was used to compute the mash distances between all pairs of mitochondrial genomes.
+To ensure the most relevant mitochondrial genomes were retained, I first specified for manual retention the genomes for all the species listed in the third supplementary file of \citet{crits2023genetic}, as well as genomes for some additional relevant species (these species are listed under the \textit{mitochondrial\_genomes\_to\_keep} key in \url{https://github.com/jbloom/Huanan_market_samples/blob/main/config.yaml}).
+After retaining all of these manually specified mitochondrial genomes, the pipeline then greedily iterated through all other genomes choosing for retention each genome that was not within a mash distance of 0.07 of another already retained genome.
+The full set of retained mitochondrial genomes is listed in Table~\ref{tab:mito_retained}.
+
+The retained mitochondrial genomes were then concatenated, and added to the SARS-CoV-2 reference genome (Genbank accession NC\_045512v2) with its polyA tail trimmed to avoid spurious alignments.
+This concatenation of the SARS-CoV-2 and mitochondrial genomes served as the reference for all sequencing read alignment.
+
+The sequencing reads were then aligned to this genome using \texttt{minimap2}~\citep{li2018minimap2} in the \texttt{sr} (short-read) mode.
+The resulting alignments were filtered to only retain primary alignments with mapping quality of at least 4.
+
+I then used \texttt{CoverM} (\url{https://github.com/wwood/CoverM}) to compute the number of aligned reads for each run, requiring alignment lengths of at least 40 nucleotides with at least 95\% identity, and excluding the 100 nucleotides at the contig ends.
+The resulting statistics on alignment counts to SARS-CoV-2 and the mitochondrial genomes for each sequencing run are in Tables~\ref{tab:mito_composition_by_run} and \ref{tab:sars2_aligned_by_run}.
+To get per-sample alignment counts, I aggregated counts for all runs for each sample to get the statistics in Tables~\ref{tab:mito_composition_by_sample} and \ref{tab:sars2_aligned_by_sample}.
+For the mitochondrial genome compositions and all other analyses in this paper, I only included only the samples from metagenomic sequencing, which are annotated with the description ``RNA sequencing of total nucleic acids from environmental swabs for metagenomics'' in the metadata provided by \citet{liu2023surveillance}.
+Species were only retained in the annotated reference set if they had at least 20\% of all aligned mitochondrial reads and at least 4000 covered based for at least one run, or if they are one of the species specified under the \textit{mitochondrial\_genomes\_to\_keep} key in \url{https://github.com/jbloom/Huanan_market_samples/blob/main/config.yaml}.
+The species specified under that key include all susceptible species studied in \citet{crits2023genetic}, so this criteria does not lead too dropping of any of the species in their study.
+
+\subsection{Assembling and aligning contigs for sample Q61}
+For sample Q61, contigs were also assembled and aligned to full genomes to facilitate comparison to \citet{crits2023genetic}, who also performed a similar analysis only for this sample.
+The contigs were assembled using \texttt{Trinity}~\citep{grabherr2011trinity}, and then aligned to using \texttt{minimap2}~\citep{li2018minimap2} to concatenated full genomes for chicken, dog, raccoon dog, and duck.
+Contig alignments were only reported if they had a mapping quality of at least 10, an alignment length of at least 300 nucleotides, and an identity of at least 98\%.
+
+\section{Acknowledgments}
+I thank \citet{liu2023surveillance} for publicly sharing via the NGDC database the deep sequencing data analyzed in this study.
+An initial version of this preprint was revised in part based on helpful comments posted on \textit{bioRxiv} by Florence Débarre and Alex Crits-Christoph (see appendix posted as supplementary material).
+This study utilized the Fred Hutch Scientific Computing infrastructure, which is supported in part by NIH grants S10-OD-020069 and S10-OD-028685.
+The author is an Investigator of the Howard Hughes Medical Institute.
+
+\section{Competing interests}
+JDB is on the scientific advisory boards of Apriori Bio, Aerium Therapeutics, Invivyd, the Vaccine Company, and Oncorus; consults for GSK; and receives royalty payments as an inventor on Fred Hutch licensed patents related to deep mutational scanning of viral proteins.
+
+\bibliography{references}
+}
+
+\newgeometry{left=1.2in, right=1.2in, top=48pt, bottom=60pt}
+\onecolumn
+\renewcommand{\thepage}{S\arabic{page}}
+\setcounter{page}{1}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\setcounter{figure}{0}
+\renewcommand{\thetable}{S\arabic{table}}
+\setcounter{table}{0}
+
+\clearpage
+
+\begin{figure*}
+\includegraphics[width=\linewidth]{figures/per_species_corr_faceted_later_dates.png}
+\caption{
+Correlation between percent of all reads mapping to SARS-CoV-2 and the mitochondrial genome of each of the indicated species only among samples collected after the first (Jan-1-2020) sampling date.
+Except for the fact that this figure excludes samples from the first date, this figure is otherwise the same as Figure~\ref{fig:per_species_corr_faceted}.
+See \url{https://jbloom.github.io/Huanan_market_samples/per_species_corr_faceted.html} for an interactive version of this plot with numerous options, including allowing further refinement of the sample date range.
+The plots shown here include only samples with at least 200 aligned mitochondrial reads; that option can be adjusted in the interactive plots.
+\label{fig:per_species_corr_faceted_later_dates}
+}
+\end{figure*}
+
+\clearpage
+
+\begin{figure*}
+\includegraphics[width=\linewidth]{figures/different_corrs/correlations.pdf}
+\caption{
+The correlations between the amount of SARS-CoV-2 and mitochondrial genetic material in the samples depends on how the correlation is calculated.
+The top row shows correlations for human, and the bottom row shows correlations for raccoon dog.
+Each column shows the correlations calculated different ways: with a log or linear scale, calculating the mitochondrial percent to be of all reads or just reads mapping to the mitochondria, and showing all samples or only those with at least one SARS-CoV-2 read.
+See \url{https://jbloom.github.io/Huanan_market_samples/per_species_corr_single.html} for interactive versions of the plot panels.
+The plots shown here include only samples with at least 200 aligned mitochondrial reads; that option can be adjusted in the interactive plots.
+\label{fig:different_corrs}
+}
+\end{figure*}
+
+\clearpage
+
+\begin{table}
+\caption{
+See \url{https://github.com/jbloom/Huanan_market_samples/blob/main/results/crits_christoph_data/check_sha512_vs_crits_christoph.csv} for the correspondence between the FASTQ files analyzed by \citet{crits2023genetic} and the files deposited in the NGDC by \citet{liu2023surveillance}.
+The files are matched based on their SHA-526 hashes, which were computed directly for the NGDC files as part of the current study, and were taken from Table S1 of \citet{crits2023genetic} for that study.
+\label{tab:sha526}
+}
+\end{table}
+
+\begin{table}
+\caption{
+See \url{https://github.com/jbloom/Huanan_market_samples/blob/main/results/metadata/merged_metadata.csv} for the metadata for all of the samples and files uploaded to the NGDC by \citet{liu2023surveillance} under accession CRA010170.
+\label{tab:metadata}
+}
+\end{table}
+
+\begin{table}
+\caption{
+See \url{https://github.com/jbloom/Huanan_market_samples/blob/main/results/mitochondrial_genomes/retained.csv} for the NCBI accessions of the set of chordate mitochondrial genomes that was used as the alignment reference for the metagenomic analysis.
+\label{tab:mito_retained}
+}
+\end{table}
+
+\begin{table}
+\caption{
+See \url{https://github.com/jbloom/Huanan_market_samples/blob/main/results/aggregated_counts/mito_composition_by_run.csv} for the counts of reads aligning to each mitochondrial genome for each sequencing run.
+\label{tab:mito_composition_by_run}
+}
+\end{table}
+
+\begin{table}
+\caption{
+See \url{https://github.com/jbloom/Huanan_market_samples/blob/main/results/aggregated_counts/mito_composition_by_sample.csv} for the counts of reads aligning to each mitochondrial genome for each sample.
+\label{tab:mito_composition_by_sample}
+}
+\end{table}
+
+\begin{table}
+\caption{
+See \url{https://github.com/jbloom/Huanan_market_samples/blob/main/results/aggregated_counts/sars2_aligned_by_run.csv} for the counts of reads aligning to SARS-CoV-2 for each sequencing run.
+\label{tab:sars2_aligned_by_run}
+}
+\end{table}
+
+\begin{table}
+\caption{
+See \url{https://github.com/jbloom/Huanan_market_samples/blob/main/results/aggregated_counts/sars2_aligned_by_sample.csv} for the counts of reads aligning to SARS-CoV-2 for each sequencing sample.
+\label{tab:sars2_aligned_by_sample}
+}
+\end{table}
+
+\begin{table}
+\caption{
+Reads mapping to SARS-CoV-2 out of all high-quality (pre-processed) reads for samples with $\ge$20\% of their mammalian mitochondrial composition from a susceptible non-human species as defined in \citet{crits2023genetic}.
+Samples with non-zero SARS-CoV-2 reads are in bold.
+See Table~\ref{tab:susceptible} for a similar table that shows chordate rather than mammalian composition.
+This table uses a 20\% cutoff due to space considerations; to see similar data tabulated for all samples with no cutoff, see the much larger Table~\ref{tab:raccoon_dog_long} (for raccoon dog) and Table~\ref{tab:mito_composition_by_sample} (for all species).
+\label{tab:susceptible_mammal}
+}
+{\scriptsize
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{llrrr}
+\toprule
+species      &   sample              & \makecell[r]{mammalian \\ mitochondrial \\ reads from \\ species} &  \makecell[r]{reads \\ aligning \\ to SARS2} & \makecell[r]{ total pre-\\processed \\ reads} \\ 
+\midrule
+\multirow{28}{*}{raccoon dog} & HJ200050-20200112-1 &                                       94\% &                        0 &                     1e+08 \\
+                  & HJ200023-20200112-1 &                                       93\% &                        0 &                   6.9e+07 \\
+                  & HJ200048-20200112-1 &                                       92\% &                        0 &                   1.2e+08 \\
+                  & HJ200019-20200112-1 &                                       90\% &                        0 &                     7e+07 \\
+                  & {\bf Q61} &                                       {\bf 81\%} &                        {\bf 1} &                   {\bf 2.1e+08} \\
+                  & HJ200017-20200112-1 &                                       81\% &                        0 &                   1.1e+08 \\
+                  & 629-3-C &                                       78\% &                        0 &                   2.5e+08 \\
+                  & HJ200044-20200112-1 &                                       76\% &                        0 &                   1.2e+08 \\
+                  & HJ200014-20200112-1 &                                       70\% &                        0 &                   1.1e+08 \\
+                  & HJ200047-20200112-1 &                                       66\% &                        0 &                   1.4e+08 \\
+                  & HJ200011-20200112-1 &                                       61\% &                        0 &                   5.8e+07 \\
+                  & HJ200018-20200112-1 &                                       53\% &                        0 &                   1.4e+08 \\
+                  & HJ200013-20200112-1 &                                       50\% &                        0 &                   1.1e+08 \\
+                  & HJ200012-20200112-1 &                                       50\% &                        0 &                   1.3e+08 \\
+                  & HJ200043-20200112-1 &                                       48\% &                        0 &                   8.3e+07 \\
+                  & HJ200027-20200112-1 &                                       43\% &                        0 &                     9e+07 \\
+                  & HJ200024-20200112-1 &                                       42\% &                        0 &                   9.8e+07 \\
+                  & HJ200001-20200112-1 &                                       38\% &                        0 &                   1.2e+08 \\
+                  & HJ200016-20200112-1 &                                       33\% &                        0 &                   1.2e+08 \\
+                  & HJ200007-20200112-1 &                                       31\% &                        0 &                   1.4e+08 \\
+                  & HJ200020-20200112-1 &                                       31\% &                        0 &                   7.9e+07 \\
+                  & HJ200006-20200112-1 &                                       30\% &                        0 &                   1.3e+08 \\
+                  & HJ200009-20200112-1 &                                       27\% &                        0 &                   1.5e+08 \\
+                  & HJ200045-20200112-1 &                                       27\% &                        0 &                   1.1e+08 \\
+                  & HJ200026-20200112-1 &                                       25\% &                        0 &                     1e+08 \\
+                  & HJ200022-20200112-1 &                                       23\% &                        0 &                   1.2e+08 \\
+                  & HJ200004-20200112-1 &                                       23\% &                        0 &                   2.3e+08 \\
+                  & HJ200065-20200112-1 &                                       22\% &                        0 &                   7.3e+07 \\
+\cline{1-5}
+\multirow{14}{*}{hoary bamboo rat} & 629-13-L &                                       85\% &                        0 &                   1.5e+08 \\
+                  & HJ200041-20200112-1 &                                       56\% &                        0 &                   1.8e+08 \\
+                  & HJ200015-20200112-1 &                                       56\% &                        0 &                   1.4e+08 \\
+                  & HJ200065-20200112-1 &                                       56\% &                        0 &                   7.3e+07 \\
+                  & 629-1-L1 &                                       55\% &                        0 &                   2.5e+08 \\
+                  & 629-5-L4 &                                       54\% &                        0 &                   1.4e+08 \\
+                  & HJ200062-20200112-1 &                                       42\% &                        0 &                   1.8e+08 \\
+                  & HJ200013-20200112-1 &                                       37\% &                        0 &                   1.1e+08 \\
+                  & HJ200049-20200112-1 &                                       31\% &                        0 &                     1e+08 \\
+                  & HJ200046-20200112-1 &                                       28\% &                        0 &                   1.1e+08 \\
+                  & HJ200030-20200112-1 &                                       28\% &                        0 &                   1.1e+08 \\
+                  & HJ200067-20200112-1 &                                       27\% &                        0 &                   7.7e+07 \\
+                  & HJ200025-20200112-1 &                                       21\% &                        0 &                   1.2e+08 \\
+                  & {\bf Q68} &                                       {\bf 20\%} &                        {\bf 6} &                   {\bf 8.7e+07} \\
+\cline{1-5}
+\multirow{15}{*}{Amur hedgehog} & W-8-25-L2 &                                       76\% &                        0 &                   3.1e+08 \\
+                  & HJ200040-20200112-1 &                                       75\% &                        0 &                   1.5e+08 \\
+                  & HJ200038-20200112-1 &                                       63\% &                        0 &                     1e+08 \\
+                  & HJ200039-20200112-1 &                                       62\% &                        0 &                   1.2e+08 \\
+                  & 8-25-CK &                                       62\% &                        0 &                   1.5e+09 \\
+                  & W-8-25-L &                                       59\% &                        0 &                   2.9e+08 \\
+                  & HJ200035-20200112-1 &                                       59\% &                        0 &                   7.2e+07 \\
+                  & {\bf 8-25-M1} &                                      {\bf 53\%} &                      {\bf 24} &                   {\bf 4.4e+08} \\
+                  & HJ200033-20200112-1 &                                       51\% &                        0 &                   1.2e+08 \\
+                  & W-8-25-D2 &                                       50\% &                        0 &                   3.3e+08 \\
+                  & W-8-25-D1 &                                       50\% &                        0 &                   2.9e+08 \\
+                  & HJ200045-20200112-1 &                                       41\% &                        0 &                   1.1e+08 \\
+                  & HJ200032-20200112-1 &                                       35\% &                        0 &                   1.4e+08 \\
+                  & 8-25-M2 &                                       24\% &                        0 &                   1.6e+09 \\
+                  & HJ200036-20200112-1 &                                       21\% &                        0 &                   2.2e+08 \\
+\cline{1-5}
+\multirow{2}{*}{Malayan porcupine} & {\bf Q70} &                                      {\bf 93\%} &                       {\bf 2} &                  {\bf 1.5e+08} \\
+                  & HJ200001-20200112-1 &                                       23\% &                        0 &                   1.2e+08 \\
+\cline{1-5}
+Himalayan marmot & HJ200005-20200112-1 &                                       36\% &                        0 &                   1.2e+08 \\
+\cline{1-5}
+masked palm civet & HJ200042-20200112-1 &                                       22\% &                        0 &                   1.9e+08 \\
+\bottomrule
+\end{tabular}
+}
+\end{table}
+
+\begin{table}
+\caption{
+See \url{https://github.com/jbloom/Huanan_market_samples/blob/main/results/plots/raccoon_dog_long.csv} for a table giving the raccoon dog mitochondrial composition (both among chordates and mammals) along with the SARS-CoV-2 content for all samples.
+\label{tab:raccoon_dog_long}
+}
+\end{table}
+
+
+\begin{table}
+\caption{
+See \url{https://github.com/jbloom/Huanan_market_samples/blob/main/results/rt_qpcr/rt_qpcr.csv} for combined RT-qPCR data and number of SARS-CoV-2 reads for all environmental samples that were either RT-qPCR positive or metagenomically sequenced.
+This table was constructed by merging the results for all sequenced samples with all samples listed in the second supplementary table of \citet{liu2023surveillance} (or equivalently the first main table of \citet{liu2022surveillance}), which lists all ``positive samples.''
+Since the Chinese CDC says all environmental samples were tested by RT-qPCR, samples not listed as RT-qPCR positive are presumed to have tested negative by that assay.
+Note that this table does \emph{not} list samples that tested negative by RT-qPCR and were not sequenced.
+\label{tab:rt-qpcr}
+}
+\end{table}
+
+\clearpage
+
+\renewcommand{\thepage}{A\arabic{page}}
+\setcounter{page}{1}
+\renewcommand{\thefigure}{A\arabic{figure}}
+\setcounter{figure}{0}
+\renewcommand{\thetable}{A\arabic{table}}
+\setcounter{table}{0}
+
+\clearpage
+\normalsize
+
+\section{Appendix: response to comments and revision of first version of preprint}
+After the original version of this preprint was posted on \textit{bioRxiv} at \url{https://www.biorxiv.org/content/10.1101/2023.04.25.538336v1}, Florence Débarre and Alex Crits-Christoph posted a set of helpful comments at \url{https://www.biorxiv.org/content/10.1101/2023.04.25.538336v1#comments} using the \textit{bioRxiv} comment feature.
+
+This appendix provides a response to those comments, some of which were used to inform revisions incorporated into this new version of the preprint.
+Note that the computer code / data / paper from the initial version are all also available on GitHub under tag \texttt{bioRxiv\_v1} (\url{https://github.com/jbloom/Huanan_market_samples/tree/bioRxiv_v1}) and the code / data / paper for this revised version are under the tag \texttt{bioRxiv\_v2} (\url{https://github.com/jbloom/Huanan_market_samples/tree/bioRxiv_v2}).
+To see all differences between the two versions, go to \url{https://github.com/jbloom/Huanan_market_samples/compare/bioRxiv_v1...bioRxiv_v2} which shows the differences between the GitHub tags.
+
+In addition to the revisions made in response to the comments below, I also made a minor tweak to ensure that the same \texttt{fastp} pre-processing filters were being applied to both the single- and paired-end sequencing data.
+Overall, none of the modifications to the code led to anything more than minor changes in the overall results.
+
+Below the comments posted on \textit{bioRxiv} by Florence Débarre and Alex Crits-Christoph are in {\bf \color{purple} purple text}, and my responses are in {\bf black text}.
+
+\color{purple}
+
+\subsection{Comments and responses}
+
+In this preprint, Bloom re-analyses a dataset of metagenomic data recently shared on open repositories by \citet{liu2023surveillance}.
+A subset of these data, previously made available on GISAID, was also previously analyzed by \citet{crits2023genetic}---of which we are co-authors.
+
+\begin{enumerate}
+\item Bloom’s analysis largely confirms the genetic identification of wildlife species by \citet{crits2023genetic}.
+
+The identification of animal species differed between \citet{liu2023surveillance} and \citet{crits2023genetic}, in particular regarding the abundance of raccoon dog genetic material in sample Q61. Bloom’s analysis, done with similar but independent methods from \citet{crits2023genetic}, largely replicates their findings.
+
+A comprehensive Github repository allows any interested reader to conveniently check Bloom’s results by themselves.
+
+{\color{black}
+I agree that my analysis largely confirm the analysis of the mammalian mitochondrial genetic material in your study.
+As I note in my preprint, it is reassuring to have two independent studies reach largely consistent results on this point.
+As I also note, I think the main value of your earlier work was to provide genetic confirmation of which animals were at the market, and my study basically independently confirms your findings on that point.
+
+I am glad you find the GitHub repository useful!
+}
+
+\item The correlation analysis presented by Bloom contains numerous flaws.
+
+Bloom reproduced the correlation analysis initially presented in \citet{liu2022surveillance}, but Bloom’s analysis, as conducted, is inappropriate to answer the question of which animal hosts shed the viral material detected. \citet{crits2023genetic} were missing data to carry out such an analysis, but warned against its use. Here we repeat and expand the arguments presented in \citet{crits2023genetic}. These points would need to be taken into account for a correlation analysis to be valid, but were not by Bloom (and often just cannot be):
+
+{\color{black}
+At a high level, I agree that the lack of any correlation between SARS-CoV-2 and the genetic material of susceptible animals does not \emph{disprove} the possible existence of an infected animal (for reasons you list below).
+However, it does indicate that the genetic content of these samples is insufficient to reliably indicate whether any animal was infected. That is the claim my preprint makes.
+In the end, if the SARS-CoV-2 content is not associated with the genetic content from susceptible animals, then certainly the genetic material cannot reliably indicate that the animals were infected and shedding the virus.
+
+I think we are in agreement that co-mingling of viral and animal genetic material in these samples is insufficient to indicate if any animals were infected.
+Regardless of perceptions/discussion on social or popular media, your report never claimed proof of infected animals, and my preprint never claimed disproof of infected animals.
+Rather, my understanding is that by fully analyzing the data we are converging on the view that the genetic content of these samples is simply insufficient to reliably determine if any animals were infected.
+}
+
+\begin{enumerate}[label=\alph*)]
+
+\item The outbreak had been ongoing for weeks in the market when the samples were collected, and multiple humans had been infected. By then, most virus in the market will come from human cases, especially as stalls containing human cases were targeted first, when sampling was performed on January 1. The large number of samples from these stalls with sick humans will highly influence correlational analyses. As shown in Worobey et al. (2022) on similar data obtained via qPCR, both the distance from known human cases and the distance from wildlife stalls independently contributed to the spatial variation in viral positive samples. The number of human cases at the time of sampling means that even if infected animals were present at the market, an underpowered correlation analysis of the sequencing data would be unlikely to have revealed it.
+
+{\color{black} I agree that the late date of sample collection is a major limitation, and mention that several times in my preprint. As a say in the preprint, by the time the samples were collected humans had spread the virus widely across the market. That means the environmental samples are not particularly informative on the original source of the virus in the market in either direction, which is the central conclusion I draw.}
+
+\item The correlation analysis treats all animals of a given species as an homogeneous group. There were however multiple stalls selling the same animal species, but likely not from the same supply sources. The presence of uninfected animals in one stall would affect the result of a correlation analysis, but would not invalidate the potential presence of infected animals in another stall.
+
+{\color{black} Certainly I agree that this is a limitation. As I say in the preprint, these environmental samples are not sufficient for reliably indicating if any animals were infected.}
+
+\item The samples themselves are not homogeneous: for instance, within-sample animal diversity is different when the swab was taken directly from fish packaging than from the ground.
+
+In addition, wildlife stall samples tend to be composed of a diverse menagerie of animal species RNA/DNA (a consequence of animals housed directly on top of each other and equipment shared between them), while samples related to human cases elsewhere in the market tend to be fairly simple. Therefore, by correlating abundances within just the positive samples, human-shed samples tend to have very high relative abundances for human DNA (or, e.g., human and fish), while animal shed samples tend to have lower abundances for any given species. This is a natural consequence of sequencing abundances being relative, not absolute.
+
+{\color{black}
+There is no correlation between the amount of SARS-CoV-2 genetic material and that from potentially susceptible animals like raccoon dogs or bamboo rats regardless of whether the correlation is taken over just SARS-CoV-2 positive samples or all samples. 
+This is shown in the new Figure~\ref{fig:overall_corr} and can also be seen in Figure~\ref{fig:per_species_corr_faceted} and perhaps most easily in the interactive version of that figure linked in its legend.
+}
+
+\item SARS-CoV-2 read counts can differ for multiple reasons: there can be different quantities of virus shed in the first place, and different times since virus deposition will influence detection, as RNA degrades over time. While it is not possible to precisely date the time of viral deposition, there are two important considerations. First, if wildlife introduced the virus first to the market, animal-shed virus would (on average) occur before human sheddings. Second, wildlife stalls were sampled multiple days after stalls with reported cases (January 12 vs January 1). Put together, this means there would have been substantially more time for virus shed by animals to decay than virus shed by humans.
+
+{
+\color{black}
+There is no correlation between the amount of SARS-CoV-2 and genetic material from potentially susceptible animals like raccoon dogs or bamboo rats regardless of whether the analysis is performed on all samples or restricted to just samples collected on later dates (such as January 12).
+This can be seen in Figure~\ref{fig:overall_corr}, Figure~\ref{fig:per_species_corr_faceted_later_dates}, and perhaps most easily in the interactive plots at  \url{https://jbloom.github.io/Huanan_market_samples/per_species_corr_faceted.html}, which enable subsetting to samples collected on arbitrary dates.
+Of course this fact does not rule out the possibility that animals shed virus earlier and that viral RNA decayed.
+It is also possible animals never shed virus.
+Both possibilities are consistent with my conclusion that these samples are not sufficient to reliably indicate whether any animals were infected.
+}
+
+\item Virus presence is detected through RNA, host presence through mtDNA, which degrade differently over time. Relative abundances therefore depend on the time difference between when the different genetic materials were deposited and when they were collected.
+
+{\color{black}
+See response to prior point.
+}
+
+\item Stalls were sampled multiple times. A correlation analysis would need to take into account spatial proximity and in particular model the per-stall effect.
+
+{\color{black}
+At a qualitative level (just for instance looking at the scatter plots), it is obvious that the samples that contain substantial amounts of material from potentially susceptible animals like raccoon dogs or bamboo rats contain no or very little SARS-CoV-2 (see interactive plots at \url{https://jbloom.github.io/Huanan_market_samples/per_species_corr_single.html}).
+This is going to remain true no matter how the samples are partitioned or modeled.
+Given this fact, it seems clear that the samples do not suggest shedding by an infected animal. 
+Of course there could have been infected animals earlier or that shed virus that was not collected in these samples, but in either case that makes these samples uninformative for determining if any animal was infected.
+}
+
+\item The correlations reported in Bloom’s figure 5 are calculated solely on samples that contained any positive reads for SARS-CoV-2, and were therefore sequencing-positive for the virus. Therefore, this is not a test of which species were more likely to be in samples that tested positive for the virus, but how abundant each species was in the samples that did test positive. This is an important distinction.
+
+{\color{black}
+The correlations in Figure~\ref{fig:per_species_corr_faceted} and its interactive version (\url{https://jbloom.github.io/Huanan_market_samples/per_species_corr_faceted.html}) show all samples, and I have also added panels with all samples to Figure~\ref{fig:overall_corr}.
+It remains the case even when looking at all samples that SARS-CoV-2 content is mostly associated with material from animals that definitely were not infected.
+}
+
+\end{enumerate}
+
+For these reasons, both positive and negative correlations are largely uninterpretable:
+\begin{itemize}
+
+\item A positive correlation is not indicative of infection. As an enlightening example (also highlighted in \citet{crits2023genetic}), the most correlated species in Bloom’s analysis is a fish species that is not susceptible to SARS-CoV-2.
+
+\item A negative correlation is not indicative of lack of infection (see above).
+
+\end{itemize}
+
+{\color{black}
+I agree with this essential point: my preprint simply concludes that the genetic content of these samples is insufficient to reliably determine if there were any infected animals.
+}
+
+\item Some samples appear to be missing in the analysis, which contained high viral read numbers: A20, F13, F54.
+
+{\color{black}
+In my analysis, I filter only for samples sequenced metagenomically, and exclude samples that were enriched for virus for viral sequencing.
+Originally, I was filtering all samples that had any virus-enrichment based sequencing.
+In the updated pipeline, for samples like A20 that have both metagenomic and viral sequencing, I now retain the metagenomic sequencing while ignoring the viral sequencing---thanks for pointing out this oversight.
+This adds a few samples including A20, but does not change any of the overall results.
+However, F13 and F54 are still excluded because according to the metadata in the \textit{Experiments} sheet in the Chinese CDC metadata Excel file at \url{https://ngdc.cncb.ac.cn/gsa/browse/CRA010170}, these samples were not sequenced metagenomically (there are no entries with the ``RNA sequencing of total nucleic acids from environmental swabs for metagenomics'' annotation for them in the \textit{Experiments} sheet).
+}
+
+\item Bloom chose to align reads to chordates’ mitochondrial genomes, but did not justify this choice.
+Only mammals are known to be infected by SARS-CoV-2, so an analysis of just mammalian RNA/DNA, as presented in \citet{crits2023genetic}, is most relevant to the question of which species may have shed the virus in a particular sample. If the aim was to provide a better picture of the diversity of animals sold at the Huanan market, all metazoa should have been included, to be able to identify seafood for instance (a key early case was a shrimp seller).
+
+However, the end result is that Bloom’s 20\% chordate inclusion threshold for this table results in most of the samples with both wildlife RNA/DNA (e.g. raccoon dogs) and viral RNA being excluded. The claim that only one sample of all samples with raccoon dog DNA that contains SARS-CoV-2 is therefore inaccurate: please see the supplementary data of either \citet{crits2023genetic} or Bloom et al. for comparative results on the true number of such samples (which is at least 5, depending on the given analysis).
+
+{\color{black}
+The reason I limited to chordate rather than metazoa mitochondrial genomes is that all chordates have very similar length mitochondrial genomes, but at the level of metazoa there is wide variation in mitochondrial genome length---this is now explained in the revised Methods.
+
+In any case, the choice of using chordate versus mammalian has no real effect.
+The 20\% cutoff in Table~\ref{tab:susceptible} was just to make the table small enough to easily fit in the main text.
+I have now added a comparable table (Table~\ref{tab:susceptible_mammal}) that lists mammalian rather than chordate composition, and another table that lists SARS-CoV-2 and raccoon dog content for all samples without any cutoff (Table~\ref{tab:raccoon_dog_long}).
+The essential result is unchanged: the samples with abundant raccoon dog mitochondrial material have little or no SARS-CoV-2 reads.
+This is also easily seen in the interactive scatter plots provided in the paper.
+
+There are a few other samples with low raccoon dog content (less than 20\% of either their chordate or mammalian mitochondrial content, see Table~\ref{tab:raccoon_dog_long}) that have some SARS-CoV-2 reads, but these samples also have more abundant genetic material from many other species.
+So certainly they are not sufficient to support an association between viral and raccoon dog material that exceeds that of any of a large number of other species that clearly were not infected (because they are not susceptible).
+This all supports the conclusion that the genetic contents of these samples are insufficient to conclude if any animal was infected.
+}
+
+\item Bloom’s comments on the definition of positive samples overlook the difference in sensitivity between qPCR and sequencing in environmental sampling---qPCR is highly sensitive, with near single molecule detection resolution, and correlates with the absolute load of the virus in the sample. Sequencing, however, is both less sensitive (even when deeply sequencing), and highly dependent on the quantity of what else is in the sample. Thus, it is very challenging to identify SARS-CoV-2 in samples sequenced from the environment without any kind of enrichment performed: this is because the virus is comparatively rare compared to abundant environmental microbes (bacteria, fungi) as well as DNA/RNA shed by animals and humans. This is why most environmental viral sequencing is done after performing a viral enrichment (either physical or amplicon). For a similar comparison of unenriched SARS-CoV-2 sequencing, see the supplementary table S1 of Crits-Christoph et al. 2021 (“Genome Sequencing of Sewage Detects Regionally Prevalent SARS-CoV-2 Variants”), where 5 unenriched samples with viral Ct values in the range of 30-32 were deeply sequenced, and only 1-17 SARS-CoV-2 reads were obtained. For this reason, we do not encourage using only sequencing data quantitative values and ignoring qPCR positive samples. There is no indication in the \citet{liu2023surveillance} dataset that we have seen to indicate the qPCR results were impacted by contamination. Indeed, 112/116 samples that were reported negative for qPCR were also negative by NGS, indicating a high degree of agreement between the two approaches, and that qPCR is merely more sensitive.
+
+In addition, the definition of a positive sample cannot be done independently of the provenance of the sample: even at very low read count, the presence of other positive samples in the same stall at the same date is indicative of sample positivity.
+
+{\color{black}
+I agree that RT-qPCR could be more sensitive than sequencing.
+But the key point is that the ``positive'' sample with the most raccoon dog genetic material (Q61) tested \emph{negative} by RT-qPCR, and was called positive by the Chinese CDC on the basis of having 1 in 200,000,000 reads align to raccoon dog.
+It is not consistent to call that sample ``positive'' if other samples that also tested negative by RT-qPCR but were never sequenced are called ``negative.''
+Samples should only be analyzed together if they were subjected to the same consistent set of assays: so for instance, all samples could be classified by RT-qPCR, or all samples subjected to both assays could be classified based on both.
+This observation is not a criticism of your work: the basis for these classifications only recently became clear with the new \citet{liu2023surveillance} paper.
+I just think we should now consider these points now that they are apparent.
+
+As far as other samples in the same stall, it is clear that SARS-CoV-2 was spread widely across the market: that is why we see it on samples full of material from fish, snakes, etc.
+Therefore, it is my contention that we simply can't conclude much about whether any animal was infected if the virus is spread widely in the environment uncorrelated with any specific animal genetic material.
+This is true regardless of whether we do the analysis at the level of samples or stalls.
+}
+
+\item Citations to news articles are vague or misleading. It would be preferable to stick to arguments presented in scientific documents, rather than rely on newspaper articles.
+
+\begin{enumerate}[label=\alph*)]
+
+\item
+As rationale for his analysis, in the Introduction of his preprint, Bloom claims that “Other scientists pointed out that if the raw data were shared, it would be possible to expand upon the analysis in the 2022 Chinese CDC preprint to determine if the abundance of SARS-CoV-2 genetic material correlated with material from other species (Cohen 2022a,b)”, where the two Cohen citations are news articles. The authors quoted in these articles (Robertson, Rambaut, Holmes) did not mention Figure 4a because they thought the analysis was useful enough to be reproduced, but because it was possible that other animals’ genetic material was present in the environmental samples, and these data were not shown.
+
+{
+\color{black}
+The overall rationale of my study was to examine the quantitative association between SARS-CoV-2 content and animal genetic material.
+Figure 4a of the original Chinese CDC study was the only prior work on this topic, and it was widely discussed including in the three Cohen news articles I mentioned, one of which even re-printed the figure.
+I think it is important to provide this as background, and I am careful to distinguish what was discussed in \citet{crits2023genetic} (which did not discuss this figure) versus news articles.
+}
+
+\item
+By conflating their views with misinterpretations of news reports written about their work, Bloom misrepresents the conclusions of \citet{crits2023genetic}:
+\citet{crits2023genetic} did not conclude they had found the intermediate host and it was raccoon dogs: their report clearly stated that they could not “identify the intermediate animal host species from these data”, and that the presence of infected animals was a “plausible explanation” for their results. And they explicitly stated that “the most abundant animal in the sequencing data of a particular sample is not necessarily the source of the virus in that sample”.
+
+{
+\color{black}
+I am careful to delineate that \citet{crits2023genetic} did \emph{not} analyze the SARS-CoV-2 content in their report, and so never claimed that animal and viral co-mingling in the environmental samples indicated an infected animal.
+My preprint mentions several times how it is consistent with the results reported in \citet{crits2023genetic}, but adds more analyses that look at association between animal and viral material.
+
+However, it is true that the news articles I cite \emph{did} talk about co-mingling of material suggesting infected animals, and those were widely read.
+I therefore provide the full context to help disentangle the confusion between what was in the scientific report versus the related news articles, which the scientific authors obviously did not write.
+}
+
+\end{enumerate}
+
+\end{enumerate}
+
+
+
+
+\end{document}

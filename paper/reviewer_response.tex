@@ -1,0 +1,242 @@
+\documentclass[11pt, oneside]{article}   	% use "amsart" instead of "article" for AMSLaTeX format
+\usepackage{geometry}                		% See geometry.pdf to learn the layout options. There are lots.
+\geometry{letterpaper}                   		% ... or a4paper or a5paper or ... 
+\usepackage{color}
+\usepackage[parfill]{parskip}    		% Activate to begin paragraphs with an empty line rather than an indent
+\usepackage{graphicx}				% Use pdf, png, jpg, or eps§ with pdflatex; use eps in DVI mode
+								% TeX will automatically convert eps --> pdf in pdflatex	
+								
+												
+\usepackage{amssymb}
+\usepackage{hyperref} 
+\usepackage[round,semicolon]{natbib}
+
+
+\newcommand{\comment}[1]{{\color{red}[\textsl{#1}]}}
+\newcommand{\response}[1]{{\color{black}#1}}
+
+
+\title{Response to reviews of ``Association between SARS-CoV-2 and metagenomic content of samples from the Huanan Seafood Market'' for \textit{Virus Evolution}}
+\author{}
+
+\begin{document}
+\maketitle
+
+\emph{Below, the reviewer and editor comments {\color{blue} are in blue}, and my responses are in black.}
+
+\color{blue}
+
+
+\subsection*{Reviewer: 1}
+
+Comments to the Author
+
+The manuscript by Jesse Bloom performs a thorough analysis of the metagenomic sequence derived from the Huanan Seafood Market collected shortly after the first cases of SARS-CoV-2 in China.  The manuscript does a fantastic job of boiling down the data and putting it onto interactive online outputs that a normal person can play with.  The basic conclusion is that the data can be used to determine what animals were present in the market, but cannot be used to determine if any of the animals were infected. 
+
+\response{This is a good and accurate summary of the conclusions.} 
+
+The topic of this manuscript is very controversial, so if it is to be taken seriously by readers (regardless of their opinions) it needs to be as unbiased as possible.  While the author has mostly ‘stuck to the fact’ there are a few places where those facts could have been presented more neutrally.
+
+\response{
+I have indeed tried to stick as narrowly to the facts as possible, and appreciate the suggestions below of places where descriptions can be made even more neutral.
+As described below, I have made revisions along the lines of all of these suggestions.
+}
+
+The author states more than once that the first infections were in November or earlier.   The statement in the introduction was, “A significant caveat of the Chinese CDC study is that all the samples were collected on January-1-2020 or later, which is at least a month after the first human infections in Wuhan.”  While this is probably correct, it should not be stated as a fact.  I looked up most of the reference cited and none of them were so definitive.  Among the documents was an unclassified government summary which concluded that the virus ‘probably’ emerged no later than November, 2019.  Without the ‘probably’ or some other modifier, what is written in the manuscript is misrepresenting the government document.
+
+\response{
+I have added the qualifier ``probably'' to the references in both the Introduction and Discussion about how the first cases probably occurred no later than November of 2019.
+I have also added several more citations to papers that use various methods to try to date the first human infections.
+All of these papers make a point estimate of the date of the first human infection that is no later than November of 2019, although some of them do estimate credible or confidence intervals that extend into early December of 2019.
+}
+
+Conspicuously missing from the introduction is any discussion of the epidemiology papers that suggest that the virus originated in the market.  A description could come with commentary, but to simply ignore the work makes the manuscript come across as biased.
+
+\response{
+This is a good suggestion.
+I have added new text (third paragraph of revised Introduction) that discusses the interpretations of epidemiological data about the origin of the virus.
+}
+
+I don’t love the 20\% cutoff.  I understand why the table in the paper needs to have the 20\% cutoff to make it a manageable size, but the complete dataset is included as supplementary, so there isn’t any reason for the text to focus on the arbitrary 20\% as much as it does.  I suppose it isn’t essential to do away with it, but people who don’t like the paper are going to say that this is cherry picking.
+The abstract states ``For instance, 14 samples have $>$20\% of their chordate mitochondrial material from raccoon dogs, but only one of these samples contains any SARS-CoV-2 reads, and that sample only has 1 of $\sim$200,000,000 reads mapping to SARS-CoV-2.''  After reading the manuscript this sentence makes sense, but a lot of people are probably only going to read the abstract, so the 20\% cutoff seems would seem arbitrary, and the 1 in 200M has not context.  In the abstract makes it sounds ridiculously low, but many of the samples had viral copies in the single digits.  If this sentence is included I think it should be reworded or put into context (elaborating on what a `typical' number of reads is).
+
+\response{
+As the reviewer notes, the paper contains in the figures and a supplementary table analysis of the association between SARS-CoV-2 content and mitochondrial material composition for all samples without any cutoff, and the 20\% cutoff was applied just to make Table 1 fit in the main text as the full table is too large.
+
+However, I see the reviewer's point that the 20\% cutoff is reasonable for creating the table, but that the main text should not rely heavily on that particular cutoff in describing the results as otherwise the reader may get the incorrect impression that the 20\% cutoff is somehow integral to the analysis.
+I also agree that the abstract should clearly emphasize how nearly all samples contain low SARS-CoV-2 content.
+I have made revisions to the text to reflect these suggestions. 
+The abstract now emphasizes the low overall SARS-CoV-2 content and relatively de-emphasizes the 20\% cutoff with the new wording below.
+Similar changes in wording have been made to the discussion text.
+\begin{quote}
+\textit{
+However, the SARS-CoV-2 content of the environmental samples is generally very low: only 21 of 176 samples contain more than 10 SARS-CoV-2 reads, despite most samples being sequenced to depths exceeding $10^8$  total reads.
+None of the samples with double-digit numbers of SARS-CoV-2 reads have a substantial fraction of their mitochondrial material from any non-human susceptible species.
+Only one of the 14 samples with at least a fifth of the chordate mitochondrial material from raccoon dogs contains any SARS-CoV-2 reads, and that sample only has 1 of $\sim$200,000,000 reads mapping to SARS-CoV-2.
+Instead, SARS-CoV-2 reads are most correlated with reads mapping to various fish, such as catfish and largemouth bass.
+}
+\end{quote}
+}
+
+Related to the above point, it seems to me that the manuscript missed an opportunity to drive home the point that the data cannot be used to infer viral source.  The one way that one could get a smoking gun from this kind of data is if there was a sample that had a whole lot of viral material, and basically only one species associated with it (which didn’t happen).  In fact, the two samples with the highest SC2 levels didn’t have high levels of raccoon dog, human or any other susceptible species.  Using that as a foil one could point out that the positive with the most raccoon dog had only once SC2 copy, while the samples with the most SC2 copies ($>$1000 times more) had no prevalent candidate hosts associated with it at all.  Just a thought.
+
+\response{
+I agree that the main finding is that the metagenomic content of the environmental samples cannot be used to infer the viral source.
+I have tried to emphasize this point as the major finding.
+For instance, the abstract concludes with the statement that the samples are unable to ``reliably indicated whether any animals were infected by SARS-CoV-2.''
+Likewise, the last two paragraphs of the discussion touch on this point (eg, ``When considered in the larger context, the inability of the environmental samples to inform on the origins of the virus is unsurprising.'').
+However, I do not think it was \textit{a priori} certain that the samples would be uninformative on this question: as the reviewer notes, if there were a very strong association with a single species, that would be close to a smoking gun.
+
+Overall, I agree with the reviewer's points above, and hope the current text, particularly the last two paragraphs of the discussion, adequately discuss these points.
+}
+
+\subsection*{Reviewer: 2}
+
+Comments to the Author
+
+In this paper, Bloom performs an independent analysis of metagenomic environmental samples from the Huanan Seafood market obtained through Chinese surveillance efforts. Because of the extensive press coverage and vigorous debates on social media regarding various claims and counter-claims about whether or not these data can be used to argue that potential animal intermediate hosts of SARS-CoV-2 (e.g. infected raccoon dogs) were present in the market, Bloom's analysis is valuable. Without this context, it would not be remarkable or publishable. However, it provides a very important null result, and also highlights a number of questionable scientific practices and overzealous interpretations by others. It should be therefore be published. I also commend Bloom on his unfailing commitment to reproducibility, with all code, and results made available (and usable)
+
+\response{
+I agree that this paper essentially just shows that these samples don't tell us much about the origin of the virus.
+Normally, that would not be a finding of particular interest, but because there has been so much intense speculation about this question this paper is an example where an inconclusive or null result (simply showing that the data can't answer the question) is of interest.
+
+I am glad the reviewer found the code and plots useful, and am hopeful that others have also used them to explore these data more.
+}
+
+I have several specific comments/suggestions which I believe could strengthen the manuscript and improve its readability
+
+1. I think it is critically important to specifically state that EVEN IF there was strong positive correlation between mammalian read counts and SC-2 read counts, it would still not be possible to use these data to argue that ANY particular animal was infected. Correlation $\ne$ causation, and there are too many confounders to note.
+
+\response{
+I am not certain agree with this point (see also the last point made by Reviewer 1 and my response).
+
+I fully agree that these particular data aren't sufficient to tell either way whether any animal was infected.
+But one can hypothetically imagine a scenario in which there was an extremely strong correlation between SARS-CoV-2 content and genetic material from a single species.
+For instance, if all the samples with appreciable SARS-CoV-2 were dominated by raccoon dog material and no other samples had any SARS-CoV-2, that would in my view be strong evidence for infected raccoon dogs.
+Likewise if all the samples with appreciable SARS-CoV-2 were dominated by human genetic material it would strongly suggest humans were shedding the virus.
+Of course, in actuality it turns out that there isn't any trend like that, and to the extent there is any correlation it is with species that don't make sense as having been infected.
+So I fully agree that it turns out that these samples are not sufficient to show that any particular animal was infected, and there are plenty of reasons we can see in hindsight why this is the case (samples collected late, low viral content, lots of mixing of material from different species, samples collected at different times, etc).
+
+However, I do think that hypothetically if there had been very strong patterns in the data it could have provided strong evidence for infected animals of a particular species, so I don't really feel comfortable stating that the samples could not have been informative even in principle.
+}
+
+2. There is very robust literature on estimating species abundance from RNASeq-type metagenomic data. Specialized tools (e.g. Kraken 2) exist for efficient and accurate classification of such reads. It would be worthwhile to explain briefly why it is necessary to develop a "de novo" pipeline. Many commonly recognized issues (e.g. short reads which are not diagnostic at species level because they are found in multiple genomes) are well understood and quantified. C-C (presumably) used contigs to address this lack of ``read-level'' precision (they are very SHORT in the data discussed), but that's a hack.
+
+\response{
+This is an excellent question.
+My primary reason for using the \textit{de novo} mitochondrial pipeline rather than something like Kraken2 was to enhance the comparability of my results to those of Crits-Christoph et al, since I thought a major question was likely to be if any discrepancies between their findings and mine were due to methodological differences.
+Crits-Christoph et al did not make the relevant code for the metagenomic analyses publicly available alongside their report, so I wrote a \textit{de novo} pipeline that mirrored what they described in the methods of their report.
+
+There are also several technical reasons why standard use of Kraken2 with off-the-shelf reference genome sets would not work:
+\begin{itemize}
+\item A standard Kraken2 pre-built genomic database would not be suitable for this study, as some of the species of particular interest (eg, bamboo rat) do not even have sequenced genomes on RefSeq.
+\item Use of mitochondrial rather than nuclear genomes is therefore probably preferable because a much wider range of species, including essentially all the potentially susceptible non-human species at the market, have fully sequenced mitochondrial genomes.
+\item Although this is not clearly explained in the methods of Crits-Christoph et al, at the current time at least one of the species that is a focus of their study (Amur hedgehog) does not even have a mitochondrial genome on RefSeq, and that sequence had to be obtained elsewhere manually from Genbank (see methods of my pre-print). Therefore, it required some steps beyond just downloading RefSeq mitochondrial genomes to build a reference set comparable to that used by Crits-Christoph et al.
+\item Given these complexities, I wanted to be sure I explicitly understood how all steps were being handled in reference building and handling of multi-mapping reads. This made me prefer a pipeline where I had written each step explicitly rather than a package like Kracken2 which streamlines several steps together.
+\end{itemize}
+
+Nonetheless, I think a similar analysis could have been performed using Kraken2, and I mostly took the approach here to ensure as much comparability as possible to the report by Crits-Christoph et al.
+
+I have added text to the portion of the manuscript that explains the methods used for this part of the analysis explaining the points above.
+}
+
+3. One specific issue with the minimap2 mapping to a concatenome is how "non-uniquely" mapping reads are dealt with. "Methods" mention something about using only primary maps, but more discussion is warranted. Otherwise, reads which could be similarly diagnostic of multiple species (assuming there are some), would simply be assigned to the first genome in the concatenated string. Maybe this is not an issue here, but should be discussed.
+
+\response{
+This is a great question, because as the reviewer notes the number of aligned reads will depend on how non-uniquely mapping reads are handled.
+Briefly, these are reads that map to two different species in the reference equally well.
+This happens with some reads, although the rate at which it occurs is reduced by use of only mitochondrial genomes in the reference (which are much shorter than nuclear genomes) and the filtering of the reference set to remove nearly identical mitochondrial genomes.
+
+The current pipeline only counts reads that map better to one species than any other species.
+As the reviewer notes, if we simply took all primary alignments that would not be sufficient to guarantee consideration of only uniquely best mapping reads, because if a read maps equally well to two sequences (ie, species) in the reference then \texttt{minimap2} (the aligner used here) will randomly assign the primary mapping to one of the two.
+(Note \texttt{minimap2} chooses the primary alignment randomly among equally good hits, not by taking the first of the concatenated genome.)
+So primary aligned reads are \emph{not} guaranteed to be reads that have uniquely best mapping locations, and so could match equally well to multiple species.
+
+However, as described briefly in the Methods of the original version of my paper, my analysis only counts primary mappings that \emph{also have a mapping quality of at least 4}.
+The mapping quality is an indicator of how confidently a read maps to a specific location in the reference versus all other locations, and read will only have a mapping quality $>$0 if the primary mapping is better than all other mappings.
+Therefore, the combined requirement that reads be primary and have a mapping quality greater than zero has the effect of only counting reads that uniquely map best to just one species.
+
+I have elaborated to better explain this point in the relevant section of the Methods, as suggested by the reviewer.
+
+Note also that in the \texttt{config.yaml} file for the pipeline, you can change the minimum mapping quality from 4 to 0 and re-run the pipeline.
+If you do that, non-uniquely mapping reads are assigned randomly to one of the best-mapping reference species, which has the net effect (averaged over many reads) of giving a fractional score for these reads (eg, 0.5 for a read that maps to two species).
+If you re-run the pipeline with this option, you will see that although the quantitative results shift some, the qualitative conclusions are largely unchanged.
+}
+
+4. I think the point of inconsistent calling of +/- SARS-CoV-2 samples by the original authors of the samples is VERY important and needs to be emphasized, especially because the positivity pattern was used to make very strong spatial correlation claims by Worobey and others. I would also suggest that instead of simply stating that 1/200M is statistically indistinguishable from 0/200M, it might be more informative to talk about limits of detection. In other words, if we accept 1/200M as a positive, we cannot rule out 0/200M as being positive, and perhaps talk about how many reads you would actually need to make some statistically sound claims (as a function of total read \#). You could put this in Table 1, for example.
+
+\response{
+I agree that the calling of samples as positive / negative based on the binary presence / absence of any SARS-CoV-2 read is not statistically well supported, as we cannot reject the null hypothesis that the underlying amount of SARS-CoV-2 is significantly lower in a sample with 0 in 200-million SARS-CoV-2 reads versus a sample with 1 in 200-million SARS-CoV-2 reads.
+If we use a Fisher exact test and compare two samples with 200-million total reads one of which has 0 SARS-CoV-2 reads and the other of which has $N$ SARS-CoV-2 reads, we can only reject the null hypothesis that the two samples are drawn from reads with the same underlying distribution of SARS-CoV-2 content at $P \le 0.05$ when $N \ge 6$.
+
+Therefore, as suggested by the reviewer, I have expanded on the relevant portion of the text explaining this fact, and described what threshold is needed for statistical significance on the statement that the SARS-CoV-2 content of the two samples is significantly different.
+
+That said, I have not included any claims about how this fact would affect the conclusions that have been drawn by Worobey and others.
+Certainly it is a factor that needs to be considered---however, many of the samples analyzed by Worobey and co-workers were also analyzed by RT-qPCR in addition to next-generation sequencing, so substantially more analysis of the full dataset and spatial distribution of samples is needed to determine how the above point might affect any conclusions by Worobey et al.
+That analysis is beyond the scope of the current study, so here I have simply noted the lack of statistical rigor in how samples have been called positive / negative from deep-sequencing data by the Chinese CDC, but have refrained from speculating on how exactly that might impact downstream analyses using the Chinese CDC's positive / negative classifications.
+}
+
+5. I think several figures can be removed from the printed manuscript without information loss. For example Figure 1 shows a lot of near ~1 correlations, and Figure 4 shows a lot of ``Rorschach blot'' scatter-shots of points.
+
+\response{
+As the reviewer suggests, I have moved Figure 1 of the original manuscript to the supplement, where it is now Figure S1.
+This is the figure that simply shows that the mammalian metagenomic composition is highly correlated across all shared samples between my analysis and that of Crits-Christoph et al.
+
+However, I have chosen to keep Figure 1 of the original manuscript (now Figure 3 of the revised manuscript) as a main figure.
+I agree with the reviewer that this is a large figure with lots of scatter plots that is a bit overwhelming to look at.
+But this is also represents arguably the most key results of the entire analysis, and since \textit{Virus Evolution} has no length limit I think it is better to keep this large full-page figure so all of the key results are in the main manuscript without having to refer to the supplement.
+}
+
+6. For regression analyses, I might suggest something more robust to outliers that linear/rank regression. Theil-Sen estimators, or quantile regression might be better here.
+
+\response{
+The reviewer is correct that there are a lot of ``outlier'' points in the correlation scatter plots.
+This isn't a substantive issue for the large panel of scatter plots in Figure 3 of the revised manuscript (Figure 4 of the original) since the panels show all the points visually and don't rely on the correlation coefficients for anything other than a numerical summary.
+However, this issue does substantively affect Figure 4 of the revised manuscript (Figure 3 of the original), which plots the Pearson and Spearman correlation coefficients.
+
+The reviewer is correct that Theil-Sen estimators or quantile regression are more robust to outliers.
+However, there are two difficulties with using these instead: the paper never shows the fit lines (which is what those approaches estimate), but rather the correlation coefficient.
+But both Theil-Sen estimators nor quantile regression are designed to estimate fit lines, and don't directly estimate a counterpart to a correlation coefficient.
+However, I did locate a formula for a correlation measure based on the Theil-Sen estimator (\url{https://towardsdatascience.com/a-correlation-measure-based-on-theil-sen-regression-31b8b9ed64f1}).
+I have therefore created a version of Figure 4 that uses this Theil-Sen estimator based correlation rather than the Pearson correlation; it is Figure S4 of the revised manuscript.
+The correlations are somewhat different for the Theil-Sen based estimator than the Pearson or Spearman methods (the Theil-Sen measure is zero for many species where there is no correlation except for a few outliers), but the basic finding holds that the most correlated species across the entire dataset do not include non-human species susceptible to SARS-CoV-2.
+
+I have kept the Pearson / Spearman correlation figure as the main text figure for consistency with the Chinese CDC pre-print, and put this new plot as a supplementary figure.
+}
+
+7. Two points of curiosity
+   (a) For the samples with sufficient SC-2 reads, is it possible to assemble any contigs and see what lineage the virus is?
+   (b) Are there any other viral pathogens present?
+   
+\response{
+For the first question, it isn't actually necessary to assemble contigs since the SARS-CoV-2 reference genome is known and reads can just be aligned to that.
+However, most of the samples have so few viral reads that most of the genome isn't covered.
+From the environmental sample metagenomic sequencing, only sample B5 has decent coverage over the viral genome.
+However, the Chinese CDC did do viral enrichment and sequencing on some of the samples in data that are not analyzed here (as the viral enrichment means those samples are not suitable for metagenomics).
+The results of that analysis are in their \textit{Nature} paper (Liu et al, 2023).
+
+I did not attempt to analyze the presence of other viral pathogens.
+This is an interesting question, but beyond the scope of the current study.
+}
+
+
+\section*{Associate Editor: Koelle, Katia}
+
+Comments to the Author:
+
+Both reviewers are of the opinion that this submitted work is highly valuable and thoroughly performed. One of the reviewers has several suggestions/questions that pertain to the methods used in the sequencing analyses, as well as suggestions for streamlining the results presented. The other reviewer has several text edit suggestions, including referencing the epidemiology papers that argue that the virus originated at the market. Both reviewers point out that the manuscript should emphasize the point that the sequencing data cannot be used to infer the viral source. Based on these reviews, I recommend minor revision of this manuscript.
+
+\response{
+Thanks for the helpful and timely reviews.
+In the revised manuscript, I have addressed all of the major comments from the reviewers, including clarification of details about the analysis and more discussion of studies related to the epidemiology of the market.
+I have made sure that the paper clearly emphasizes that these samples are simply not informative either way for determining the source of the virus in the market.
+}
+
+\color{black}
+\bibliographystyle{genetics}
+{\small
+\bibliography{references.bib}
+}
+
+
+\end{document}  

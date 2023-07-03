@@ -43,6 +43,7 @@ plot_htmls = {
         "per_species_corr_faceted",
         "per_species_corr_single",
         "overall_corr",
+        "theil_sen_corr",
     ]
 }
 

@@ -37,7 +37,7 @@ index_abstract: |
 # List of plots along with a `title` and markdown `legend`.
 # The keys should be the base name of the plot.
 plots:
-  
+
   crits_christoph_vs_current_run_corr:
     title: Correlation of read counts aligned to mitochondria of different species in current study vs Crits-Christoph et al
     legend: |
@@ -56,14 +56,14 @@ plots:
       plot shows the percentage of aligned mitochondrial reads that map to each species as determined
       in the current study. Pie charts are shown for all chordates and just mammals.
 
-      For the samples also analyzed in 
+      For the samples also analyzed in
       [Crits-Christoph et al (2023)](https://zenodo.org/record/7754299#.ZDNVv-zMLX0), there are also
       pie charts showing the mitochondrial DNA composition determined in that study
       for all species in Table S3 of
       Crits-Christoph et al, and for all species plotted in Figure 1 of Crits-Christoph
       et al (note Table S3 of their paper reports counts only for mammals, and Figure 1 of
       their paper only plots counts for a subset of these mammals).
-      
+
       Use the clickable legend below the plot to show some of these species sets.
 
       Mouseover the pie slices for more details about counts for individual species,
@@ -79,7 +79,7 @@ plots:
       [Crits-Christoph et al (2023)](https://zenodo.org/record/7754299#.ZDNVv-zMLX0).
 
       Mouseover the pie slices for more details about the counts for individual species.
-  
+ 
   sars2_aligned:
     title: Percent of high-quality reads aligning to SARS-CoV-2 in each metagenomic sample
     legend: |
@@ -105,7 +105,7 @@ plots:
       particular sources. Mouseover points on the plot for details about individual samples.
 
       Note that the y-axis uses a symlog scale.
-  
+ 
   per_species_corr_faceted:
     title: Correlation of mitochondrial composition with SARS-CoV-2 reads for all species
     legend: |
@@ -123,7 +123,7 @@ plots:
         - Whether the axis scales show the raw percentages or the log10 of the percentages. When using a log scale, percentages of zero are set to half the lowest observed percentage across all samples and species.
 
       Other at the bottom of the plot enable:
-      
+
         - Selection of samples only from specific collection dates (click on circles next to select).
         - Selection of only samples collected from particular sources.
         - Selection of samples only with a sufficient number of total aligned mitochondrial reads.
@@ -134,7 +134,7 @@ plots:
       The correlation coefficients will change accordingly if you select different options for
       how the percent mitochondrial reads is computed or whether we analyze the direct or log10
       percents.
-    
+
   per_species_corr_single:
     title: Correlation of mitochondrial composition with SARS-CoV-2 reads for individual species
     legend: |
@@ -152,7 +152,7 @@ plots:
         - Whether the axis scales show the raw percentages or the log10 of the percentages. When using a log scale, percentages of zero are set to half the lowest observed percentage across all samples and species.
 
       Other at the bottom of the plot enable:
-      
+
         - Selection of samples only from specific collection dates (click on circles next to select).
         - Selection of only samples collected from particular sources.
         - Selection of samples only with a sufficient number of total aligned mitochondrial reads.
@@ -164,7 +164,7 @@ plots:
       The correlation coefficients will change accordingly if you select different options for
       how the percent mitochondrial reads is computed or whether we analyze the direct or log10
       percents.
-    
+
   overall_corr:
     title: Overall correlation of mitochondrial DNA and SARS-CoV-2 across all species
     legend: |
@@ -182,13 +182,39 @@ plots:
       The options at bottom allows you to show correlations computed only over samples
       collected on specific dates, isolated from particular sources, or that contain at least one
       SARS-CoV-2 read.
-      
+
       The *species to highlight* boxes allow you to click on a specific species to
       highlight in a red box on the plot.
 
       This plot is modeled on that shown in Figure 4A of the original
       [Liu et al (2022) Research Square](https://assets.researchsquare.com/files/rs-1370392/v1_covered.pdf)
       pre-print.
+
+  theil_sen_corr:
+    title: Overall correlation of mitochondrial DNA and SARS-CoV-2 across all samples using Theil-Sen estimator
+    legend: |
+      Each point shows the correlation between the percent of all high-quality reads that align
+      to SARS-CoV-2 and the percent of aligned mitochondrial reads for a specific species taken
+      across all samples. The axes show the Spearman correlation and a
+      [measure of correlation based on the Theil-Sen estimator](https://towardsdatascience.com/a-correlation-measure-based-on-theil-sen-regression-31b8b9ed64f1).
+
+      A critical aspect of this plot is the choice of what scale is used to
+      calculate the correlations. The choices, which are adjustable using the options below
+      the plot, are:
+
+        - Quantify the mitochondrial reads is as the percent of all high-quality (preprocessed) reads that map to the mitochondrial genome of that species, or as the percent of reads that align to any chordate mitochondrial genome that align to that species.
+        - Whether the axis scales show the raw percentages or the log10 of the percentages. When using a log scale, percentages of zero are set to half the lowest observed percentage across all samples and species.
+
+      The options at bottom allows you to show correlations computed only over samples
+      collected on specific dates, isolated from particular sources, or that contain at least one
+      SARS-CoV-2 read.
+
+      The *species to highlight* boxes allow you to click on a specific species to
+      highlight in a red box on the plot.
+
+      This plot is modeled on that shown in Figure 4A of the original
+      [Liu et al (2022) Research Square](https://assets.researchsquare.com/files/rs-1370392/v1_covered.pdf)
+      pre-print, except it shows the Theil-Sen estimator correlation rather than the Pearson correlation.
 
   ct_vs_reads:
     title: Correlation of RT-qPCR and SARS-CoV-2 reads in deep sequencing
