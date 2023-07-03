@@ -290,6 +290,7 @@ Correlations between SARS-CoV-2 content and mitochondrial content for all specie
 Top row show just samples containing at least one SARS-CoV-2 read and bottom row shows samples regardless of SARS-CoV-2 content; left shows samples from all sampling dates and right shows just samples from the January-12-2020 date when most of the wildlife sampling occurred.
 This plot is designed to mimic the fourth figure of \citet{liu2022surveillance}.
 Some key species are labeled; see the interactive version at \url{https://jbloom.github.io/Huanan_market_samples/overall_corr.html} to mouseover all points for details, select different subsets of samples, and calculate the correlations on a linear or log scale.
+See Figure~\ref{fig:theil_sen_corr} for a version of this plot that uses correlations based on a Theil-Sen estimator that is more robust to outliers.
 \label{fig:overall_corr}
 }
 \end{figure}
@@ -302,6 +303,7 @@ It is also informative to take the correlations only across samples collected on
  If we include January-12-2020 samples regardless of SARS-CoV-2 content, then snakehead fish and Malayan porcupine are among the most correlated species.
 Raccoon dog and bamboo rat genetic material are not positively correlated with SARS-CoV-2 reads in any of the sample sets.
 See the interactive version of Figure~\ref{fig:overall_corr} at \url{https://jbloom.github.io/Huanan_market_samples/overall_corr.html} to explore other sample subsets.
+The trends are broadly similar if the correlations are instead calculated based on a Theil-Sen estimator~\citep{theilsen} that is more robust to outliers (Figure~\ref{fig:theil_sen_corr}).
 
 Note that the correlation plots in Figure~\ref{fig:overall_corr} are not exactly identical to those in the original Chinese CDC preprint.
 Since \citet{liu2022surveillance} do not provide sufficiently detailed methods to fully reproduce their analysis, it is impossible to definitively determine the source of the discrepancy---but it is likely due to the inclusion of different genomes in the reference sets used to calculate the metagenomic composition of the samples.
@@ -515,6 +517,19 @@ The plots shown here include only samples with at least 200 aligned mitochondria
 \label{fig:different_corrs}
 }
 \end{figure*}
+
+\clearpage
+
+\begin{figure}
+\centering
+\includegraphics[width=0.6\linewidth]{figures/theil_sen_corr/theil_sen_corr.png}
+\caption{
+A version of Figure~\ref{fig:overall_corr} where the y-axis shows a correlation computed from the Theil-Sen estimator~\citep{theilsen} rather than the Pearson correlation.
+The Theil-Sen estimator is more robust to outliers, so species where the correlation is driven by just a few species will have values of zero in these plots.
+See \url{https://jbloom.github.io/Huanan_market_samples/theil_sen_corr.html} for an interactive version of this plot.
+\label{fig:theil_sen_corr}
+}
+\end{figure}
 
 \clearpage
 

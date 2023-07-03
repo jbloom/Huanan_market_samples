@@ -189,6 +189,21 @@ But this is also represents arguably the most key results of the entire analysis
 
 6. For regression analyses, I might suggest something more robust to outliers that linear/rank regression. Theil-Sen estimators, or quantile regression might be better here.
 
+\response{
+The reviewer is correct that there are a lot of ``outlier'' points in the correlation scatter plots.
+This isn't a substantive issue for the large panel of scatter plots in Figure 3 of the revised manuscript (Figure 4 of the original) since the panels show all the points visually and don't rely on the correlation coefficients for anything other than a numerical summary.
+However, this issue does substantively affect Figure 4 of the revised manuscript (Figure 3 of the original), which plots the Pearson and Spearman correlation coefficients.
+
+The reviewer is correct that Theil-Sen estimators or quantile regression are more robust to outliers.
+However, there are two difficulties with using these instead: the paper never shows the fit lines (which is what those approaches estimate), but rather the correlation coefficient.
+But both Theil-Sen estimators nor quantile regression are designed to estimate fit lines, and don't directly estimate a counterpart to a correlation coefficient.
+However, I did locate a formula for a correlation measure based on the Theil-Sen estimator (\url{https://towardsdatascience.com/a-correlation-measure-based-on-theil-sen-regression-31b8b9ed64f1}).
+I have therefore created a version of Figure 4 that uses this Theil-Sen estimator based correlation rather than the Pearson correlation; it is Figure S4 of the revised manuscript.
+The correlations are somewhat different for the Theil-Sen based estimator than the Pearson or Spearman methods (the Theil-Sen measure is zero for many species where there is no correlation except for a few outliers), but the basic finding holds that the most correlated species across the entire dataset do not include non-human species susceptible to SARS-CoV-2.
+
+I have kept the Pearson / Spearman correlation figure as the main text figure for consistency with the Chinese CDC pre-print, and put this new plot as a supplementary figure.
+}
+
 7. Two points of curiosity
    (a) For the samples with sufficient SC-2 reads, is it possible to assemble any contigs and see what lineage the virus is?
    (b) Are there any other viral pathogens present?
