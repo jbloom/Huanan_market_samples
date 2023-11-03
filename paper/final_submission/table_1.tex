@@ -1,0 +1,75 @@
+\documentclass[9pt,twocolumn,twoside]{gsajnl_modified}
+% Use the documentclass option 'lineno' to view line numbers
+
+\usepackage[htt]{hyphenat}  % https://tex.stackexchange.com/a/543
+\usepackage[export]{adjustbox}
+\usepackage{xurl}
+\usepackage{stfloats}
+\usepackage{multirow}
+\usepackage{makecell}
+ \renewcommand\theadfont{}
+\usepackage[leftcaption]{sidecap}
+\sidecaptionvpos{figure}{t}
+
+\renewcommand{\topfraction}{0.9}	% max fraction of floats at top
+    \renewcommand{\bottomfraction}{0.8}	% max fraction of floats at bottom
+    %   Parameters for TEXT pages (not float pages):
+    \setcounter{topnumber}{2}
+    \setcounter{bottomnumber}{2}
+    \setcounter{totalnumber}{4}     % 2 may work better
+    \setcounter{dbltopnumber}{2}    % for 2-column pages
+    \renewcommand{\dbltopfraction}{0.9}	% fit big float above 2-col. text
+    \renewcommand{\textfraction}{0.07}	% allow minimal text w. figs
+    %   Parameters for FLOAT pages (not text pages):
+    \renewcommand{\floatpagefraction}{0.7}	% require fuller float pages
+	% N.B.: floatpagefraction MUST be less than topfraction !!
+    \renewcommand{\dblfloatpagefraction}{0.7}	% require fuller float pages
+
+\begin{document}
+
+\begin{table}
+
+\setlength{\tabcolsep}{5pt}
+\renewcommand{\arraystretch}{1.3}
+\begin{tabular}{llrrr}
+\toprule
+species      &   sample              & \makecell[r]{chordate \\ mitochondrial \\ reads from \\ species} &  \makecell[r]{reads \\ aligning \\ to SARS2} & \makecell[r]{ total pre-\\processed \\ reads} \\ 
+\midrule
+\multirow{14}{*}{raccoon dog} & HJ200048-20200112-1 &                                80\% &                        0 &                   $1.2\times 10^8$ \\
+                 & HJ200050-20200112-1 &                                69\% &                        0 &                     $1.0 \times 10^8$ \\
+                 & HJ200017-20200112-1 &                                61\% &                        0 &                   $1.1 \times 10^8$ \\
+                 & HJ200023-20200112-1 &                                58\% &                        0 &                   $6.9 \times 10^7$ \\
+                 & HJ200011-20200112-1 &                                41\% &                        0 &                   $5.8 \times 10^7$ \\
+                 & HJ200012-20200112-1 &                                39\% &                        0 &                   $1.3 \times 10^8$ \\
+                 & {\bf Q61} &                                {\bf 32\%} &                        {\bf 1} &                   $\mathbf{2.1 \times 10^8}$ \\
+                 & HJ200019-20200112-1 &                                30\% &                        0 &                     $7.0 \times 10^7$ \\
+                 & HJ200006-20200112-1 &                                29\% &                        0 &                   $1.3 \times 10^8$ \\
+                 & HJ200001-20200112-1 &                                28\% &                        0 &                   $1.2 \times 10^8$ \\
+                 & HJ200018-20200112-1 &                                26\% &                        0 &                   $1.4 \times 10^8$ \\
+                 & HJ200044-20200112-1 &                                25\% &                        0 &                   $1.2 \times 10^8$ \\
+                 & HJ200047-20200112-1 &                                22\% &                        0 &                   $1.4 \times 10^8$ \\
+                 & 629-3-C &                                22\% &                        0 &                   $2.5 \times 10^8$ \\
+\cline{1-5}
+\multirow{6}{*}{hoary bamboo rat} & HJ200065-20200112-1 &                                48\% &                        0 &                   $7.3 \times 10^7$ \\
+                 & HJ200062-20200112-1 &                                40\% &                        0 &                   $1.8 \times 10^8$ \\
+                 & 629-5-L4 &                                35\% &                        0 &                   $1.4 \times 10^8$ \\
+                 & 629-13-L &                                33\% &                        0 &                   $1.5 \times 10^8$ \\
+                 & 629-1-L1 &                                30\% &                        0 &                   $2.5 \times 10^8$ \\
+                 & HJ200049-20200112-1 &                                23\% &                        0 &                     $1.0 \times 10^8$ \\
+\cline{1-5}
+\multirow{6}{*}{Amur hedgehog} & W-8-25-L2 &                                56\% &                        0 &                   $3.1 \times 10^8$ \\
+                 & HJ200040-20200112-1 &                                51\% &                        0 &                   $1.5 \times 10^8$ \\
+                 & HJ200039-20200112-1 &                                30\% &                        0 &                   $1.2 \times 10^8$ \\
+                 & {\bf 8-25-M1} &                                {\bf 30\%} &                      {\bf 24} &                   $\mathbf{4.4 \times 10^8}$ \\
+                 & HJ200038-20200112-1 &                                23\% &                        0 &                     $1.0 \times 10^8$ \\
+                 & W-8-25-D2 &                                22\% &                        0 &                   $3.3 \times 10^8$ \\
+\cline{1-5}
+Malayan porcupine & {\bf Q70} &                                {\bf 85\%} &                        {\bf 2} &                   $\mathbf{1.5 \times 10^8}$ \\
+\cline{1-5}
+Himalayan marmot & HJ200005-20200112-1 &                                30\% &                        0 &                   $1.2 \times 10^8$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+
+\end{document}

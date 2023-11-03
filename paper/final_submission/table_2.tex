@@ -1,0 +1,47 @@
+\documentclass[9pt,twocolumn,twoside]{gsajnl_modified}
+% Use the documentclass option 'lineno' to view line numbers
+
+\usepackage[htt]{hyphenat}  % https://tex.stackexchange.com/a/543
+\usepackage[export]{adjustbox}
+\usepackage{xurl}
+\usepackage{stfloats}
+\usepackage{multirow}
+\usepackage{makecell}
+ \renewcommand\theadfont{}
+\usepackage[leftcaption]{sidecap}
+\sidecaptionvpos{figure}{t}
+
+\renewcommand{\topfraction}{0.9}	% max fraction of floats at top
+    \renewcommand{\bottomfraction}{0.8}	% max fraction of floats at bottom
+    %   Parameters for TEXT pages (not float pages):
+    \setcounter{topnumber}{2}
+    \setcounter{bottomnumber}{2}
+    \setcounter{totalnumber}{4}     % 2 may work better
+    \setcounter{dbltopnumber}{2}    % for 2-column pages
+    \renewcommand{\dbltopfraction}{0.9}	% fit big float above 2-col. text
+    \renewcommand{\textfraction}{0.07}	% allow minimal text w. figs
+    %   Parameters for FLOAT pages (not text pages):
+    \renewcommand{\floatpagefraction}{0.7}	% require fuller float pages
+	% N.B.: floatpagefraction MUST be less than topfraction !!
+    \renewcommand{\dblfloatpagefraction}{0.7}	% require fuller float pages
+
+\newcommand\jdbcomment[1]{\textcolor{red}{[#1]}}
+\newcommand\rancomment[1]{\textcolor{blue}{[#1]}}
+
+
+\begin{document}
+
+
+\begin{tabular}{llll}
+\toprule
+sample & \makecell[l]{RT-qPCR test \\ result (Ct)} & \makecell[l]{sequencing reads \\ mapping to SARS-CoV-2 \\ out of high-quality reads} & \makecell[l]{classification in \\ Chinese CDC study} \\
+\midrule
+F100 & positive (34.7) & 7,200 out of $2.6 \times 10^8$ & positive \\
+Q61 & negative & 1 out of $2.1 \times 10^8$ & positive \\
+E-10-29-2 & negative & 0 out of $1.9 \times 10^8$ & negative \\
+A1 & negative & not sequenced & negative \\
+\bottomrule
+\end{tabular}
+
+
+\end{document}
