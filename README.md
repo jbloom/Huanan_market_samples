@@ -4,7 +4,7 @@ This repository contains a fully reproducible computational pipeline for analyzi
 
 The pipeline was created by Jesse Bloom.
 
-The analysis and results are described in [Bloom et al, bioRxiv, DOI 10.1101/2023.04.25.538336](https://doi.org/10.1101/2023.04.25.538336).
+The analysis and results are described in [Bloom et al, Virus Evolution, 9:vead050 (2023)](https://academic.oup.com/ve/article/9/2/vead050/7249794).
 
 ## Results and plots
 Key results are in the [./results/](results) subdirectory.
